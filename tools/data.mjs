@@ -192,6 +192,8 @@ export const FAQ = [
 ];
 
 export const COLUMNS = [
+  { slug: "ubereats-start", title: "Uber Eatsをはじめるなら、代理店経由がお得｜手数料・撮影・広告・クーポンの5つの出店特典", img: "subuta", short: "Uber Eatsをはじめるなら、代理店経由がお得", tag: "デリバリー", date: "2026-09-23",
+    lead: "販売手数料3か月0%、タブレット無料、商品撮影、広告2週間、クーポン1万円分。当社経由で新規出店すると使える5つの特典と、活かし方をまとめました。", works: [] },
   { slug: "8-items", title: "飲食店のHPに載せるべき8項目｜来店前のお客さまが本当に見ているもの", img: "teishoku", short: "飲食店HPに載せるべき8項目", tag: "HPの基本", date: "2026-09-10",
     lead: "営業時間、メニューと価格、アクセス——当たり前の情報ほど、古いまま放置されがちです。来店前の数十秒で見られる8項目を、優先順位つきで整理しました。", works: ["cafe-hidamari", "ramen-kogane"] },
   { slug: "uber-eats-link", title: "Uber Eatsの注文リンクをHPに置く方法｜ボタンの位置と文言で注文は変わる", img: "gyoza", short: "Uber Eatsの注文リンクをHPに置く方法", tag: "デリバリー", date: "2026-09-16",

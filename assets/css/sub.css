@@ -477,3 +477,25 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9em;background
 .sh__en--s{font-size:clamp(38px,4.8vw,74px)}
 .sub-main > .sh:first-child .sh__in{padding-top:calc(var(--header-h) + 24px)}
 .sh__cloud{opacity:.5 !important}
+
+/* ---------- 記事：特典のまとめ（Uber Eats 出店） ---------- */
+.perks{display:grid;grid-template-columns:repeat(2,1fr);border-top:2px solid var(--ink);margin:2em 0 2.4em}
+.perks__i{position:relative;padding:22px 20px 24px 0;border-bottom:1px solid var(--rule);line-height:1.8}
+.perks__i:nth-child(even){padding-left:20px;border-left:1px solid var(--rule)}
+.perks__i--wide{grid-column:1/-1;background:var(--accent-3);padding:24px 24px 26px;border-bottom:0}
+.perks__n{font-size:12px;color:var(--line)}
+.perks__i strong{display:block;font-size:15px;letter-spacing:.04em;margin-top:2px}
+.perks__big{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px;margin:6px 0 4px !important;line-height:1.2}
+.perks__big b{font-size:clamp(26px,3vw,34px);font-weight:900;color:var(--accent);letter-spacing:.02em}
+.perks__big b.en{font-size:clamp(40px,5vw,60px);line-height:1}
+.perks__big small{font-size:13px;font-weight:700}
+.perks__big em{font-style:normal;font-size:12px;font-weight:700;color:var(--sub);margin:0 6px}
+.perks__i > p:last-child{font-size:13px;color:#3b3b3b;margin:0}
+.perks__i--wide:nth-child(even){padding-left:24px;border-left:0}
+.perks__i--wide ~ .perks__i:nth-child(odd){padding-left:20px;border-left:1px solid var(--rule)}
+.perks__i--wide ~ .perks__i:nth-child(even){padding-left:0;border-left:0}
+.art-cta{display:flex;justify-content:center;margin:.4em 0 2.6em}
+@media (max-width:750px){
+  .perks{grid-template-columns:1fr}
+  .perks__i--wide ~ .perks__i:nth-child(n){padding-left:0;border-left:0}
+}

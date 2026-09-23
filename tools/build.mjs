@@ -302,6 +302,7 @@ ${cats.map((c) => `<section class="faq-sec" id="faq-${c}"><h2 class="h3">${c}</h
 
   columns: (a = {}) => {
     let list = D.COLUMNS;
+    if (a.not) list = list.filter((c) => c.slug !== a.not);
     if (a.limit) list = list.slice(0, +a.limit);
     return `<ul class="cgrid">${list.map((c) => `<li class="ccard"><a href="/column/${c.slug}/"><span class="ccard__img"><img src="/assets/img/photos/m/${c.img}.webp" alt="" loading="lazy" decoding="async" width="800" height="600"></span><span class="ccard__tag">${c.tag}</span><strong>${c.short}</strong><span class="ccard__lead">${c.lead}</span><time datetime="${c.date}">${c.date.replace(/-/g, ".")}</time></a></li>`).join("")}</ul>`;
   },
