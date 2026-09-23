@@ -709,3 +709,4 @@ html[data-tod=night] .tod button[aria-pressed="true"]{background:#fff;color:var(
 
 /* ---- 画面の外にある部分の動きは止める（chrome.js / top.js が .is-offscreen を付け外し） ---- */
 .is-offscreen,.is-offscreen *,.is-offscreen *::before,.is-offscreen *::after{animation-play-state:paused !important}
+.cgrid + .c-btn{margin-top:48px}
