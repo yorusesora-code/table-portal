@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>パティスリー ミエル｜はちみつの洋菓子店 公式サイト（Table Web 制作デモ）</title>
+<meta name="description" content="午後三時の光のような、はちみつ色の洋菓子を。パティスリー ミエルの公式サイトです。※Table Web の制作デモ（架空の店舗）です。">
+<meta name="robots" content="noindex, nofollow">
+<meta name="application-name" content="パティスリー ミエル 公式サイト">
+<meta name="theme-color" content="#FFF6E3">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="パティスリー ミエル 公式サイト">
+<meta property="og:title" content="パティスリー ミエル｜はちみつの洋菓子店">
+<meta property="og:description" content="午後三時の光のような、はちみつ色の洋菓子を。（Table Web 制作デモ・架空の店舗）">
+<meta property="og:image" content="../../../assets/img/photos/macaron.jpg">
+<meta property="og:image:alt" content="パティスリー ミエルのマカロン">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="パティスリー ミエル｜はちみつの洋菓子店">
+<meta name="twitter:description" content="午後三時の光のような、はちみつ色の洋菓子を。（Table Web 制作デモ）">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 4l24 14v28L32 60 8 46V18z' fill='%23F0A830'/%3E%3Cellipse cx='32' cy='34' rx='11' ry='14' fill='%23FFE08A'/%3E%3Cpath d='M22 30h20M21 37h22' stroke='%235B3A1F' stroke-width='4'/%3E%3C/svg%3E">
+<script>document.documentElement.classList.add("js")</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bounce: cubic-bezier(0.19, 1.74, 0.47, 0.62);
+  --cream:#FFF6E3; --cream2:#FFEFCF; --paper:#FFFBF3;
+  --honey:#F0A830; --honey-d:#C9780A; --honey-l:#FFE3A3;
+  --brown:#5B3A1F; --brown-l:#8A6444;
+  --petal:#F6C6C0; --leaf:#9DB86A;
+  --glow:rgba(240,168,48,.28); --glow2:rgba(240,168,48,.5);
+  --radius:20px;
+  --serif:"Cormorant Garamond", "Zen Maru Gothic", serif;
+  --sans:"Zen Maru Gothic", system-ui, -apple-system, "Hiragino Maru Gothic ProN", sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--sans);color:var(--brown);background:var(--cream);line-height:1.8;font-size:15px;overflow-x:hidden}
+@supports (overflow:clip){html,body{overflow-x:clip}}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit}
+h1,h2,h3,h4,p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:3px solid var(--honey-d);outline-offset:3px;border-radius:8px}
+.wrap{width:min(1120px,100% - 32px);margin-inline:auto}
+section[id]{scroll-margin-top:24px}
+
+/* ---------- demo bar ---------- */
+.demo-bar{position:relative;z-index:80;display:flex;flex-wrap:wrap;gap:4px 14px;justify-content:center;align-items:center;
+  padding:5px 16px;background:#3f2915;color:#f3e3c8;font-size:11px;line-height:1.5;letter-spacing:.02em}
+.demo-bar a{color:#ffd580;text-decoration:none;transition:color .18s linear}
+.demo-bar a:hover{color:#fff;text-decoration:underline}
+
+/* ---------- link B : text color ---------- */
+.tlink{text-decoration:none;transition:color .18s linear}
+.tlink:hover,.tlink.touch-hover{color:var(--honey-d)}
+
+/* ---------- hover A : ring expand pill ---------- */
+.pill{position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:.5em;
+  padding:.72em 1.5em;border:0;background:none;cursor:pointer;text-decoration:none;font-weight:700;letter-spacing:.04em;
+  color:var(--brown);border-radius:999px;line-height:1.3;transition:color .2s linear}
+.pill::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:999px;background:#fff;
+  box-shadow:0 0 16px var(--glow);border:2px solid var(--honey-l);transition:inset .6s var(--bounce),box-shadow .3s ease}
+.pill:hover::before,.pill.touch-hover::before,.pill:focus-visible::before{inset:-5px;box-shadow:2px 4px 18px var(--glow2)}
+.pill--honey{color:#fff}
+.pill--honey::before{background:linear-gradient(180deg,#F6B845,#E0901A);border-color:transparent}
+.pill--line{color:#fff}
+.pill--line::before{background:#06C755;border-color:transparent;box-shadow:0 0 16px rgba(6,199,85,.3)}
+.pill--line:hover::before{box-shadow:2px 4px 18px rgba(6,199,85,.5)}
+.pill svg{width:1.3em;height:1.3em;flex:none}
+
+/* ---------- reveal ---------- */
+.js .reveal{opacity:0;transform:translateY(30px)}
+.js .reveal.is-in{opacity:1;transform:none;transition:opacity .6s ease,transform .7s var(--bounce)}
+.js .reveal-pop{opacity:0;transform:scale(.55)}
+.js .reveal-pop.is-in{opacity:1;transform:scale(1);transition:opacity .4s ease,transform .6s var(--bounce)}
+
+/* ---------- fixed header / nav ---------- */
+.gnav{display:none}
+.burger{position:fixed;top:40px;right:14px;z-index:70;width:54px;height:54px;border:0;border-radius:50%;cursor:pointer;background:none;isolation:isolate}
+.burger::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:50%;background:#fff;box-shadow:0 2px 16px var(--glow);
+  border:2px solid var(--honey-l);transition:inset .6s var(--bounce),box-shadow .3s}
+.burger:hover::before{inset:-5px;box-shadow:2px 4px 18px var(--glow2)}
+.burger span{position:absolute;left:15px;right:15px;height:3px;border-radius:3px;background:var(--brown);transition:transform .3s ease}
+.burger span:nth-child(1){top:21px}
+.burger span:nth-child(2){top:30px}
+.nav-open .burger span:nth-child(1){transform:translateY(4.5px) rotate(45deg)}
+.nav-open .burger span:nth-child(2){transform:translateY(-4.5px) rotate(-45deg)}
+.burger small{position:absolute;left:0;right:0;bottom:6px;font-size:8px;letter-spacing:.12em;font-weight:700;line-height:1}
+
+.menu{position:fixed;inset:0;z-index:65;pointer-events:none}
+.menu-l1,.menu-l2{position:absolute;inset:0;transition:clip-path .5s ease-in-out}
+.menu-l1{background:var(--honey);clip-path:circle(0% at 0% 100%)}
+.menu-l2{background:radial-gradient(120% 80% at 90% 0%,#FFF9EC 0%,#FFEFC9 70%,#FFE2A0 100%);clip-path:circle(0% at 100% 0%);
+  overflow-y:auto;display:flex;flex-direction:column;align-items:center;padding:96px 24px 40px}
+.nav-open .menu{pointer-events:auto}
+.nav-open .menu-l1{clip-path:circle(145% at 0% 100%)}
+.nav-open .menu-l2{clip-path:circle(145% at 100% 0%);transition-delay:.08s}
+.menu-title{font-family:var(--serif);font-style:italic;font-size:30px;color:var(--honey-d);line-height:1;margin-bottom:22px}
+.menu-list{position:relative;display:flex;flex-direction:column;gap:14px;width:min(300px,100%)}
+.menu-list .pill{width:100%;padding:.8em 1em}
+.menu-list .pill.is-current{color:var(--honey-d)}
+.menu-ind{position:absolute;left:-22px;top:0;width:14px;height:14px;transition:transform .16s ease-in-out;pointer-events:none}
+.menu-ind svg{animation:ind-bob-x 1.4s ease-in-out infinite}
+.menu-foot{margin-top:28px;display:flex;flex-direction:column;align-items:center;gap:12px;width:min(300px,100%)}
+.menu-foot .pill{width:100%}
+.menu-bee{width:64px;margin-bottom:-6px}
+@keyframes ind-bob-x{0%,100%{transform:translateX(0)}50%{transform:translateX(3px)}}
+@keyframes ind-bob-y{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+
+@media (min-width:960px){
+  .burger,.menu{display:none}
+  .gnav{display:block;position:fixed;top:40px;right:20px;z-index:70;padding:10px 14px 10px;border-radius:26px;
+    background:rgba(255,251,243,.86);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 6px 24px rgba(91,58,31,.10);
+    border:1.5px solid rgba(240,168,48,.35);max-width:560px}
+  .gnav ul{position:relative;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px 6px}
+  .gnav a{position:relative;display:block;padding:.35em .9em;font-size:13px;font-weight:700;text-decoration:none;border-radius:999px;transition:color .18s linear}
+  .gnav a::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:999px;background:#fff;box-shadow:0 0 10px var(--glow);transition:inset .6s var(--bounce)}
+  .gnav a:hover::before{inset:-4px}
+  .gnav a:hover,.gnav a.is-current{color:var(--honey-d)}
+  .gnav li{position:relative;isolation:isolate}
+  .gnav .nav-ind{position:absolute;left:0;top:0;width:12px;height:10px;transition:transform .16s ease-in-out;pointer-events:none;z-index:2}
+  .nav-ind svg{animation:ind-bob-y 1.4s ease-in-out infinite}
+}
+
+/* ---------- fixed CV ---------- */
+.cv{position:fixed;right:14px;bottom:16px;z-index:60;width:76px;height:76px;border-radius:50%;text-decoration:none;
+  display:grid;place-items:center;text-align:center;color:#fff;font-weight:700;font-size:12px;line-height:1.3;isolation:isolate}
+.cv::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:50%;background:linear-gradient(180deg,#F6B845,#DD8C16);
+  box-shadow:0 4px 18px var(--glow2);border:3px solid #fff;transition:inset .6s var(--bounce)}
+.cv:hover::before,.cv.touch-hover::before{inset:-6px}
+.cv .cv-bee{position:absolute;top:-30px;left:50%;width:46px;margin-left:-23px;z-index:-2;animation:peek 3.2s ease-in-out infinite}
+@keyframes peek{0%,100%{transform:translateY(8px)}40%,60%{transform:translateY(0) rotate(-6deg)}}
+.cv span{font-size:9px;letter-spacing:-.02em;display:block;font-weight:500;opacity:.95}
+@media (min-width:960px){.cv{right:28px;bottom:28px;width:92px;height:92px;font-size:14px}}
+
+/* ---------- bee svg ---------- */
+.bee .wing{transform-box:fill-box;transform-origin:50% 100%;animation:flutter .09s linear infinite alternate}
+.bee .wing2{animation-delay:.045s}
+@keyframes flutter{from{transform:scaleY(1) skewX(0)}to{transform:scaleY(.45) skewX(-12deg)}}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;overflow:hidden;padding:84px 0 56px;
+  background:
+    radial-gradient(90% 60% at 85% 10%,rgba(255,226,150,.85) 0%,rgba(255,226,150,0) 60%),
+    radial-gradient(70% 50% at 0% 100%,rgba(246,198,192,.45) 0%,rgba(246,198,192,0) 70%),
+    linear-gradient(180deg,#FFF3D8 0%,var(--cream) 100%)}
+.rays{position:absolute;inset:-20% -30% auto auto;width:140%;height:120%;z-index:1;pointer-events:none;transform-origin:100% 0;animation:rays 14s ease-in-out infinite alternate}
+.rays i{position:absolute;top:0;right:12%;width:90px;height:140%;transform-origin:50% 0;
+  background:linear-gradient(180deg,rgba(255,236,180,.75),rgba(255,236,180,0) 80%);filter:blur(6px);opacity:.7}
+.rays i:nth-child(1){transform:rotate(28deg)}
+.rays i:nth-child(2){transform:rotate(40deg);width:50px;right:18%}
+.rays i:nth-child(3){transform:rotate(52deg);width:130px;right:6%;opacity:.5}
+.rays i:nth-child(4){transform:rotate(64deg);width:40px;right:22%}
+@keyframes rays{from{transform:rotate(-3deg);opacity:.8}to{transform:rotate(3deg);opacity:1}}
+.px{position:absolute;z-index:2;pointer-events:none;will-change:transform}
+.px .drift{animation:drift 26s ease-in-out infinite alternate}
+.px.p2 .drift{animation-duration:34s;animation-direction:alternate-reverse}
+.px.p3 .drift{animation-duration:30s}
+@keyframes drift{from{transform:translateX(-5%) rotate(-2deg)}to{transform:translateX(5%) rotate(2deg)}}
+.px.p1{top:6%;left:-40px;width:180px;opacity:.55}
+.px.p2{bottom:10%;right:-50px;width:220px;opacity:.45}
+.px.p3{top:46%;left:36%;width:110px;opacity:.35}
+.px.p4{top:16%;right:32%;width:70px;opacity:.5}
+
+.hero-inner{position:relative;z-index:3;display:grid;gap:28px;align-items:center}
+.brand{text-align:center}
+.brand-mark{display:inline-flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.3em;color:var(--brown-l);margin-bottom:10px}
+.brand-mark svg{width:26px}
+.hero-title{font-family:var(--serif);font-weight:600;font-size:clamp(44px,13vw,92px);line-height:1;letter-spacing:.01em;color:var(--brown);white-space:nowrap}
+.hero-title .ch{display:inline-block}
+.js .hero-title .ch{opacity:0;transform:translateY(.6em) scale(.5)}
+.is-loaded .hero-title .ch{opacity:1;transform:none;transition:opacity .4s ease,transform .7s var(--bounce);transition-delay:calc(.45s + var(--i) * .07s)}
+.hero-title .ch.m{color:var(--honey-d)}
+.is-done .hero-title{animation:glow 3.6s ease-in-out infinite}
+@keyframes glow{0%,100%{text-shadow:0 0 0 rgba(240,168,48,0)}50%{text-shadow:0 0 22px rgba(240,168,48,.55)}}
+.hero-ja{margin-top:10px;font-size:15px;letter-spacing:.5em;font-weight:700;padding-left:.5em}
+.hero-copy{margin-top:18px;font-size:clamp(17px,4.6vw,22px);font-weight:700;letter-spacing:.12em;line-height:1.9}
+.hero-copy em{font-style:normal;background:linear-gradient(transparent 62%,var(--honey-l) 62%)}
+.hero-sub{margin-top:8px;font-size:13px;color:var(--brown-l)}
+.hero-cta{margin-top:22px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+
+.kv-area{position:relative}
+.js .kv{opacity:0;transform:scale(.86)}
+.is-loaded .kv{opacity:1;transform:none;transition:opacity .6s ease,transform .8s var(--bounce)}
+.kv{position:relative;width:min(420px,100%);margin-inline:auto}
+.kv-frame{position:relative;aspect-ratio:4/5;border-radius:999px 999px 36px 36px;overflow:hidden;
+  box-shadow:0 18px 40px rgba(201,120,10,.22),0 0 0 8px #fff,0 0 0 10px var(--honey-l)}
+.kv-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease}
+.kv-slide.is-active{opacity:1;z-index:1}
+.kv-slide img{width:100%;height:100%;object-fit:cover;transform:scale(1.1);transition:transform 7s ease-out}
+.kv-slide.is-active img{transform:scale(1)}
+.kv-slide::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,220,140,.18),rgba(91,58,31,.0) 40%,rgba(91,58,31,.45))}
+.kv-cap{position:absolute;left:0;right:0;bottom:22px;z-index:2;text-align:center;color:#fff;text-shadow:0 1px 8px rgba(60,30,0,.5);padding:0 20px}
+.kv-cap b{display:block;font-family:var(--serif);font-style:italic;font-size:15px;letter-spacing:.1em;font-weight:500}
+.kv-cap span{font-size:15px;font-weight:700;letter-spacing:.08em}
+.kv-illust{width:100%;height:100%;background:radial-gradient(80% 60% at 50% 30%,#FFF2CC,#F8C766)}
+.kv-illust svg{width:100%;height:100%}
+.kv-thumbs{display:flex;justify-content:center;gap:16px;margin-top:22px}
+.kv-thumb{position:relative;width:58px;height:58px;border-radius:50%;border:0;padding:0;cursor:pointer;background:#fff;isolation:isolate}
+.kv-thumb::before{content:"";position:absolute;inset:-3px;border-radius:50%;z-index:-1;background:#fff;box-shadow:0 0 12px var(--glow);transition:inset .6s var(--bounce),background .2s}
+.kv-thumb:hover::before,.kv-thumb.touch-hover::before{inset:-8px}
+.kv-thumb.is-active::before{background:var(--honey);inset:-6px}
+.kv-thumb img,.kv-thumb .th{width:100%;height:100%;border-radius:50%;object-fit:cover;overflow:hidden}
+.kv-thumb .th{background:radial-gradient(#FFF2CC,#F8C766);display:grid;place-items:center}
+.kv-thumb .th svg{width:70%}
+.kv-bee{position:absolute;z-index:4;width:64px;pointer-events:none}
+.kv-bee.b1{top:6%;left:-6px;animation:fly1 9s ease-in-out infinite}
+.kv-bee.b2{bottom:24%;right:-10px;width:48px;animation:fly2 11s ease-in-out infinite}
+@keyframes fly1{0%,100%{transform:translate(0,0) rotate(-8deg)}25%{transform:translate(30px,-18px) rotate(4deg)}50%{transform:translate(60px,6px) rotate(-4deg)}75%{transform:translate(24px,22px) rotate(6deg)}}
+@keyframes fly2{0%,100%{transform:translate(0,0) scaleX(-1)}30%{transform:translate(-36px,-24px) scaleX(-1) rotate(6deg)}60%{transform:translate(-14px,-50px) scaleX(-1)}80%{transform:translate(-40px,-10px) scaleX(-1) rotate(-6deg)}}
+
+.particles{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden}
+.petal{position:absolute;top:-30px;width:16px;animation:fall var(--d,12s) linear infinite;animation-delay:var(--dl,0s);opacity:0}
+.petal svg{animation:sway 2.6s ease-in-out infinite alternate}
+@keyframes fall{0%{transform:translate(0,0) rotate(0);opacity:0}8%{opacity:.9}90%{opacity:.9}100%{transform:translate(60px,105vh) rotate(300deg);opacity:0}}
+@keyframes sway{from{transform:translateX(-12px) rotate(-20deg)}to{transform:translateX(12px) rotate(25deg)}}
+.pollen{position:absolute;bottom:10%;width:8px;height:8px;border-radius:50%;background:radial-gradient(#FFF6C8,rgba(255,214,110,0) 70%);animation:rise var(--d,7s) linear infinite;animation-delay:var(--dl,0s);opacity:0}
+@keyframes rise{0%{transform:translateY(0) scale(.9);opacity:0}15%{opacity:.9}100%{transform:translateY(-160px) scale(1.4);opacity:0}}
+.scroll-hint{position:absolute;left:50%;bottom:14px;z-index:5;transform:translateX(-50%);font-family:var(--serif);font-style:italic;font-size:13px;letter-spacing:.2em;color:var(--brown-l);display:none}
+.scroll-hint::after{content:"";display:block;width:1px;height:28px;margin:4px auto 0;background:var(--brown-l);transform-origin:top;animation:line 2s ease-in-out infinite}
+@keyframes line{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+
+@media (min-width:960px){
+  .hero{padding:130px 0 90px;min-height:min(900px,100vh)}
+  .hero-inner{grid-template-columns:1.05fr .95fr;gap:40px}
+  .brand{text-align:left}
+  .hero-cta{justify-content:flex-start}
+  .scroll-hint{display:block}
+}
+
+/* ---------- section common ---------- */
+.sec{position:relative;padding:72px 0}
+.sec--comb{background-color:var(--paper);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='97' viewBox='0 0 56 97'%3E%3Cpath d='M28 0l28 16v32L28 64 0 48V16zM28 64l28 16v32M28 64L0 80v32' fill='none' stroke='%23F0A830' stroke-opacity='.12' stroke-width='1.5'/%3E%3C/svg%3E")}
+.sec--warm{background:linear-gradient(180deg,#FFF1D2,#FFE9C0)}
+.sec-head{position:relative;isolation:isolate;width:fit-content;max-width:100%;margin:0 auto 44px;padding:40px 40px 26px;text-align:center}
+.sec-head::before{content:"";position:absolute;inset:0;z-index:0;filter:drop-shadow(0 4px 14px rgba(240,168,48,.35));
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 110' preserveAspectRatio='none'%3E%3Cpath d='M20 4h260a16 16 0 0 1 16 16v60a16 16 0 0 1-16 16H20A16 16 0 0 1 4 80V20A16 16 0 0 1 20 4z' fill='white'/%3E%3Cpath d='M4 20A16 16 0 0 1 20 4h260a16 16 0 0 1 16 16c0 3-3 4-6 4-4 0-5 2-5 6a4 4 0 0 1-8 0c0-4-2-6-6-6H156c-4 0-5 3-5 8a5 5 0 0 1-10 0c0-6-2-8-6-8H80c-3 0-4 1-4 4a4 4 0 0 1-8 0c0-3-1-4-5-4H12c-5 0-8-2-8-4z' fill='%23F5BE45'/%3E%3C/svg%3E") center/100% 100% no-repeat}
+.sec-head::after{content:"";position:absolute;z-index:0;left:18%;bottom:-16px;width:10px;height:10px;border-radius:50%;background:#fff;
+  box-shadow:14px 8px 0 -2px #fff;filter:drop-shadow(0 2px 5px rgba(240,168,48,.4))}
+.sec-head .en{position:relative;z-index:1;display:block;font-family:var(--serif);font-style:italic;font-size:15px;letter-spacing:.14em;color:var(--brown-l);margin-top:8px;line-height:1.2}
+.sec-head h2{position:relative;z-index:1;font-size:clamp(22px,6vw,30px);letter-spacing:.14em;line-height:1.35;font-weight:700}
+.sec-head h2 .a{color:var(--honey-d)}
+.sec-head .peek{position:absolute;z-index:-1;top:-26px;right:16px;width:50px;animation:peekbob 3s ease-in-out infinite}
+@keyframes peekbob{0%,100%{transform:translateY(4px) rotate(4deg)}50%{transform:translateY(-3px) rotate(-4deg)}}
+.sec-head .loop{position:absolute;z-index:0;right:-54px;top:6px;width:56px;opacity:.8}
+.sec-lead{text-align:center;max-width:36em;margin:-12px auto 32px;color:var(--brown-l);font-size:14px}
+@media (max-width:420px){.sec-head{padding:38px 28px 24px}.sec-head .loop{display:none}}
+
+/* ---------- news ---------- */
+.news-list{max-width:760px;margin:0 auto;display:grid;gap:12px}
+.news-item a{position:relative;isolation:isolate;display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:center;padding:16px 20px;text-decoration:none;border-radius:18px}
+.news-item a::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:18px;background:#fff;box-shadow:0 0 16px var(--glow);transition:inset .6s var(--bounce)}
+.news-item a:hover::before,.news-item a.touch-hover::before{inset:-5px}
+.news-item time{font-family:var(--serif);font-size:16px;font-weight:600;letter-spacing:.06em}
+.news-cat{justify-self:start;font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px;background:var(--honey-l)}
+.news-item p{grid-column:1/-1;font-weight:500;transition:color .18s linear}
+.news-item a:hover p{color:var(--honey-d)}
+.more{display:flex;justify-content:center;align-items:flex-end;gap:6px;margin-top:30px}
+.more .mbee{width:40px;animation:peekbob 2.6s ease-in-out infinite}
+@media (min-width:720px){.news-item a{grid-template-columns:auto auto 1fr}.news-item p{grid-column:auto}}
+
+/* ---------- story ---------- */
+.story{display:grid;gap:36px;align-items:start}
+.story-visual{position:relative;max-width:420px;margin-inline:auto;width:100%}
+.story-photo{position:relative;border-radius:180px 180px 24px 24px;overflow:hidden;aspect-ratio:4/5;background:linear-gradient(180deg,#FFE7A8,#F4B64A)}
+.story-photo svg{width:100%;height:100%}
+.story-photo figcaption{position:absolute;left:0;right:0;bottom:0;padding:10px 14px;font-size:11px;color:#fff;background:linear-gradient(transparent,rgba(91,58,31,.55))}
+.story-badge{position:absolute;right:6px;top:24px;width:96px;height:96px;border-radius:50%;background:#fff;display:grid;place-items:center;text-align:center;
+  font-size:11px;font-weight:700;line-height:1.35;box-shadow:0 4px 16px var(--glow);animation:spin 24s linear infinite}
+.story-badge b{display:block;font-family:var(--serif);font-size:24px;color:var(--honey-d);line-height:1}
+@keyframes spin{to{transform:rotate(360deg)}}
+.story-body .kicker{font-size:12px;letter-spacing:.2em;color:var(--brown-l);font-weight:700}
+.story-body h3{font-size:clamp(20px,5.6vw,28px);line-height:1.6;letter-spacing:.08em;margin:8px 0 18px}
+.story-body p{margin-bottom:1.1em;text-align:justify}
+.story-body .q{font-weight:700;color:var(--brown)}
+.pull{position:relative;margin:26px 0;padding:22px 22px 22px 56px;border-radius:20px;background:#fff;box-shadow:0 0 18px var(--glow);font-size:17px;font-weight:700;line-height:1.8;letter-spacing:.04em}
+.pull::before{content:"“";position:absolute;left:14px;top:-6px;font-family:var(--serif);font-size:72px;color:var(--honey);line-height:1}
+.chef{display:flex;align-items:center;gap:12px;margin-top:22px;padding-top:18px;border-top:1px dashed rgba(91,58,31,.3)}
+.chef-ico{width:52px;height:52px;border-radius:50%;background:var(--honey-l);display:grid;place-items:center;flex:none}
+.chef-ico svg{width:80%}
+.chef small{display:block;font-size:11px;color:var(--brown-l)}
+.chef b{font-size:16px;letter-spacing:.1em}
+.credit{font-size:11px;color:var(--brown-l);margin-top:14px}
+@media (min-width:900px){.story{grid-template-columns:.8fr 1.2fr;gap:64px}.story-visual{position:sticky;top:120px}}
+
+/* ---------- pickup carousel ---------- */
+.car{position:relative}
+.car-view{overflow:hidden;padding:26px 0 30px}
+.car-track{display:flex;gap:24px;will-change:transform}
+.pk{flex:none;width:min(280px,76vw);position:relative;isolation:isolate;text-decoration:none;border-radius:26px;padding:16px 16px 20px;display:block}
+.pk::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:26px;background:#fff;box-shadow:0 0 18px var(--glow);transition:inset .6s var(--bounce)}
+.pk:hover::before,.pk.touch-hover::before{inset:-5px}
+.pk-img{position:relative;aspect-ratio:1;border-radius:20px;overflow:visible;background:var(--bg,#FFF1CF)}
+.pk-img .fr{position:absolute;inset:0;border-radius:20px;overflow:hidden;display:grid;place-items:center}
+.pk-img img{width:100%;height:100%;object-fit:cover}
+.pk-img svg{width:78%;height:78%}
+.pk-img .fr > *{transition:transform .6s var(--bounce)}
+.pk:hover .fr > *,.pk.touch-hover .fr > *{transform:rotate(-12deg) translate(-6%,3%) scale(1.06)}
+.pk-no{position:absolute;left:-8px;top:-12px;z-index:2;width:48px;height:48px;border-radius:50%;background:var(--honey);color:#fff;display:grid;place-items:center;font-family:var(--serif);font-size:20px;font-weight:600;box-shadow:0 0 0 4px #fff}
+.pk h3{margin-top:14px;font-size:16px;letter-spacing:.06em;line-height:1.5}
+.pk p{font-size:12.5px;color:var(--brown-l);margin-top:4px;line-height:1.7}
+.pk .price{margin-top:8px;font-family:var(--serif);font-size:20px;font-weight:600}
+.pk .price small{font-family:var(--sans);font-size:11px;margin-left:2px}
+.car-ui{display:flex;align-items:center;justify-content:center;gap:18px}
+.car-btn{position:relative;isolation:isolate;width:50px;height:50px;border:0;border-radius:50%;background:none;cursor:pointer;display:grid;place-items:center}
+.car-btn::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:50%;background:#fff;box-shadow:0 0 14px var(--glow);border:2px solid var(--honey-l);transition:inset .6s var(--bounce)}
+.car-btn:hover::before,.car-btn.touch-hover::before{inset:-5px}
+.car-btn svg{width:18px}
+.car-btn.next svg{transform:scaleX(-1)}
+.car-dots{display:flex;gap:10px}
+.car-dots button{width:10px;height:10px;border-radius:50%;border:0;padding:0;background:#E9CFA0;cursor:pointer;transition:transform .2s ease-in-out,background .2s}
+.car-dots button.is-active{transform:scale(1.6);background:var(--honey)}
+
+/* ---------- menu (products) ---------- */
+.filters{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:12px}
+.filter{border:0;cursor:pointer;padding:.55em 1.2em;border-radius:999px;font-weight:700;font-size:13.5px;letter-spacing:.06em;
+  background:#FFF0CC;color:var(--brown);transition:color .2s,background-color .2s,opacity .2s}
+.filter:hover{background:#FFE2A0}
+.filter[aria-pressed="true"]{background:var(--brown);color:#fff}
+.filter .n{font-family:var(--serif);font-size:.95em;margin-left:.35em;opacity:.8}
+.count{text-align:center;font-size:12px;color:var(--brown-l);margin-bottom:26px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 12px}
+.card{position:relative;isolation:isolate;border-radius:20px;padding:10px 10px 14px}
+.card::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:20px;background:#fff;box-shadow:0 0 14px rgba(240,168,48,.18);transition:inset .6s var(--bounce)}
+.card:hover::before,.card.touch-hover::before{inset:-4px}
+.card-img{position:relative;aspect-ratio:1;border-radius:14px;background:var(--bg,#FFF1CF)}
+.card-img .fr{position:absolute;inset:0;border-radius:14px;overflow:hidden;display:grid;place-items:center}
+.card-img .fr > *{transition:transform .6s var(--bounce)}
+.card-img img{width:100%;height:100%;object-fit:cover}
+.card-img svg{width:80%;height:80%}
+.card:hover .fr > *,.card.touch-hover .fr > *{transform:rotate(-16deg) translate(-8%,3%)}
+.card .badge{position:absolute;right:6px;top:6px;z-index:2;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--brown);color:#fff}
+.card .badge.s{background:#C0563F}
+.card h3{font-size:13.5px;line-height:1.5;margin-top:10px;letter-spacing:.02em}
+.card .desc{font-size:11.5px;color:var(--brown-l);line-height:1.6;margin-top:3px}
+.card .tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.card .tags span{font-size:10px;padding:1px 7px;border-radius:999px;background:#FFF0CC}
+.card .price{margin-top:6px;font-family:var(--serif);font-size:19px;font-weight:600;line-height:1.2}
+.card .price small{font-family:var(--sans);font-size:10.5px;margin-left:2px;font-weight:500}
+.card[hidden]{display:none}
+.note{font-size:12px;color:var(--brown-l);text-align:center;margin-top:24px}
+@media (min-width:640px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 18px}.card{padding:12px 12px 16px}.card h3{font-size:14.5px}}
+@media (min-width:1000px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+/* ---------- season ---------- */
+.season{position:relative;overflow:hidden;background:linear-gradient(180deg,#FBE3C2 0%,#F7D3A9 100%)}
+.leaves{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.season-box{position:relative;display:grid;gap:26px}
+.season-hero{position:relative;border-radius:28px;background:#fff;padding:26px 22px;box-shadow:0 8px 30px rgba(160,80,20,.14);text-align:center}
+.season-hero .period{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.1em;padding:4px 14px;border-radius:999px;background:#C0563F;color:#fff}
+.season-hero h3{font-size:clamp(21px,6vw,30px);letter-spacing:.1em;margin:14px 0 8px;line-height:1.5}
+.season-hero p{font-size:14px;color:var(--brown-l)}
+.season-list{display:grid;gap:18px}
+.sitem{position:relative;isolation:isolate;display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:center;padding:14px;border-radius:22px}
+.sitem::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:22px;background:rgba(255,255,255,.85);box-shadow:0 0 16px rgba(192,86,63,.14);transition:inset .6s var(--bounce)}
+.sitem:hover::before,.sitem.touch-hover::before{inset:-5px}
+.sitem .si{position:relative;aspect-ratio:1;border-radius:50%;background:var(--bg);display:grid;place-items:center}
+.sitem .si svg{width:80%;transition:transform .6s var(--bounce)}
+.sitem:hover .si svg,.sitem.touch-hover .si svg{transform:rotate(-16deg) translate(-8%,3%) scale(1.1)}
+.sitem h4{font-size:15px;line-height:1.5}
+.sitem p{font-size:12px;color:var(--brown-l);line-height:1.6;margin-top:2px}
+.sitem .price{font-family:var(--serif);font-size:19px;font-weight:600;margin-top:4px}
+.sitem .price small{font-family:var(--sans);font-size:10.5px}
+@media (min-width:900px){.season-box{grid-template-columns:.9fr 1.1fr;align-items:center}.season-list{grid-template-columns:1fr 1fr}}
+
+/* ---------- reserve ---------- */
+.rsv{display:grid;gap:20px}
+.rsv-card{position:relative;background:#fff;border-radius:26px;padding:26px 22px;box-shadow:0 0 20px var(--glow)}
+.rsv-card h3{display:flex;align-items:center;gap:10px;font-size:18px;letter-spacing:.08em;margin-bottom:12px}
+.rsv-card h3 svg{width:40px;flex:none}
+.rsv-card p{font-size:14px}
+.sizes{margin-top:14px;display:grid;gap:6px}
+.sizes li{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px dashed rgba(91,58,31,.2);font-size:14px}
+.sizes li b{font-family:var(--serif);font-size:18px;font-weight:600;white-space:nowrap}
+.sizes li b small{font-family:var(--sans);font-size:10.5px;font-weight:500}
+.checks{margin-top:12px;display:grid;gap:6px;font-size:13.5px}
+.checks li{position:relative;padding-left:22px}
+.checks li::before{content:"";position:absolute;left:2px;top:.55em;width:12px;height:12px;background:var(--honey);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.steps{display:grid;gap:12px;margin:34px auto 0;max-width:880px;counter-reset:st}
+.steps li{position:relative;padding:14px 16px 14px 60px;border-radius:18px;background:rgba(255,255,255,.7);font-size:14px}
+.steps li::before{counter-increment:st;content:counter(st);position:absolute;left:14px;top:50%;margin-top:-17px;width:34px;height:34px;display:grid;place-items:center;
+  background:var(--honey);color:#fff;font-family:var(--serif);font-size:20px;font-weight:600;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.steps b{display:block}
+.rsv-cta{margin:34px auto 0;max-width:720px;text-align:center;background:#fff;border-radius:28px;padding:28px 20px;box-shadow:0 0 24px var(--glow)}
+.rsv-cta .lbl{font-size:13px;font-weight:700;letter-spacing:.1em;color:var(--brown-l)}
+.tel{display:inline-block;margin:6px 0 4px;font-family:var(--serif);font-size:clamp(34px,10vw,46px);font-weight:600;letter-spacing:.04em;text-decoration:none;line-height:1.2;transition:color .18s linear}
+.tel:hover{color:var(--honey-d)}
+.rsv-cta .hrs{font-size:12px;color:var(--brown-l)}
+.rsv-cta .or{display:flex;align-items:center;gap:10px;margin:18px 0 14px;font-size:12px;color:var(--brown-l)}
+.rsv-cta .or::before,.rsv-cta .or::after{content:"";flex:1;height:1px;background:rgba(91,58,31,.18)}
+@media (min-width:760px){.rsv{grid-template-columns:1fr 1fr}.steps{grid-template-columns:repeat(3,1fr)}}
+
+/* ---------- sns ---------- */
+.sns-block+.sns-block{margin-top:56px}
+.sns-title{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;margin-bottom:18px}
+.sns-title h3{display:flex;align-items:center;gap:10px;font-size:18px;letter-spacing:.06em}
+.sns-title h3 svg{width:28px;height:28px}
+.embed-lbl{font-size:10.5px;font-weight:700;letter-spacing:.06em;padding:3px 10px;border-radius:999px;border:1.5px dashed var(--honey);color:var(--honey-d);background:#fff}
+.ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;max-width:720px;margin:0 auto}
+.ig{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;background:var(--bg);display:grid;place-items:center;text-decoration:none}
+.ig img{width:100%;height:100%;object-fit:cover}
+.ig svg.art{width:72%;height:72%;transition:transform .6s var(--bounce)}
+.ig:hover svg.art,.ig.touch-hover svg.art{transform:rotate(-12deg) scale(1.1)}
+.ig .ov{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:6px;color:#fff;font-weight:700;font-size:13px;background:rgba(91,58,31,.45);opacity:0;transition:opacity .2s linear}
+.ig .ov svg{width:16px}
+.ig:hover .ov,.ig.touch-hover .ov,.ig:focus-visible .ov{opacity:1}
+.ig .ph{position:absolute;left:6px;bottom:5px;font-size:9px;color:rgba(91,58,31,.55);font-weight:700}
+.ig.photo .ph{color:rgba(255,255,255,.85)}
+.x-grid{display:grid;gap:14px}
+.xpost{background:#fff;border-radius:18px;padding:16px 18px;box-shadow:0 0 14px rgba(240,168,48,.16);border:1px solid #F3E4C6}
+.xpost header{display:flex;align-items:center;gap:10px}
+.xpost .av{width:40px;height:40px;border-radius:50%;background:var(--honey-l);display:grid;place-items:center;flex:none}
+.xpost .av svg{width:78%}
+.xpost .nm{font-weight:700;font-size:14px;line-height:1.3}
+.xpost .id{font-size:12px;color:#8a7a6a;line-height:1.3}
+.xpost .xlogo{margin-left:auto;width:18px;height:18px;color:var(--brown)}
+.xpost p{margin-top:10px;font-size:14px;line-height:1.75}
+.xpost .meta{margin-top:10px;display:flex;gap:16px;font-size:12px;color:#8a7a6a}
+.xpost .meta span{display:inline-flex;align-items:center;gap:4px}
+.xpost .meta svg{width:14px}
+@media (min-width:700px){.x-grid{grid-template-columns:1fr 1fr}.ig-grid{gap:10px}}
+@media (min-width:1040px){.x-grid{grid-template-columns:repeat(3,1fr)}}
+.line-box{position:relative;overflow:hidden;margin-top:56px;border-radius:30px;padding:30px 22px;background:linear-gradient(135deg,#EAF9EF,#FFF6DD);display:grid;gap:18px;align-items:center;text-align:center;border:2px solid #CDEFD8}
+.line-box h3{font-size:clamp(18px,5vw,24px);letter-spacing:.08em;line-height:1.5}
+.line-box ul{display:grid;gap:6px;font-size:13.5px;text-align:left;justify-self:center}
+.line-box li{position:relative;padding-left:20px}
+.line-box li::before{content:"";position:absolute;left:0;top:.5em;width:12px;height:12px;border-radius:50%;background:#06C755}
+.line-box .lb-bee{position:absolute;right:14px;top:10px;width:46px;animation:fly1 8s ease-in-out infinite}
+@media (min-width:800px){.line-box{grid-template-columns:1.2fr 1fr;text-align:left;padding:36px 44px}.line-box ul{justify-self:start}}
+
+/* ---------- shop ---------- */
+.shop{display:grid;gap:28px}
+.info{background:#fff;border-radius:26px;padding:10px 22px;box-shadow:0 0 20px var(--glow)}
+.info dl{margin:0}
+.info div{display:grid;grid-template-columns:5.5em 1fr;gap:10px;padding:14px 0;border-bottom:1px dashed rgba(91,58,31,.2);font-size:14px}
+.info div:last-child{border:0}
+.info dt{font-weight:700;color:var(--honey-d)}
+.info dd{margin:0}
+.map{position:relative;border-radius:26px;overflow:hidden;min-height:300px;background:#F4EEDD;box-shadow:0 0 20px var(--glow)}
+.map svg.m{position:absolute;inset:0;width:100%;height:100%}
+.map-pin{position:absolute;left:52%;top:44%;width:44px;margin:-44px 0 0 -22px;animation:pin 1.8s var(--bounce) infinite}
+@keyframes pin{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.map-lbl{position:absolute;left:12px;right:12px;bottom:12px;background:rgba(255,255,255,.92);border-radius:14px;padding:10px 14px;font-size:12px;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;justify-content:space-between}
+.map-lbl b{font-size:12px}
+@media (min-width:880px){.shop{grid-template-columns:1fr 1fr;align-items:stretch}}
+
+/* ---------- footer ---------- */
+.foot{position:relative;background:var(--brown);color:#F6E7CC;padding:64px 0 110px;overflow:hidden}
+.foot::before{content:"";position:absolute;left:0;right:0;top:-1px;height:28px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 28' preserveAspectRatio='none'%3E%3Cpath d='M0 0h400v6c0 4-4 6-8 6s-6 4-6 10a6 6 0 0 1-12 0c0-7-3-10-8-10H250c-4 0-6 3-6 8a5 5 0 0 1-10 0c0-5-2-8-6-8H120c-4 0-6 4-6 12a6 6 0 0 1-12 0c0-8-2-12-7-12H40c-4 0-5 2-5 6a5 5 0 0 1-10 0c0-4-2-6-6-6H0z' fill='%23FFF6E3'/%3E%3C/svg%3E") center/100% 100%}
+.foot-logo{font-family:var(--serif);font-size:34px;font-weight:600;letter-spacing:.04em;text-align:center;line-height:1.1}
+.foot-logo small{display:block;font-family:var(--sans);font-size:12px;letter-spacing:.4em;margin-top:6px;opacity:.8}
+.foot-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin:26px 0;font-size:13px}
+.foot-nav a{text-decoration:none;transition:color .18s linear}
+.foot-nav a:hover{color:var(--honey)}
+.foot-sns{display:flex;justify-content:center;gap:14px}
+.foot-sns a{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.1);transition:background .2s}
+.foot-sns a:hover{background:var(--honey)}
+.foot-sns svg{width:20px;height:20px}
+.foot-note{text-align:center;font-size:11px;opacity:.75;margin-top:26px;line-height:1.9}
+.foot-bee{position:absolute;width:44px;left:8%;top:48px;opacity:.9;animation:fly1 10s ease-in-out infinite}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  .reveal,.reveal-pop,.kv,.hero-title .ch{opacity:1 !important;transform:none !important}
+  .petal,.pollen{display:none}
+}
+</style>
+</head>
+<body id="top">
+<div class="demo-bar" role="note"><span>これは Table Web の制作デモです（架空の店舗です）</span><a href="../../patisserie-miel/">← 事例ページへ戻る</a></div>
+
+<!-- desktop nav -->
+<nav class="gnav" aria-label="メインナビゲーション">
+  <ul id="gnavList">
+    <li><a href="#top" data-nav="top">トップ</a></li>
+    <li><a href="#news" data-nav="news">お知らせ</a></li>
+    <li><a href="#story" data-nav="story">シェフの想い</a></li>
+    <li><a href="#pickup" data-nav="pickup">ピックアップ</a></li>
+    <li><a href="#menu" data-nav="menu">商品一覧</a></li>
+    <li><a href="#season" data-nav="season">季節限定</a></li>
+    <li><a href="#reserve" data-nav="reserve">ご予約</a></li>
+    <li><a href="#sns" data-nav="sns">SNS</a></li>
+    <li><a href="#shop" data-nav="shop">店舗情報</a></li>
+    <li class="nav-ind" aria-hidden="true"><svg viewBox="0 0 12 10"><path d="M0 0h12L6 10z" fill="#5B3A1F"/></svg></li>
+  </ul>
+</nav>
+
+<button class="burger" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="spMenu"><span></span><span></span><small>MENU</small></button>
+<div class="menu" id="spMenu" inert>
+  <div class="menu-l1"></div>
+  <div class="menu-l2">
+    <p class="menu-title">Menu</p>
+    <ul class="menu-list" id="menuList">
+      <li><a class="pill" href="#top" data-nav="top">トップ</a></li>
+      <li><a class="pill" href="#news" data-nav="news">お知らせ</a></li>
+      <li><a class="pill" href="#story" data-nav="story">シェフの想い</a></li>
+      <li><a class="pill" href="#pickup" data-nav="pickup">ピックアップ</a></li>
+      <li><a class="pill" href="#menu" data-nav="menu">商品一覧</a></li>
+      <li><a class="pill" href="#season" data-nav="season">季節限定</a></li>
+      <li><a class="pill" href="#reserve" data-nav="reserve">ギフト・ご予約</a></li>
+      <li><a class="pill" href="#sns" data-nav="sns">Instagram・X</a></li>
+      <li><a class="pill" href="#shop" data-nav="shop">店舗情報・アクセス</a></li>
+      <li class="menu-ind" aria-hidden="true"><svg viewBox="0 0 12 14"><path d="M0 0l12 7-12 7z" fill="#5B3A1F"/></svg></li>
+    </ul>
+    <div class="menu-foot">
+      <span class="menu-bee" data-bee></span>
+      <a class="pill pill--honey" href="tel:0300000000">お電話 03-0000-0000</a>
+      <a class="pill pill--line" href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.2 8.3 7.9.3.1.8.2.9.5.1.3.1.7 0 1l-.1.9c0 .3-.2 1 .9.5 1.1-.5 5.9-3.5 8-6C21.4 14.3 22 12.7 22 11c0-4.4-4.5-8-10-8z"/></svg>LINE 友だち追加</a>
+    </div>
+  </div>
+</div>
+
+<a class="cv" href="#reserve"><span class="cv-bee" data-bee></span>ご予約<span>ギフト・ケーキ</span></a>
+
+<main>
+<!-- ================= HERO ================= -->
+<section class="hero" id="hero" data-spy="top" aria-label="キービジュアル">
+  <div class="rays" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div class="px p1" data-depth="0.18" aria-hidden="true"><div class="drift" data-comb></div></div>
+  <div class="px p2" data-depth="-0.12" aria-hidden="true"><div class="drift" data-comb></div></div>
+  <div class="px p3" data-depth="0.3" aria-hidden="true"><div class="drift" data-comb></div></div>
+  <div class="px p4" data-depth="0.08" aria-hidden="true"><div class="drift" data-flower></div></div>
+  <div class="particles" id="particles" aria-hidden="true"></div>
+
+  <div class="wrap hero-inner">
+    <div class="brand">
+      <p class="brand-mark"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 2l16 9v18l-16 9-16-9V11z" fill="#F0A830"/><path d="M20 10l8 4.5v9L20 28l-8-4.5v-9z" fill="#FFE3A3"/></svg>PÂTISSERIE · SINCE 2014</p>
+      <h1 class="hero-title" aria-label="Pâtisserie Miel（パティスリー ミエル）"><span id="titleText" aria-hidden="true">Pâtisserie <span class="m">Miel</span></span></h1>
+      <p class="hero-ja">パティスリー ミエル</p>
+      <p class="hero-copy">午後三時の光のような、<br><em>はちみつ色</em>の洋菓子を。</p>
+      <p class="hero-sub">国産の百花蜜と、季節の果実でつくる小さな洋菓子店。</p>
+      <div class="hero-cta">
+        <a class="pill pill--honey" href="#menu">商品を見る</a>
+        <a class="pill" href="#reserve">ホールケーキのご予約</a>
+      </div>
+    </div>
+
+    <div class="kv-area">
+      <div class="kv" id="kv">
+        <span class="kv-bee b1" data-bee></span>
+        <span class="kv-bee b2" data-bee></span>
+        <div class="kv-frame" aria-roledescription="スライダー" aria-label="お店のキービジュアル">
+          <figure class="kv-slide is-active" style="margin:0">
+            <img src="../../../assets/img/photos/macaron.jpg" width="760" height="507" alt="色とりどりのはちみつマカロン">
+            <figcaption class="kv-cap"><b>Macaron au miel</b><span>はちみつを挟んだ、ひと口の午後</span></figcaption>
+          </figure>
+          <figure class="kv-slide" style="margin:0">
+            <img src="../../../assets/img/photos/cheesecake.jpg" width="760" height="506" alt="濃厚なベイクドチーズケーキ" loading="lazy">
+            <figcaption class="kv-cap"><b>Gâteau au fromage</b><span>アカシア蜜が香る、しっとりチーズケーキ</span></figcaption>
+          </figure>
+          <figure class="kv-slide" style="margin:0">
+            <div class="kv-illust" id="kvIllust" role="img" aria-label="はちみつの瓶とハニーディッパーのイラスト"></div>
+            <figcaption class="kv-cap"><b>Miel de saison</b><span>季節ごとに変わる、店主こだわりの蜜</span></figcaption>
+          </figure>
+        </div>
+        <div class="kv-thumbs" role="tablist" aria-label="スライド切り替え">
+          <button class="kv-thumb is-active" role="tab" aria-selected="true" aria-label="スライド1：マカロン"><img src="../../../assets/img/photos/macaron.jpg" alt=""></button>
+          <button class="kv-thumb" role="tab" aria-selected="false" aria-label="スライド2：チーズケーキ"><img src="../../../assets/img/photos/cheesecake.jpg" alt="" loading="lazy"></button>
+          <button class="kv-thumb" role="tab" aria-selected="false" aria-label="スライド3：はちみつ"><span class="th" data-art="jar"></span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="scroll-hint" aria-hidden="true">scroll</span>
+</section>
+
+<!-- ================= NEWS ================= -->
+<section class="sec" id="news" data-spy="news">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="peek" data-bee></span><h2><span class="a">お</span>知らせ</h2><span class="en">News</span><svg class="loop" viewBox="0 0 60 50" aria-hidden="true"><path d="M2 40c14 6 30-2 26-14s-18-6-12 4 30 12 40-24" fill="none" stroke="#C9780A" stroke-width="2" stroke-dasharray="4 5" stroke-linecap="round"/></svg></div>
+    <ul class="news-list">
+      <li class="news-item reveal"><a href="#season"><time datetime="2026-09-20">2026.09.20</time><span class="news-cat">季節限定</span><p>秋のはちみつフェア「ミエル・ドートンヌ」がはじまりました</p></a></li>
+      <li class="news-item reveal"><a href="#reserve"><time datetime="2026-09-12">2026.09.12</time><span class="news-cat">ご予約</span><p>ハロウィン・ホールケーキのご予約受付を開始しました（10/31まで）</p></a></li>
+      <li class="news-item reveal"><a href="#shop"><time datetime="2026-09-01">2026.09.01</time><span class="news-cat">営業日</span><p>9月・10月の営業カレンダーを更新しました</p></a></li>
+    </ul>
+    <div class="more reveal-pop"><span class="mbee" data-bee></span><a class="pill" href="#news">お知らせ一覧へ</a></div>
+  </div>
+</section>
+
+<!-- ================= STORY ================= -->
+<section class="sec sec--comb" id="story" data-spy="story">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="peek" data-bee></span><h2><span class="a">シ</span>ェフの想い</h2><span class="en">Story</span><svg class="loop" viewBox="0 0 60 50" aria-hidden="true"><path d="M2 40c14 6 30-2 26-14s-18-6-12 4 30 12 40-24" fill="none" stroke="#C9780A" stroke-width="2" stroke-dasharray="4 5" stroke-linecap="round"/></svg></div>
+    <div class="story">
+      <div class="story-visual reveal">
+        <figure class="story-photo" style="margin:0">
+          <div id="chefIllust" role="img" aria-label="厨房で蜂蜜をすくうシェフのイラスト（取材写真の差し替え枠）"></div>
+          <figcaption>※実際の制作では取材時に撮影した写真をレタッチして掲載します</figcaption>
+        </figure>
+        <div class="story-badge" aria-hidden="true"><div><b>12</b>種の<br>はちみつ</div></div>
+      </div>
+      <article class="story-body">
+        <p class="kicker reveal">INTERVIEW ── オーナーシェフ 蜂谷 まどか</p>
+        <h3 class="reveal">「甘さ」じゃなく、<br>「花の記憶」を届けたい。</h3>
+        <p class="reveal">店の奥の棚には、大小さまざまな蜜の瓶が並ぶ。アカシア、れんげ、みかん、そば、栗。シェフの蜂谷まどかさんは、そのひとつひとつの蓋を開けては、確かめるように香りを吸いこむ。</p>
+        <p class="reveal"><span class="q">「はちみつって、同じ“甘い”でも、咲いていた花によってまるで違うんです」</span>。フランスの地方菓子店で修業していた頃、朝市で出会った養蜂家の蜜に衝撃を受けた。「菓子の味が一段、奥まで届くような感覚でした」。</p>
+        <blockquote class="pull reveal">砂糖の一部を蜜に置き換えるだけで、焼き色も、しっとり感も、香りの余韻も変わる。だから配合は、蜜ごとに全部つくり直します。</blockquote>
+        <p class="reveal">帰国後、この街の小さな角地に店を構えて12年。いまでは国内の養蜂家8軒から、季節ごとに蜜を仕入れている。看板の「ミエル」は、百花蜜のムースにアカシア蜜のジュレを重ねた一品。午後の日差しが差しこむ時間になると、ショーケースの中で琥珀色にきらりと光る。</p>
+        <p class="reveal">「おやつの時間って、一日のなかでいちばんやさしい時間だと思うんです。その時間に、ちょっとだけ花の記憶を添えられたらうれしいですね」。</p>
+        <div class="chef reveal">
+          <span class="chef-ico" data-bee></span>
+          <div><small>Owner Pâtissière</small><b>蜂谷 まどか</b><small>リヨンの老舗パティスリーで6年修業。2014年に独立開業。</small></div>
+        </div>
+        <p class="credit reveal">取材・文：Table Web 編集部（プレミアムプラン 取材ライティング）※架空のインタビューです</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PICKUP ================= -->
+<section class="sec" id="pickup" data-spy="pickup">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="peek" data-bee></span><h2><span class="a">ピ</span>ックアップ</h2><span class="en">Pick up</span><svg class="loop" viewBox="0 0 60 50" aria-hidden="true"><path d="M2 40c14 6 30-2 26-14s-18-6-12 4 30 12 40-24" fill="none" stroke="#C9780A" stroke-width="2" stroke-dasharray="4 5" stroke-linecap="round"/></svg></div>
+    <p class="sec-lead reveal">迷ったら、まずはこちら。ミエルを代表する6品です。</p>
+  </div>
+  <div class="car" id="car" aria-roledescription="カルーセル" aria-label="おすすめ商品">
+    <div class="car-view"><div class="car-track" id="carTrack"></div></div>
+    <div class="car-ui">
+      <button class="car-btn prev" type="button" aria-label="前へ"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M12 2L5 9l7 7" fill="none" stroke="#5B3A1F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="car-dots" id="carDots"></div>
+      <button class="car-btn next" type="button" aria-label="次へ"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M12 2L5 9l7 7" fill="none" stroke="#5B3A1F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MENU ================= -->
+<section class="sec sec--comb" id="menu" data-spy="menu">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="peek" data-bee></span><h2><span class="a">商</span>品一覧</h2><span class="en">Menu</span><svg class="loop" viewBox="0 0 60 50" aria-hidden="true"><path d="M2 40c14 6 30-2 26-14s-18-6-12 4 30 12 40-24" fill="none" stroke="#C9780A" stroke-width="2" stroke-dasharray="4 5" stroke-linecap="round"/></svg></div>
+    <div class="filters" role="group" aria-label="カテゴリで絞り込み" id="filters"></div>
+    <p class="count" id="count" aria-live="polite"></p>
+    <ul class="grid" id="grid"></ul>
+    <p class="note">価格はすべて税込（テイクアウト 8%）です。仕入れ状況により内容・価格が変わる場合があります。</p>
+  </div>
+</section>
+
+<!-- ================= SEASON ================= -->
+<section class="sec season" id="season" data-spy="season">
+  <div class="leaves" id="leaves" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="peek" data-bee></span><h2><span class="a">季</span>節限定</h2><span class="en">Seasonal</span><svg class="loop" viewBox="0 0 60 50" aria-hidden="true"><path d="M2 40c14 6 30-2 26-14s-18-6-12 4 30 12 40-24" fill="none" stroke="#C9780A" stroke-width="2" stroke-dasharray="4 5" stroke-linecap="round"/></svg></div>
+    <div class="season-box">
+      <div class="season-hero reveal">
+        <span class="period">2026.9.20 ─ 11.30</span>
+        <h3>ミエル・ドートンヌ<br><small style="font-size:.6em;letter-spacing:.2em">秋のはちみつフェア</small></h3>
+        <p>栗の花の蜜、そば蜜。秋にしか採れない、深くて力強い蜜が入荷しました。果実と合わせた期間限定の5品をどうぞ。</p>
+        <div style="margin-top:18px"><a class="pill pill--honey" href="#menu" data-jump-filter="季節限定">季節限定だけを見る</a></div>
+      </div>
+      <ul class="season-list" id="seasonList"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESERVE ================= -->
+<section class="sec sec--warm" id="reserve" data-spy="reserve">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="peek" data-bee></span><h2><span class="a">ギ</span>フト・ご予約</h2><span class="en">Gift &amp; Order</span><svg class="loop" viewBox="0 0 60 50" aria-hidden="true"><path d="M2 40c14 6 30-2 26-14s-18-6-12 4 30 12 40-24" fill="none" stroke="#C9780A" stroke-width="2" stroke-dasharray="4 5" stroke-linecap="round"/></svg></div>
+    <p class="sec-lead reveal">お誕生日・記念日のホールケーキ、手土産の焼き菓子ギフトは、お電話または公式LINEで承ります。</p>
+    <div class="rsv">
+      <div class="rsv-card reveal">
+        <h3><span data-art-inline="whole"></span>ホールケーキ</h3>
+        <p>はちみつショートケーキ、ミエル（ムース）、ベイクドチーズケーキの3種からお選びいただけます。</p>
+        <ul class="sizes">
+          <li><span>4号（直径12cm／2〜4名）</span><b>¥3,800<small>税込</small></b></li>
+          <li><span>5号（直径15cm／4〜6名）</span><b>¥4,800<small>税込</small></b></li>
+          <li><span>6号（直径18cm／6〜8名）</span><b>¥5,900<small>税込</small></b></li>
+        </ul>
+        <ul class="checks">
+          <li>受け取り日の<b>3日前の18時</b>までにご予約ください</li>
+          <li>メッセージプレート・ろうそく無料</li>
+          <li>アレルギー対応はご相談ください</li>
+        </ul>
+      </div>
+      <div class="rsv-card reveal">
+        <h3><span data-art-inline="gift"></span>ギフト・手土産</h3>
+        <p>焼き菓子の詰め合わせは、ご予算に合わせてお作りします。10個以上のまとめ買いは前日までのご予約がおすすめです。</p>
+        <ul class="checks">
+          <li>詰め合わせ ¥2,000〜（ご予算に応じて）</li>
+          <li>のし・メッセージカード無料</li>
+          <li>手提げ袋は1枚無料でお付けします</li>
+          <li>内祝い・法人さまのまとめ注文も承ります</li>
+          <li>地方発送は行っておりません</li>
+        </ul>
+      </div>
+    </div>
+    <ol class="steps">
+      <li class="reveal"><b>お電話 or LINEで連絡</b>ケーキの種類・サイズ・受け取り日時をお知らせください</li>
+      <li class="reveal"><b>内容を確認してご予約確定</b>LINEの場合はスタッフが返信した時点で確定です</li>
+      <li class="reveal"><b>店頭でお受け取り</b>お支払いは受け取り時に店頭でお願いします</li>
+    </ol>
+    <div class="rsv-cta reveal">
+      <p class="lbl">お電話でのご予約</p>
+      <a class="tel" href="tel:0300000000">03-0000-0000</a>
+      <p class="hrs">受付 11:00〜18:30（火曜・第2水曜定休）</p>
+      <p class="or">または</p>
+      <a class="pill pill--line" href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.2 8.3 7.9.3.1.8.2.9.5.1.3.1.7 0 1l-.1.9c0 .3-.2 1 .9.5 1.1-.5 5.9-3.5 8-6C21.4 14.3 22 12.7 22 11c0-4.4-4.5-8-10-8z"/></svg>公式LINEで予約する</a>
+      <p class="hrs" style="margin-top:10px">LINEのトーク画面から24時間受付（返信は営業時間内）</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SNS ================= -->
+<section class="sec" id="sns" data-spy="sns">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="peek" data-bee></span><h2><span class="a">S</span>NS</h2><span class="en">Instagram &amp; X</span><svg class="loop" viewBox="0 0 60 50" aria-hidden="true"><path d="M2 40c14 6 30-2 26-14s-18-6-12 4 30 12 40-24" fill="none" stroke="#C9780A" stroke-width="2" stroke-dasharray="4 5" stroke-linecap="round"/></svg></div>
+    <p class="sec-lead reveal">焼き上がり情報や売り切れ状況は、SNSでいちばん早くお知らせしています。</p>
+
+    <div class="sns-block">
+      <div class="sns-title reveal">
+        <h3><svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="igg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#F9A43A"/><stop offset=".5" stop-color="#E4405F"/><stop offset="1" stop-color="#8A3AB9"/></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="6" fill="url(#igg)"/><circle cx="12" cy="12" r="4.4" fill="none" stroke="#fff" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.3" fill="#fff"/></svg>Instagram</h3>
+        <span class="embed-lbl">Instagram 埋め込み枠（最新9件）</span>
+      </div>
+      <div class="ig-grid" id="igGrid"></div>
+      <div class="more reveal-pop"><a class="pill" href="#">@patisserie_miel をフォロー</a></div>
+    </div>
+
+    <div class="sns-block">
+      <div class="sns-title reveal">
+        <h3><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="#111"/><path d="M6 6h3.2l3.1 4.3L16 6h1.6l-4.6 5.4L18 18h-3.2l-3.3-4.6L7.6 18H6l4.8-5.6z" fill="#fff"/></svg>X（旧Twitter）</h3>
+        <span class="embed-lbl">X 埋め込み枠（最新6件・プレースホルダ）</span>
+      </div>
+      <div class="x-grid" id="xGrid"></div>
+    </div>
+
+    <div class="line-box reveal">
+      <span class="lb-bee" data-bee></span>
+      <div>
+        <h3>公式LINEで、<br>焼きたての合図を。</h3>
+        <ul>
+          <li>新作・季節限定の入荷をいち早くお知らせ</li>
+          <li>ホールケーキ・ギフトの予約もトークで完結</li>
+          <li>お誕生月に焼き菓子1個プレゼント</li>
+        </ul>
+      </div>
+      <div><a class="pill pill--line" href="#" style="font-size:16px;padding:.9em 2em"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.2 8.3 7.9.3.1.8.2.9.5.1.3.1.7 0 1l-.1.9c0 .3-.2 1 .9.5 1.1-.5 5.9-3.5 8-6C21.4 14.3 22 12.7 22 11c0-4.4-4.5-8-10-8z"/></svg>友だち追加</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SHOP ================= -->
+<section class="sec sec--comb" id="shop" data-spy="shop">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="peek" data-bee></span><h2><span class="a">店</span>舗情報</h2><span class="en">Shop &amp; Access</span><svg class="loop" viewBox="0 0 60 50" aria-hidden="true"><path d="M2 40c14 6 30-2 26-14s-18-6-12 4 30 12 40-24" fill="none" stroke="#C9780A" stroke-width="2" stroke-dasharray="4 5" stroke-linecap="round"/></svg></div>
+    <div class="shop">
+      <div class="info reveal">
+        <dl>
+          <div><dt>店名</dt><dd>パティスリー ミエル<br><small>Pâtisserie Miel</small></dd></div>
+          <div><dt>住所</dt><dd>〒000-0000<br>東京都○○区○○町 0-0-0 ○○ビル 1F</dd></div>
+          <div><dt>電話</dt><dd><a class="tlink" href="tel:0300000000">03-0000-0000</a></dd></div>
+          <div><dt>営業時間</dt><dd>11:00〜19:00<br><small>※売り切れ次第終了</small></dd></div>
+          <div><dt>定休日</dt><dd>火曜日・第2水曜日</dd></div>
+          <div><dt>アクセス</dt><dd>○○線「○○駅」東口より徒歩5分</dd></div>
+          <div><dt>お支払い</dt><dd>現金・各種クレジットカード・交通系IC・QRコード決済</dd></div>
+          <div><dt>その他</dt><dd>テイクアウト専門（イートインなし）／駐車場なし</dd></div>
+        </dl>
+      </div>
+      <div class="map reveal" role="img" aria-label="Googleマップ埋め込みエリア（プレースホルダ）">
+        <svg class="m" viewBox="0 0 400 320" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="400" height="320" fill="#F4EEDD"/>
+          <path d="M-10 250 C80 230 140 280 230 250 S360 210 420 230" stroke="#BFE0EE" stroke-width="22" fill="none"/>
+          <g fill="#E8DFC7"><rect x="20" y="20" width="90" height="60" rx="6"/><rect x="130" y="20" width="70" height="60" rx="6"/><rect x="250" y="30" width="120" height="50" rx="6"/><rect x="20" y="110" width="60" height="80" rx="6"/><rect x="250" y="110" width="50" height="70" rx="6"/><rect x="320" y="110" width="60" height="70" rx="6"/></g>
+          <rect x="100" y="110" width="120" height="70" rx="8" fill="#D8E8C2"/>
+          <g stroke="#fff" stroke-width="12" fill="none"><path d="M0 95h400M230 0v320M0 200h400M115 0v200"/></g>
+          <path d="M0 95h400M230 0v320" stroke="#F7D27A" stroke-width="5" fill="none"/>
+          <rect x="300" y="200" width="70" height="22" rx="11" fill="#5B3A1F"/><text x="335" y="215" font-size="11" fill="#fff" text-anchor="middle" font-family="sans-serif">○○駅</text>
+        </svg>
+        <svg class="map-pin" viewBox="0 0 44 56" aria-hidden="true"><path d="M22 54S4 34 4 21a18 18 0 0 1 36 0c0 13-18 33-18 33z" fill="#F0A830" stroke="#fff" stroke-width="3"/><path d="M22 11l8 4.6v9.2L22 29.4l-8-4.6v-9.2z" fill="#fff"/></svg>
+        <div class="map-lbl"><b>Googleマップ 埋め込みエリア</b><span>※公開時に店舗の地図を埋め込みます</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <span class="foot-bee" data-bee></span>
+  <div class="wrap">
+    <p class="foot-logo">Pâtisserie Miel<small>パティスリー ミエル</small></p>
+    <nav class="foot-nav" aria-label="フッターナビゲーション">
+      <a href="#top">トップ</a><a href="#news">お知らせ</a><a href="#story">シェフの想い</a><a href="#pickup">ピックアップ</a><a href="#menu">商品一覧</a><a href="#season">季節限定</a><a href="#reserve">ギフト・ご予約</a><a href="#sns">SNS</a><a href="#shop">店舗情報</a>
+    </nav>
+    <div class="foot-sns">
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="7" r="1.2" fill="currentColor"/></svg></a>
+      <a href="#" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h4l4 5.5L16.5 4H19l-5.8 6.8L20 20h-4l-4.3-5.9L6.6 20H4.2l6.3-7.2z" fill="currentColor"/></svg></a>
+      <a href="#" aria-label="公式LINE"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.2 8.3 7.9.3.1.8.2.9.5.1.3.1.7 0 1l-.1.9c0 .3-.2 1 .9.5 1.1-.5 5.9-3.5 8-6C21.4 14.3 22 12.7 22 11c0-4.4-4.5-8-10-8z"/></svg></a>
+    </div>
+    <p class="foot-note">当サイトに掲載の写真・文章の無断転載・複製を禁じます。<br>© 2026 Pâtisserie Miel（架空の店舗） All Rights Reserved.<br>Web制作：Table Web（キントウンマーケティング株式会社）</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+var root=document.documentElement; root.classList.add("js");
+var RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+var $=function(s,c){return (c||document).querySelector(s)}, $$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
+
+/* ---------- SVG parts ---------- */
+function bee(){return '<svg class="bee" viewBox="0 0 64 52" aria-hidden="true" focusable="false">'+
+ '<ellipse class="wing" cx="24" cy="14" rx="9" ry="13" fill="#fff" fill-opacity=".85" stroke="#E8C98A" stroke-width="1.5"/>'+
+ '<ellipse class="wing wing2" cx="38" cy="14" rx="9" ry="13" fill="#fff" fill-opacity=".85" stroke="#E8C98A" stroke-width="1.5"/>'+
+ '<ellipse cx="31" cy="33" rx="20" ry="14" fill="#FFCF4A"/>'+
+ '<path d="M24 20.5c-3 7-3 18 0 25M34 19.2c-3 8-3 19 0 27.6" stroke="#5B3A1F" stroke-width="5" fill="none"/>'+
+ '<path d="M51 33l8 1-8 3z" fill="#5B3A1F"/>'+
+ '<circle cx="13" cy="31" r="9" fill="#5B3A1F"/><circle cx="10" cy="29" r="2" fill="#fff"/><circle cx="15" cy="29" r="2" fill="#fff"/>'+
+ '<ellipse cx="9" cy="36" rx="2.4" ry="1.4" fill="#F6A3A0"/>'+
+ '<path d="M11 23c-2-6-6-8-8-8M16 23c1-6 4-9 7-9" stroke="#5B3A1F" stroke-width="2" fill="none" stroke-linecap="round"/></svg>'}
+function comb(){var s='<svg viewBox="0 0 200 180" aria-hidden="true">',p=[[50,40],[100,40],[75,83],[125,83],[25,83],[50,126],[100,126],[150,40]];
+ p.forEach(function(c,i){var x=c[0],y=c[1],r=26,pts=[];for(var k=0;k<6;k++){var a=Math.PI/3*k+Math.PI/6;pts.push((x+r*Math.cos(a)).toFixed(1)+','+(y+r*Math.sin(a)).toFixed(1))}
+  s+='<polygon points="'+pts.join(' ')+'" fill="'+(i%3==0?'#F5BE45':'#FFE3A3')+'" fill-opacity="'+(i%3==0?.8:.6)+'" stroke="#fff" stroke-width="4"/>'});return s+'</svg>'}
+function flower(){return '<svg viewBox="0 0 60 60" aria-hidden="true"><g fill="#F6C6C0">'+[0,72,144,216,288].map(function(r){return '<ellipse cx="30" cy="16" rx="9" ry="13" transform="rotate('+r+' 30 30)"/>'}).join('')+'</g><circle cx="30" cy="30" r="7" fill="#F5BE45"/></svg>'}
+function petal(c){return '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1C15 5 17 12 10 19 3 12 5 5 10 1z" fill="'+c+'"/></svg>'}
+function leaf(c){return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20C4 10 10 4 20 4c0 10-6 16-16 16z" fill="'+c+'"/><path d="M4 20L16 8" stroke="#fff" stroke-opacity=".5" stroke-width="1.2"/></svg>'}
+
+var H=function(x,y,r){var p=[];for(var k=0;k<6;k++){var a=Math.PI/3*k+Math.PI/6;p.push((x+r*Math.cos(a)).toFixed(1)+','+(y+r*Math.sin(a)).toFixed(1))}return p.join(' ')};
+var ART={
+ macaron:function(c){c=c||'#F6C6C0';return '<ellipse cx="60" cy="88" rx="38" ry="6" fill="#000" opacity=".06"/><path d="M26 70q0 14 34 14t34-14v-6H26z" fill="'+c+'"/><rect x="26" y="56" width="68" height="12" rx="6" fill="#FFF3D6"/><rect x="24" y="61" width="72" height="4" rx="2" fill="#F5BE45"/><path d="M26 56q0-22 34-22t34 22z" fill="'+c+'"/><path d="M26 56h68" stroke="#fff" stroke-opacity=".5" stroke-width="3" stroke-dasharray="3 3"/><ellipse cx="46" cy="42" rx="10" ry="4" fill="#fff" opacity=".45"/>'},
+ madeleine:function(){return '<ellipse cx="60" cy="92" rx="40" ry="6" fill="#000" opacity=".06"/><path d="M16 74Q30 26 60 26t44 48q-44 18-88 0z" fill="#E9B25A"/><path d="M60 30v50M42 34l8 44M78 34l-8 44M28 46l16 32M92 46l-16 32" stroke="#C98A2E" stroke-width="3" stroke-linecap="round" opacity=".7"/><path d="M16 74q44 18 88 0" stroke="#B87524" stroke-width="4" fill="none"/>'},
+ financier:function(){return '<ellipse cx="60" cy="90" rx="42" ry="6" fill="#000" opacity=".06"/><path d="M24 50h72l6 34H18z" fill="#D9973A"/><path d="M24 50h72l2 8H22z" fill="#EDB860"/><g fill="#FFF0CF"><ellipse cx="44" cy="54" rx="7" ry="3" transform="rotate(-15 44 54)"/><ellipse cx="62" cy="53" rx="7" ry="3" transform="rotate(10 62 53)"/><ellipse cx="80" cy="55" rx="7" ry="3" transform="rotate(-8 80 55)"/></g>'},
+ canele:function(){return '<ellipse cx="60" cy="96" rx="30" ry="5" fill="#000" opacity=".07"/><path d="M36 92l6-50h36l6 50q-24 8-48 0z" fill="#8A4A1E"/><path d="M46 44l-3 48M56 42v52M66 42v52M76 44l3 48" stroke="#6B3514" stroke-width="3"/><ellipse cx="60" cy="42" rx="18" ry="6" fill="#5B2A0E"/><ellipse cx="60" cy="41" rx="8" ry="2.5" fill="#A6622C"/><path d="M44 58q2-6 4-8" stroke="#fff" stroke-opacity=".3" stroke-width="3" fill="none" stroke-linecap="round"/>'},
+ cookie:function(){var s='<ellipse cx="60" cy="92" rx="38" ry="6" fill="#000" opacity=".06"/><circle cx="60" cy="58" r="34" fill="#EDC27A"/><circle cx="60" cy="58" r="34" fill="none" stroke="#D29A45" stroke-width="3"/>';[[48,48],[72,48],[60,69],[36,69],[84,69],[60,27]].forEach(function(p){s+='<polygon points="'+H(p[0],p[1],10)+'" fill="#F5BE45" stroke="#D29A45" stroke-width="2"/>'});return s},
+ sable:function(){var s='<ellipse cx="60" cy="92" rx="38" ry="6" fill="#000" opacity=".06"/>';for(var i=0;i<10;i++){var a=i*Math.PI/5;s+='<circle cx="'+(60+28*Math.cos(a)).toFixed(1)+'" cy="'+(58+28*Math.sin(a)).toFixed(1)+'" r="10" fill="#F0CB86"/>'}return s+'<circle cx="60" cy="58" r="30" fill="#F0CB86"/><circle cx="60" cy="58" r="20" fill="none" stroke="#D9A456" stroke-width="2" stroke-dasharray="3 4"/><path d="M52 52h16M52 58h16M52 64h16" stroke="#D9A456" stroke-width="2" opacity=".6"/>'},
+ russian:function(){return '<ellipse cx="60" cy="92" rx="36" ry="6" fill="#000" opacity=".06"/><circle cx="60" cy="58" r="32" fill="#F1CF8E"/><g fill="#E3AF5C">'+[0,45,90,135,180,225,270,315].map(function(r){return '<ellipse cx="60" cy="34" rx="7" ry="9" transform="rotate('+r+' 60 58)"/>'}).join('')+'</g><circle cx="60" cy="58" r="12" fill="#C0563F"/><ellipse cx="56" cy="54" rx="4" ry="2" fill="#fff" opacity=".5"/>'},
+ florentin:function(){return '<ellipse cx="60" cy="92" rx="38" ry="6" fill="#000" opacity=".06"/><rect x="24" y="44" width="72" height="42" rx="5" fill="#EBC079"/><rect x="24" y="36" width="72" height="18" rx="5" fill="#C07A25"/><g fill="#F4DBA8">'+[[34,42],[48,46],[62,40],[76,45],[88,41],[40,50],[70,50]].map(function(p,i){return '<ellipse cx="'+p[0]+'" cy="'+p[1]+'" rx="6" ry="2.4" transform="rotate('+(i*25-30)+' '+p[0]+' '+p[1]+')"/>'}).join('')+'</g>'},
+ pound:function(c){c=c||'#E3A548';return '<ellipse cx="60" cy="92" rx="44" ry="6" fill="#000" opacity=".06"/><rect x="16" y="50" width="88" height="38" rx="6" fill="'+c+'"/><path d="M16 56q44-30 88 0v4H16z" fill="#C9822E"/><path d="M40 44q20-10 40 0" stroke="#F3C77A" stroke-width="4" fill="none" stroke-linecap="round"/><rect x="16" y="62" width="88" height="26" rx="4" fill="#F5D594"/>'},
+ weekend:function(){return '<ellipse cx="60" cy="92" rx="44" ry="6" fill="#000" opacity=".06"/><rect x="16" y="46" width="88" height="42" rx="6" fill="#EDC06A"/><path d="M16 52q0-8 8-8h72q8 0 8 8v6c-4 0-4 8-8 8s-4-6-8-6-4 10-10 10-4-10-8-10-4 6-8 6-4-6-8-6-4 12-10 12-4-12-8-12-4 4-8 4-4-6-10-6z" fill="#FFFBEF"/><circle cx="40" cy="44" r="4" fill="#F7E07A"/><circle cx="82" cy="44" r="4" fill="#F7E07A"/><path d="M58 40l4-4 4 4" stroke="#9DB86A" stroke-width="3" fill="none"/>'},
+ mousse:function(){var s='<ellipse cx="60" cy="96" rx="40" ry="6" fill="#000" opacity=".07"/><rect x="22" y="80" width="76" height="12" rx="4" fill="#A8692E"/><path d="M24 82q0-48 36-48t36 48z" fill="#F5C84C"/><path d="M34 60q10-18 26-18" stroke="#fff" stroke-opacity=".6" stroke-width="5" fill="none" stroke-linecap="round"/>';s+='<polygon points="'+H(60,34,8)+'" fill="#FFE3A3" stroke="#E0901A" stroke-width="2"/><polygon points="'+H(74,40,5)+'" fill="#FFE3A3" stroke="#E0901A" stroke-width="1.5"/><circle cx="46" cy="40" r="3" fill="#fff"/>';return s},
+ shortcake:function(){return '<ellipse cx="60" cy="94" rx="42" ry="6" fill="#000" opacity=".06"/><path d="M18 88V52l84-14v50z" fill="#FFFBF0"/><path d="M18 60l84-14v10L18 70zM18 76l84-14v10L18 86z" fill="#F4D79A"/><path d="M18 66l84-14v4L18 70z" fill="#F6B8B0"/><path d="M18 52l84-14" stroke="#fff" stroke-width="6" stroke-linecap="round"/><path d="M60 34c-8 0-12 6-10 12s8 8 10 8 8-2 10-8-2-12-10-12z" fill="#E4574A"/><path d="M56 32l4-6 4 6" stroke="#6E9E3A" stroke-width="3" fill="none"/><g fill="#FFE08A"><circle cx="57" cy="42" r="1"/><circle cx="63" cy="46" r="1"/><circle cx="59" cy="49" r="1"/></g>'},
+ pudding:function(){return '<ellipse cx="60" cy="90" rx="44" ry="8" fill="#fff" stroke="#EAD9B8" stroke-width="2"/><path d="M38 44h44l8 42H30z" fill="#F7D98A"/><path d="M38 44h44l2 10H36z" fill="#9A5A1E"/><path d="M40 54q-2 6 0 8M60 54q-2 8 0 10M78 54q2 6 0 8" stroke="#9A5A1E" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="60" cy="40" rx="12" ry="7" fill="#fff"/><circle cx="62" cy="31" r="5" fill="#C0392B"/><path d="M62 26q2-6 6-8" stroke="#6E9E3A" stroke-width="2" fill="none"/>'},
+ choux:function(){return '<ellipse cx="60" cy="94" rx="38" ry="6" fill="#000" opacity=".06"/><path d="M24 76q-6-20 12-26 4-18 24-16 20-2 24 16 18 6 12 26z" fill="#E0A650"/><path d="M26 70h68" stroke="#FFF6E0" stroke-width="10" stroke-linecap="round"/><path d="M28 74q32 14 64 0v6q-32 10-64 0z" fill="#C98A34"/><g fill="#fff" opacity=".9"><circle cx="44" cy="44" r="2"/><circle cx="58" cy="38" r="2"/><circle cx="72" cy="44" r="2"/><circle cx="52" cy="50" r="1.6"/><circle cx="66" cy="50" r="1.6"/></g>'},
+ roll:function(){return '<ellipse cx="60" cy="94" rx="40" ry="6" fill="#000" opacity=".06"/><circle cx="60" cy="58" r="34" fill="#E7B25A"/><circle cx="60" cy="58" r="30" fill="#F4D18A"/><path d="M60 58c0-4 6-4 6 0 0 8-12 8-12 0 0-12 18-12 18 0 0 16-24 16-24 0 0-20 30-20 30 0" stroke="#FFFBF0" stroke-width="5" fill="none" stroke-linecap="round"/>'},
+ tart:function(){return '<ellipse cx="60" cy="92" rx="44" ry="7" fill="#000" opacity=".06"/><path d="M16 64l6 20q38 12 76 0l6-20z" fill="#D99A48"/><ellipse cx="60" cy="64" rx="44" ry="14" fill="#E9B25A"/><ellipse cx="60" cy="63" rx="38" ry="11" fill="#F7E07A"/><g fill="#FFFBF0"><path d="M40 60q4-12 8 0z"/><path d="M56 56q4-14 8 0z"/><path d="M72 60q4-12 8 0z"/></g><g fill="#E7B04F" opacity=".7"><path d="M44 56l2-4 2 4z"/><path d="M60 50l2-4 2 4z"/></g>'},
+ chocolat:function(){return '<ellipse cx="60" cy="92" rx="42" ry="6" fill="#000" opacity=".06"/><rect x="20" y="40" width="80" height="48" rx="4" fill="#4A2616"/><rect x="20" y="56" width="80" height="6" fill="#F5BE45"/><rect x="20" y="72" width="80" height="6" fill="#7A4A2A"/><rect x="20" y="40" width="80" height="8" rx="3" fill="#2E170C"/><path d="M52 40l6-6 4 5 6-4" stroke="#F5BE45" stroke-width="3" fill="none"/>'},
+ crepe:function(){var s='<ellipse cx="60" cy="94" rx="42" ry="6" fill="#000" opacity=".06"/><path d="M18 88V46l84-10v52z" fill="#FFFBF0"/>';for(var i=0;i<8;i++){s+='<path d="M18 '+(50+i*5)+'l84-10" stroke="#E6B462" stroke-width="2.4"/>'}return s+'<path d="M18 46l84-10" stroke="#C98A2E" stroke-width="5"/>'},
+ cheesecake:function(){return '<ellipse cx="60" cy="94" rx="42" ry="6" fill="#000" opacity=".06"/><path d="M18 88V58l84-16v46z" fill="#FBE9B7"/><path d="M18 80l84-10v18H18z" fill="#C9914A"/><path d="M18 58l84-16" stroke="#B87524" stroke-width="6" stroke-linecap="round"/>'},
+ gift:function(){return '<ellipse cx="60" cy="98" rx="42" ry="6" fill="#000" opacity=".06"/><rect x="22" y="50" width="76" height="46" rx="4" fill="#F6E3B8"/><rect x="18" y="40" width="84" height="16" rx="4" fill="#FFF3D6"/><rect x="54" y="40" width="12" height="56" fill="#E0901A"/><path d="M60 40c-14-18-30-8-18 0zM60 40c14-18 30-8 18 0z" fill="#F0A830" stroke="#C9780A" stroke-width="2"/><polygon points="'+H(38,74,7)+'" fill="#FFE3A3"/><polygon points="'+H(82,74,7)+'" fill="#FFE3A3"/>'},
+ macabox:function(){return '<ellipse cx="60" cy="96" rx="44" ry="6" fill="#000" opacity=".06"/><rect x="14" y="52" width="92" height="40" rx="6" fill="#FFF3D6" stroke="#E6CB93" stroke-width="2"/>'+[['#F6C6C0',30],['#F5BE45',50],['#B9D98E',70],['#C9B2E0',90]].map(function(m){return '<ellipse cx="'+m[1]+'" cy="64" rx="9" ry="6" fill="'+m[0]+'"/><rect x="'+(m[1]-9)+'" y="68" width="18" height="3" fill="#fff"/><ellipse cx="'+m[1]+'" cy="75" rx="9" ry="6" fill="'+m[0]+'"/>'}).join('')+'<path d="M14 52l12-16h68l12 16" fill="#E0901A" opacity=".85"/>'},
+ can:function(){var s='<ellipse cx="60" cy="96" rx="40" ry="7" fill="#000" opacity=".06"/><rect x="22" y="40" width="76" height="52" rx="6" fill="#F0A830"/><ellipse cx="60" cy="40" rx="38" ry="10" fill="#F7C866"/><ellipse cx="60" cy="40" rx="30" ry="6" fill="#FFE3A3"/>';[[40,66],[60,66],[80,66],[50,80],[70,80]].forEach(function(p){s+='<polygon points="'+H(p[0],p[1],9)+'" fill="none" stroke="#FFF3D6" stroke-width="2"/>'});return s},
+ jar:function(){return '<ellipse cx="60" cy="100" rx="36" ry="6" fill="#000" opacity=".07"/><rect x="36" y="24" width="48" height="12" rx="4" fill="#C9780A"/><path d="M34 40h52q8 0 8 10v36q0 12-12 12H38q-12 0-12-12V50q0-10 8-10z" fill="#F5BE45"/><path d="M34 40h52q8 0 8 10v6H26v-6q0-10 8-10z" fill="#FFF3D6" opacity=".7"/><rect x="38" y="60" width="44" height="22" rx="4" fill="#FFFBF0"/><text x="60" y="75" font-size="10" font-family="serif" font-style="italic" text-anchor="middle" fill="#5B3A1F">Miel</text><path d="M34 66q-2 12 2 20" stroke="#fff" stroke-opacity=".5" stroke-width="4" fill="none" stroke-linecap="round"/>'},
+ montblanc:function(){var s='<ellipse cx="60" cy="96" rx="36" ry="6" fill="#000" opacity=".06"/><rect x="30" y="80" width="60" height="12" rx="5" fill="#D6A459"/>';for(var i=0;i<7;i++){s+='<path d="M'+(34+i*8)+' 82 Q'+(40+i*5)+' 50 60 32" stroke="'+(i%2?'#B98450':'#C8955A')+'" stroke-width="7" fill="none" stroke-linecap="round"/>'}return s+'<path d="M52 26q8-12 16 0 2 8-8 10-10-2-8-10z" fill="#7A3E1A"/><ellipse cx="57" cy="24" rx="2.5" ry="1.5" fill="#fff" opacity=".5"/><circle cx="44" cy="46" r="1.6" fill="#fff"/><circle cx="74" cy="56" r="1.6" fill="#fff"/>'},
+ figtart:function(){var s='<ellipse cx="60" cy="92" rx="44" ry="7" fill="#000" opacity=".06"/><path d="M16 64l6 20q38 12 76 0l6-20z" fill="#D99A48"/><ellipse cx="60" cy="64" rx="44" ry="14" fill="#E9B25A"/><ellipse cx="60" cy="63" rx="38" ry="11" fill="#F6E6C4"/>';[[40,62],[60,58],[80,62],[50,68],[70,68]].forEach(function(p){s+='<ellipse cx="'+p[0]+'" cy="'+p[1]+'" rx="9" ry="6" fill="#7B3A5E"/><ellipse cx="'+p[0]+'" cy="'+p[1]+'" rx="6" ry="4" fill="#E1788A"/>'});return s},
+ imo:function(){return '<ellipse cx="60" cy="92" rx="44" ry="6" fill="#000" opacity=".06"/><rect x="16" y="50" width="88" height="38" rx="6" fill="#E6A64E"/><path d="M16 56q44-30 88 0v4H16z" fill="#BF7B2C"/><rect x="16" y="62" width="88" height="26" rx="4" fill="#F7D98F"/><g fill="#8E4A8A"><rect x="28" y="68" width="10" height="7" rx="2"/><rect x="52" y="74" width="10" height="7" rx="2"/><rect x="76" y="67" width="10" height="7" rx="2"/></g><g fill="#F8C24A"><rect x="30" y="69.5" width="6" height="4" rx="1"/><rect x="54" y="75.5" width="6" height="4" rx="1"/><rect x="78" y="68.5" width="6" height="4" rx="1"/></g>'},
+ charlotte:function(){var s='<ellipse cx="60" cy="96" rx="40" ry="6" fill="#000" opacity=".06"/><path d="M24 50h72v38q-36 10-72 0z" fill="#F6E6C4"/>';for(var i=0;i<9;i++){s+='<rect x="'+(24+i*8)+'" y="46" width="7" height="44" rx="3.5" fill="#EFC98A" stroke="#D9A456" stroke-width="1"/>'}return s+'<ellipse cx="60" cy="48" rx="36" ry="8" fill="#FFF9EC"/><path d="M60 22q12 4 10 18-2 8-10 8t-10-8q-2-14 10-18z" fill="#DCCB6A"/><path d="M60 22v-6" stroke="#6E4A1E" stroke-width="3"/><circle cx="46" cy="46" r="3" fill="#B7A0D8"/><circle cx="76" cy="46" r="3" fill="#B7A0D8"/>'},
+ whole:function(){return '<ellipse cx="60" cy="98" rx="46" ry="7" fill="#000" opacity=".06"/><path d="M18 56v30q42 16 84 0V56z" fill="#FFFBF0"/><path d="M18 70q42 14 84 0v4q-42 14-84 0z" fill="#F4D79A"/><ellipse cx="60" cy="56" rx="42" ry="12" fill="#fff"/>'+[34,48,62,76,88].map(function(x,i){return '<path d="M'+x+' '+(52+(i%2)*4)+'c-5 0-7 4-6 8s5 5 6 5 5-1 6-5-1-8-6-8z" fill="#E4574A"/>'}).join('')+'<rect x="56" y="26" width="4" height="22" fill="#F6C6C0"/><path d="M58 18q4 4 0 8-4-4 0-8z" fill="#F5BE45"/>'}
+};
+function art(k,c){return '<svg viewBox="0 0 120 120" aria-hidden="true" focusable="false">'+(ART[k]?ART[k](c):'')+'</svg>'}
+
+/* ---------- inject decorations ---------- */
+$$("[data-bee]").forEach(function(el){el.innerHTML=bee()});
+$$("[data-comb]").forEach(function(el){el.innerHTML=comb()});
+$$("[data-flower]").forEach(function(el){el.innerHTML=flower()});
+$$("[data-art]").forEach(function(el){el.innerHTML=art(el.getAttribute("data-art"))});
+$$("[data-art-inline]").forEach(function(el){el.outerHTML=art(el.getAttribute("data-art-inline"))});
+
+$("#kvIllust").innerHTML='<svg viewBox="0 0 400 500" aria-hidden="true">'+
+ '<defs><radialGradient id="sun" cx=".75" cy=".15" r=".7"><stop offset="0" stop-color="#FFF8DC"/><stop offset="1" stop-color="#F7C45A" stop-opacity="0"/></radialGradient></defs>'+
+ '<rect width="400" height="500" fill="url(#sun)"/>'+
+ '<g opacity=".5">'+[[70,90],[110,113],[70,136],[330,300],[370,323],[330,346],[370,277]].map(function(p){return '<polygon points="'+H(p[0],p[1],26)+'" fill="#FFE3A3" stroke="#fff" stroke-width="4"/>'}).join('')+'</g>'+
+ '<ellipse cx="200" cy="430" rx="130" ry="18" fill="#B8742A" opacity=".25"/>'+
+ '<g transform="translate(90 150) scale(1.8)">'+ART.jar()+'</g>'+
+ '<g transform="rotate(-28 280 200)"><rect x="276" y="90" width="8" height="130" rx="4" fill="#B8742A"/>'+[0,1,2,3].map(function(i){return '<ellipse cx="280" cy="'+(226+i*12)+'" rx="'+(20-i*1.5)+'" ry="5" fill="#D9973A"/>'}).join('')+'<ellipse cx="280" cy="272" rx="10" ry="8" fill="#D9973A"/></g>'+
+ '<path d="M296 318q-6 30 4 60q4 14-6 20" stroke="#F0A830" stroke-width="9" fill="none" stroke-linecap="round" opacity=".9"/>'+
+ '<g transform="translate(60 380)">'+flower().replace('<svg viewBox="0 0 60 60" aria-hidden="true">','<g>').replace('</svg>','</g>')+'</g>'+
+ '<g transform="translate(300 60) scale(.9)">'+flower().replace('<svg viewBox="0 0 60 60" aria-hidden="true">','<g>').replace('</svg>','</g>')+'</g>'+
+ '</svg>';
+
+$("#chefIllust").innerHTML='<svg viewBox="0 0 400 500" aria-hidden="true">'+
+ '<rect width="400" height="500" fill="#FBD98A"/><path d="M0 0h400v300L0 380z" fill="#FFE9B5"/>'+
+ '<g fill="#fff" opacity=".35"><path d="M300 0l100 0-160 500h-60z"/><path d="M380 0h20L300 500h-20z"/></g>'+
+ '<rect x="20" y="70" width="140" height="10" rx="3" fill="#C9914A"/><rect x="20" y="150" width="140" height="10" rx="3" fill="#C9914A"/>'+
+ [30,64,98,128].map(function(x,i){return '<g transform="translate('+x+' '+(i%2?28:32)+') scale(.34)">'+ART.jar()+'</g><g transform="translate('+(x+4)+' '+(i%2?110:108)+') scale(.34)">'+ART.jar()+'</g>'}).join('')+
+ '<path d="M150 500q0-120 90-130 90 10 90 130z" fill="#fff"/><path d="M200 380l40 40 40-40" stroke="#E6D6B8" stroke-width="4" fill="none"/>'+
+ '<rect x="224" y="330" width="32" height="44" rx="10" fill="#F2C9A5"/>'+
+ '<circle cx="240" cy="290" r="52" fill="#F7D5B5"/><path d="M186 290q-4-70 54-70t56 64q-14-30-56-34-42 4-54 40z" fill="#5B3A1F"/>'+
+ '<path d="M196 238q44-52 90 0l-4 -26q-40-30-82 0z" fill="#fff"/><rect x="194" y="226" width="92" height="18" rx="9" fill="#fff" stroke="#EDE0C8" stroke-width="3"/>'+
+ '<path d="M222 296q6 5 12 0M250 296q6 5 12 0" stroke="#5B3A1F" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M234 316q6 6 12 0" stroke="#C0563F" stroke-width="3" fill="none" stroke-linecap="round"/>'+
+ '<ellipse cx="216" cy="310" rx="7" ry="4" fill="#F6A3A0" opacity=".7"/><ellipse cx="266" cy="310" rx="7" ry="4" fill="#F6A3A0" opacity=".7"/>'+
+ '<g transform="translate(100 380) scale(.8)">'+ART.jar()+'</g>'+
+ '<path d="M180 470q-20-40 -40-60" stroke="#fff" stroke-width="22" stroke-linecap="round" fill="none"/><rect x="118" y="360" width="6" height="80" rx="3" fill="#B8742A" transform="rotate(-20 120 400)"/>'+
+ '</svg>';
+
+/* ---------- title split ---------- */
+(function(){var t=$("#titleText"),i=0,out="";
+ t.childNodes.forEach(function(n){var txt=n.textContent,m=n.nodeType===1;
+  for(var k=0;k<txt.length;k++){var c=txt[k];out+='<span class="ch'+(m?' m':'')+'" style="--i:'+(i++)+'">'+(c===" "?"&nbsp;":c)+'</span>'}});
+ t.innerHTML=out;})();
+
+/* ---------- particles (petals, pollen, leaves) ---------- */
+(function(){var p=$("#particles"),h="",cols=["#F6C6C0","#FBD9D3","#FFE3A3"];
+ for(var i=0;i<9;i++){h+='<span class="petal" style="left:'+(5+i*11)+'%;--d:'+(10+(i%4)*3)+'s;--dl:'+(i*1.7)+'s;width:'+(12+(i%3)*5)+'px">'+petal(cols[i%3])+'</span>'}
+ for(var j=0;j<10;j++){h+='<span class="pollen" style="left:'+(8+j*9)+'%;bottom:'+(6+(j%4)*12)+'%;--d:'+(6+(j%3)*2)+'s;--dl:'+(j*.8)+'s"></span>'}
+ p.innerHTML=h;
+ var L=$("#leaves"),lh="",lc=["#D9873A","#C0563F","#E6B04F"];
+ for(var k=0;k<7;k++){lh+='<span class="petal" style="left:'+(4+k*14)+'%;--d:'+(13+(k%3)*4)+'s;--dl:'+(k*2.1)+'s;width:'+(16+(k%3)*6)+'px">'+leaf(lc[k%3])+'</span>'}
+ L.innerHTML=lh;})();
+
+/* ---------- loaded sequence ---------- */
+var didLoad=false;function loaded(){if(didLoad)return;didLoad=true;setTimeout(function(){document.body.classList.add("is-loaded");setTimeout(function(){document.body.classList.add("is-done")},2200)},30)}
+if(document.readyState==="complete")loaded();else addEventListener("load",loaded);
+setTimeout(loaded,1500);
+
+/* ---------- KV slider ---------- */
+(function(){var slides=$$(".kv-slide"),thumbs=$$(".kv-thumb"),cur=0,timer;
+ function show(n){cur=(n+slides.length)%slides.length;
+  slides.forEach(function(s,i){s.classList.toggle("is-active",i===cur)});
+  thumbs.forEach(function(t,i){t.classList.toggle("is-active",i===cur);t.setAttribute("aria-selected",i===cur)})}
+ function auto(){clearInterval(timer);if(!RM)timer=setInterval(function(){show(cur+1)},6000)}
+ thumbs.forEach(function(t,i){t.addEventListener("click",function(){show(i);auto()})});
+ auto();})();
+
+/* ---------- scroll parallax ---------- */
+(function(){if(RM)return;var els=$$(".px[data-depth]"),tick=false;
+ function upd(){var y=window.scrollY;if(y<1200)els.forEach(function(e){e.style.transform="translate3d(0,"+(y*parseFloat(e.dataset.depth)).toFixed(1)+"px,0)"});tick=false}
+ addEventListener("scroll",function(){if(!tick){tick=true;requestAnimationFrame(upd)}},{passive:true});})();
+
+/* ---------- menu (circle wipe) ---------- */
+var burger=$(".burger"),menu=$("#spMenu");
+function setMenu(open){document.body.classList.toggle("nav-open",open);burger.setAttribute("aria-expanded",open);
+ burger.setAttribute("aria-label",open?"メニューを閉じる":"メニューを開く");
+ if(open){menu.removeAttribute("inert");root.style.overflow="hidden";placeInd()}else{menu.setAttribute("inert","");root.style.overflow=""}}
+burger.addEventListener("click",function(){setMenu(!document.body.classList.contains("nav-open"))});
+$$("#spMenu a").forEach(function(a){a.addEventListener("click",function(){setMenu(false)})});
+addEventListener("keydown",function(e){if(e.key==="Escape"&&document.body.classList.contains("nav-open")){setMenu(false);burger.focus()}});
+
+/* ---------- nav indicator + scroll spy ---------- */
+var current="top";
+function placeInd(){
+ var g=$('#gnavList a[data-nav="'+current+'"]'),gi=$(".nav-ind");
+ $$("[data-nav]").forEach(function(a){var on=a.dataset.nav===current;a.classList.toggle("is-current",on);if(on)a.setAttribute("aria-current","location");else a.removeAttribute("aria-current")});
+ if(g&&gi&&g.offsetParent){var li=g.parentNode;gi.style.transform="translate("+(li.offsetLeft+li.offsetWidth/2-6)+"px,"+(li.offsetTop-12)+"px)"}
+ var m=$('#menuList a[data-nav="'+current+'"]'),mi=$(".menu-ind");
+ if(m&&mi){var ml=m.parentNode;mi.style.transform="translateY("+(ml.offsetTop+ml.offsetHeight/2-7)+"px)"}
+}
+var spy=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){current=e.target.dataset.spy;placeInd()}})},{rootMargin:"-40% 0px -55% 0px"});
+$$("[data-spy]").forEach(function(s){spy.observe(s)});
+addEventListener("resize",placeInd);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(placeInd);
+placeInd();
+
+/* ---------- data ---------- */
+var CATS=["焼き菓子","生菓子","ギフト","季節限定"];
+var P=[
+ {n:"ミエル",d:"百花蜜のムースとアカシア蜜のジュレ。店名を冠した看板",p:680,c:["生菓子"],k:"mousse",b:"看板",bg:"#FFE9B0"},
+ {n:"はちみつショートケーキ",d:"れんげ蜜を練りこんだふんわりスポンジ",p:620,c:["生菓子"],k:"shortcake",bg:"#FFEDE8"},
+ {n:"ベイクドチーズケーキ",d:"アカシア蜜でまろやかに焼き上げた濃厚タイプ",p:580,c:["生菓子"],k:"cheesecake",img:"cheesecake.jpg",b:"人気"},
+ {n:"はちみつマカロン",d:"蜜入りガナッシュをサンド。全5色",p:320,c:["生菓子"],k:"macaron",img:"macaron.jpg"},
+ {n:"はちみつプリン",d:"卵黄たっぷり、そば蜜のカラメル",p:450,c:["生菓子"],k:"pudding",bg:"#FFF4D6"},
+ {n:"シュー・ア・ラ・ミエル",d:"注文後にクリームを詰めるサクサクシュー",p:380,c:["生菓子"],k:"choux",bg:"#FFF1CF"},
+ {n:"ロールケーキ（カット）",d:"みかん蜜のクリームを巻いた軽やかロール",p:480,c:["生菓子"],k:"roll",bg:"#FFF4DC"},
+ {n:"タルト・シトロン・ミエル",d:"レモンカードとはちみつメレンゲ",p:620,c:["生菓子"],k:"tart",bg:"#FFF7D2"},
+ {n:"ショコラ・ミエル",d:"カカオ64%と栗蜜のガナッシュ",p:650,c:["生菓子"],k:"chocolat",bg:"#F6E5D3"},
+ {n:"ミルクレープ",d:"20層の薄焼きクレープとはちみつクリーム",p:600,c:["生菓子"],k:"crepe",bg:"#FFF6E0"},
+ {n:"はちみつマドレーヌ",d:"焼きたての香りを閉じこめた定番",p:280,c:["焼き菓子"],k:"madeleine",b:"人気",bg:"#FFF1CF"},
+ {n:"焦がしバターのフィナンシェ",d:"アーモンドと焦がしバター、ひとさじの蜜",p:300,c:["焼き菓子"],k:"financier",bg:"#FFEFD0"},
+ {n:"ミエルのカヌレ",d:"外はカリッ、中はもっちり。ラム酒と百花蜜",p:380,c:["焼き菓子"],k:"canele",bg:"#F8E7D2"},
+ {n:"アカシアはちみつのサブレ（5枚）",d:"ほろほろ崩れるバターサブレ",p:650,c:["焼き菓子"],k:"sable",bg:"#FFF4DA"},
+ {n:"蜂の巣クッキー",d:"六角形の模様を型押しした看板クッキー",p:260,c:["焼き菓子"],k:"cookie",bg:"#FFF1CC"},
+ {n:"ロシアンクッキー（4個）",d:"いちごジャムとはちみつの2種",p:480,c:["焼き菓子"],k:"russian",bg:"#FFEDE8"},
+ {n:"フロランタン",d:"キャラメリゼしたアーモンドと蜜",p:420,c:["焼き菓子"],k:"florentin",bg:"#FFF0D2"},
+ {n:"はちみつパウンド（スライス）",d:"しっとり重めの生地にオレンジピール",p:350,c:["焼き菓子"],k:"pound",bg:"#FFF1CF"},
+ {n:"ウィークエンド・シトロン",d:"レモンアイシングの1本売り。日持ち7日",p:1980,c:["焼き菓子","ギフト"],k:"weekend",bg:"#FFF8D8"},
+ {n:"マカロン 6個入りボックス",d:"定番5色＋季節の1色",p:2100,c:["ギフト"],k:"macabox",bg:"#FFEDE8",b:"ギフト"},
+ {n:"焼き菓子詰め合わせ S",d:"マドレーヌ・フィナンシェなど6個",p:2700,c:["ギフト","焼き菓子"],k:"gift",bg:"#FFF1CF"},
+ {n:"焼き菓子詰め合わせ M",d:"人気の焼き菓子10個入り。のし対応",p:4320,c:["ギフト","焼き菓子"],k:"gift",bg:"#FFF4DA"},
+ {n:"蜂の巣クッキー缶",d:"六角の缶に3種のクッキーをぎっしり",p:3240,c:["ギフト","焼き菓子"],k:"can",bg:"#FFEFC8",b:"人気"},
+ {n:"ミエルのはちみつ瓶（3種）",d:"シェフが選んだ季節の蜜 各100g",p:3800,c:["ギフト"],k:"jar",bg:"#FFF6DA"},
+ {n:"ホールケーキ 4号〜（要予約）",d:"ショート・ミエル・チーズの3種から",p:3800,from:true,c:["ギフト","生菓子"],k:"whole",bg:"#FFEDE8",b:"予約"},
+ {n:"和栗とアカシアのモンブラン",d:"熊本県産和栗のペーストを注文ごとに絞ります",p:780,c:["季節限定","生菓子"],k:"montblanc",bg:"#F8E6CF",b:"秋限定",s:1},
+ {n:"無花果とはちみつのタルト",d:"完熟いちじくとそば蜜のアーモンドクリーム",p:720,c:["季節限定","生菓子"],k:"figtart",bg:"#F6E1E6",b:"秋限定",s:1},
+ {n:"洋梨とラベンダー蜂蜜のシャルロット",d:"ラベンダー蜜のババロアと洋梨のコンポート",p:700,c:["季節限定","生菓子"],k:"charlotte",bg:"#EFE7F6",b:"秋限定",s:1},
+ {n:"焼き芋とはちみつバターのパウンド",d:"紅はるかとはちみつバター。1本売り",p:1980,c:["季節限定","焼き菓子","ギフト"],k:"imo",bg:"#F3E4F0",b:"秋限定",s:1},
+ {n:"秋のマカロン アソート（5個）",d:"栗・かぼちゃ・洋梨・カシス・栗の花蜜",p:1800,c:["季節限定","ギフト"],k:"macabox",bg:"#F8E6CF",b:"秋限定",s:1}
+];
+var IMG="../../../assets/img/photos/";
+function yen(n){return "¥"+n.toLocaleString("ja-JP")}
+function visual(o,lazy){return o.img?'<img src="'+IMG+o.img+'" alt="'+o.n+'" width="760" height="507"'+(lazy?' loading="lazy"':'')+'>':art(o.k)}
+
+/* ---------- products + filter ---------- */
+(function(){var grid=$("#grid"),f=$("#filters"),cnt=$("#count");
+ grid.innerHTML=P.map(function(o,i){return '<li class="card reveal-pop" data-cat="'+o.c.join(",")+'">'+
+  '<div class="card-img" style="--bg:'+(o.bg||"#FFF1CF")+'">'+(o.b?'<span class="badge'+(o.s?' s':'')+'">'+o.b+'</span>':'')+'<div class="fr">'+visual(o,true)+'</div></div>'+
+  '<h3>'+o.n+'</h3><p class="desc">'+o.d+'</p>'+
+  '<p class="price">'+yen(o.p)+(o.from?'〜':'')+'<small>（税込）</small></p>'+
+  '<div class="tags">'+o.c.map(function(c){return '<span>'+c+'</span>'}).join('')+'</div></li>'}).join('');
+ var all=["すべて"].concat(CATS);
+ f.innerHTML=all.map(function(c,i){var n=i?P.filter(function(o){return o.c.indexOf(c)>-1}).length:P.length;
+  return '<button type="button" class="filter reveal-pop" data-f="'+c+'" aria-pressed="'+(i===0)+'">'+c+'<span class="n">'+n+'</span></button>'}).join('');
+ var cards=$$(".card",grid);
+ function apply(c){
+  $$(".filter",f).forEach(function(b){b.setAttribute("aria-pressed",b.dataset.f===c)});
+  var shown=0;
+  cards.forEach(function(el){var ok=c==="すべて"||el.dataset.cat.split(",").indexOf(c)>-1;el.hidden=!ok;
+   if(ok){el.classList.remove("is-in");el.style.transitionDelay=(Math.min(shown,12)*0.05)+"s";shown++}});
+  void grid.offsetWidth;
+  cards.forEach(function(el){if(!el.hidden)el.classList.add("is-in")});
+  cnt.textContent=(c==="すべて"?"全":"「"+c+"」")+" "+shown+" 品を表示中";
+ }
+ f.addEventListener("click",function(e){var b=e.target.closest(".filter");if(b)apply(b.dataset.f)});
+ $$("[data-jump-filter]").forEach(function(a){a.addEventListener("click",function(){apply(a.dataset.jumpFilter)})});
+ cnt.textContent="全 "+P.length+" 品を表示中";
+})();
+
+/* ---------- season list ---------- */
+$("#seasonList").innerHTML=P.filter(function(o){return o.s}).slice(0,4).map(function(o){return '<li class="sitem reveal"><div class="si" style="--bg:'+o.bg+'">'+art(o.k)+'</div><div><h4>'+o.n+'</h4><p>'+o.d+'</p><p class="price">'+yen(o.p)+'<small>（税込）</small></p></div></li>'}).join('');
+
+/* ---------- pickup carousel (3-set infinite loop) ---------- */
+(function(){
+ var picks=[0,2,10,25,22,3].map(function(i){return P[i]}),n=picks.length,track=$("#carTrack"),dots=$("#carDots"),view=$(".car-view"),GAP=24,idx=n,timer;
+ function card(o,i,clone){return '<a class="pk" href="#menu"'+(clone?' aria-hidden="true" tabindex="-1"':'')+'><div class="pk-img" style="--bg:'+(o.bg||"#FFF1CF")+'"><span class="pk-no">'+(i+1)+'</span><div class="fr">'+visual(o,true)+'</div></div>'+
+  '<h3>'+o.n+'</h3><p>'+o.d+'</p><p class="price">'+yen(o.p)+(o.from?'〜':'')+'<small>（税込）</small></p></a>'}
+ var h="";for(var s=0;s<3;s++)picks.forEach(function(o,i){h+=card(o,i,s!==1)});track.innerHTML=h;
+ dots.innerHTML=picks.map(function(o,i){return '<button type="button" aria-label="'+(i+1)+'枚目へ"></button>'}).join('');
+ var dotEls=$$("button",dots);
+ function step(){return track.children[0].getBoundingClientRect().width+GAP}
+ function go(i,anim){idx=i;var off=(view.clientWidth-track.children[0].getBoundingClientRect().width)/2;
+  track.style.transition=(anim&&!RM)?"transform .2s ease-in-out":"none";
+  track.style.transform="translate3d("+(off-idx*step()).toFixed(1)+"px,0,0)";
+  var r=((idx%n)+n)%n;dotEls.forEach(function(d,k){d.classList.toggle("is-active",k===r);d.setAttribute("aria-current",k===r?"true":"false")});
+  if(!anim||RM)norm()}
+ function norm(){if(idx>=2*n)go(idx-n,false);else if(idx<n)go(idx+n,false)}
+ track.addEventListener("transitionend",function(e){if(e.target===track)norm()});
+ function auto(){clearInterval(timer);if(!RM)timer=setInterval(function(){go(idx+1,true)},4000)}
+ $(".car-btn.next").addEventListener("click",function(){go(idx+1,true);auto()});
+ $(".car-btn.prev").addEventListener("click",function(){go(idx-1,true);auto()});
+ dotEls.forEach(function(d,k){d.addEventListener("click",function(){go(n+k,true);auto()})});
+ var car=$("#car");car.addEventListener("mouseenter",function(){clearInterval(timer)});car.addEventListener("mouseleave",auto);
+ car.addEventListener("focusin",function(){clearInterval(timer)});car.addEventListener("focusout",auto);
+ /* swipe */
+ var sx=null;view.addEventListener("touchstart",function(e){sx=e.touches[0].clientX},{passive:true});
+ view.addEventListener("touchend",function(e){if(sx===null)return;var dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40){go(idx+(dx<0?1:-1),true);auto()}sx=null},{passive:true});
+ addEventListener("resize",function(){go(idx,false)});
+ go(idx,false);auto();
+})();
+
+/* ---------- Instagram (9) / X (6) placeholders ---------- */
+(function(){
+ var ig=[{img:"macaron.jpg"},{k:"mousse",bg:"#FFE9B0"},{k:"montblanc",bg:"#F8E6CF"},{k:"madeleine",bg:"#FFF1CF"},{img:"cheesecake.jpg"},{k:"figtart",bg:"#F6E1E6"},{k:"can",bg:"#FFEFC8"},{k:"jar",bg:"#FFF6DA"},{k:"whole",bg:"#FFEDE8"}];
+ var likes=[128,96,214,77,183,152,64,88,241];
+ $("#igGrid").innerHTML=ig.map(function(o,i){return '<a class="ig reveal-pop'+(o.img?' photo':'')+'" href="#" style="--bg:'+(o.bg||"#FFF1CF")+'" aria-label="Instagram投稿 '+(i+1)+'（埋め込みプレースホルダ）">'+
+  (o.img?'<img src="'+IMG+o.img+'" alt="" loading="lazy">':'<svg class="art" viewBox="0 0 120 120" aria-hidden="true">'+ART[o.k]()+'</svg>')+
+  '<span class="ov"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z" fill="#fff"/></svg>'+likes[i]+'</span><span class="ph">embed '+(i+1)+'</span></a>'}).join('');
+ var xs=[
+  ["本日も11時オープンです。午後の焼き上がりは14時ごろ、マドレーヌとカヌレが並びます🐝","9月23日",12,48],
+  ["【秋限定】和栗とアカシアのモンブラン、はじまりました。ご注文ごとに絞ってお出ししています。","9月20日",31,156],
+  ["ハロウィンのホールケーキ、ご予約受付中です。お電話または公式LINEからどうぞ。","9月12日",18,73],
+  ["本日のはちみつプリンは完売しました。明日は多めにご用意します！","9月10日",6,41],
+  ["新しく北海道の養蜂家さんから「菩提樹の蜜」が届きました。香りがとても華やかです。","9月5日",22,98],
+  ["9月・10月の営業カレンダーです。火曜・第2水曜はお休みをいただきます。","9月1日",9,37]];
+ $("#xGrid").innerHTML=xs.map(function(x){return '<article class="xpost reveal" aria-label="X投稿（埋め込みプレースホルダ）"><header><span class="av">'+bee()+'</span><div><div class="nm">パティスリー ミエル</div><div class="id">@patisserie_miel</div></div>'+
+  '<svg class="xlogo" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h4l4 5.5L16.5 4H19l-5.8 6.8L20 20h-4l-4.3-5.9L6.6 20H4.2l6.3-7.2z" fill="currentColor"/></svg></header>'+
+  '<p>'+x[0]+'</p><div class="meta"><span>'+x[1]+'</span><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10l-3-3M17 17H7l3 3" fill="none" stroke="currentColor" stroke-width="2"/></svg>'+x[2]+'</span><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.6-7-9.6A4 4 0 0 1 12 8a4 4 0 0 1 7 2.4c0 5-7 9.6-7 9.6z" fill="none" stroke="currentColor" stroke-width="2"/></svg>'+x[3]+'</span></div></article>'}).join('');
+})();
+
+/* ---------- reveal ---------- */
+(function(){var els=$$(".reveal,.reveal-pop");
+ if(RM||!("IntersectionObserver" in window)){els.forEach(function(e){e.classList.add("is-in")});return}
+ var groups=new Map();
+ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;var el=e.target,p=el.parentNode,
+   k=(groups.get(p)||0);groups.set(p,k+1);if(!el.style.transitionDelay)el.style.transitionDelay=(Math.min(k,8)*0.07)+"s";
+   el.classList.add("is-in");io.unobserve(el);setTimeout(function(){groups.set(p,Math.max(0,(groups.get(p)||1)-1))},600)})},{rootMargin:"0px 0px -12% 0px"});
+ els.forEach(function(e){io.observe(e)});
+ /* clear delays after reveal so hover transitions stay snappy */
+ document.addEventListener("transitionend",function(e){var t=e.target;if(t.classList&&t.classList.contains("is-in")&&e.propertyName==="transform"&&!t.classList.contains("card"))t.style.transitionDelay=""});
+})();
+
+/* ---------- touch hover ---------- */
+if(matchMedia("(hover: none)").matches){
+ document.addEventListener("touchstart",function(e){var t=e.target.closest(".pill,.card,.pk,.kv-thumb,.ig,.sitem,.news-item a,.car-btn,.cv,.tlink");
+  if(!t)return;t.classList.add("touch-hover");setTimeout(function(){t.classList.remove("touch-hover")},800)},{passive:true});
+}
+})();
+</script>
+</body>
+</html>

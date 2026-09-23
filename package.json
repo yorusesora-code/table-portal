@@ -1,0 +1,11 @@
+{
+  "name": "table-portal",
+  "private": true,
+  "type": "module",
+  "description": "Table（飲食店のHP制作）ポータルサイト。静的サイトを tools/build.mjs で dist/ に書き出す。",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "dev": "node tools/serve.mjs"
+  },
+  "engines": { "node": ">=20" }
+}

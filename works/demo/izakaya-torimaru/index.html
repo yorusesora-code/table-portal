@@ -1,0 +1,997 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>炭火やきとり とりまる｜〇〇駅の焼き鳥・デリバリー（Table Web 制作デモ）</title>
+<meta name="description" content="紀州備長炭で一本ずつ焼き上げる、炭火やきとり とりまる。Uber Eats・出前館でデリバリーも。※Table Web の制作デモ（架空の店舗）です。">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#f5f0e6">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   tokens（kinetic-marquee-site の3イージング・3時間を踏襲）
+   ========================================================= */
+:root{
+  --paper:#f5f0e6; --mist:#ece5d8; --line:#ddd4c4;
+  --ink:#1b1714; --ink2:#4a423b; --sub:#7a6f64;
+  --ember:#c8401e;                         /* アクセントは炭火の赤、この1色だけ */
+  --t-fast:.3s; --t-base:.55s; --t-slow:.9s;
+  --e-out:cubic-bezier(.22,1,.36,1);
+  --e-sym:cubic-bezier(.65,0,.35,1);
+  --e-pop:cubic-bezier(.34,1.56,.64,1);
+  --header-h:64px;
+  --sans:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",sans-serif;
+  --min:"Shippori Mincho B1","Hiragino Mincho ProN","Yu Mincho",serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header-h) + 12px);overflow-x:clip}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.9;
+  -webkit-font-smoothing:antialiased;overflow-x:clip}
+img,svg{max-width:100%}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+@media (min-width:768px){.wrap{padding:0 40px}}
+:focus-visible{outline:2px solid var(--ember);outline-offset:3px}
+
+/* ---------- demo band（制作デモ表示。控えめに固定色） ---------- */
+.demo-band{position:relative;z-index:120;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:6px 16px;background:#2a2420;color:#cbbfae;font-size:11px;line-height:1.5;letter-spacing:.03em}
+.demo-band p{margin:0;min-width:0}
+.demo-band a{color:#f3ede3;text-underline-offset:2px;white-space:nowrap;flex:0 0 auto}
+
+/* ---------- header ---------- */
+header{position:sticky;top:0;z-index:100;height:var(--header-h);border-bottom:1px solid transparent;
+  transition:background var(--t-fast),border-color var(--t-fast)}
+header.scrolled{background:color-mix(in srgb,var(--paper) 88%,transparent);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom-color:var(--line)}
+.hd-in{display:flex;align-items:center;gap:24px;height:100%;max-width:1320px;margin:0 auto;padding:0 20px}
+.logo{display:flex;align-items:baseline;gap:8px;text-decoration:none;color:var(--ink);line-height:1;white-space:nowrap}
+.logo small{font-size:10.5px;font-weight:700;letter-spacing:.14em;color:var(--sub)}
+.logo b{font-family:var(--min);font-size:25px;font-weight:800;letter-spacing:.08em}
+.hd-nav{display:flex;align-items:center;gap:22px;margin-left:auto}
+.hd-nav a:not(.btn){position:relative;display:inline-block;overflow:hidden;font-size:13px;font-weight:500;
+  letter-spacing:.06em;line-height:1.5;text-decoration:none;color:var(--ink)}
+.hd-nav a:not(.btn) .rl{display:block;transition:transform var(--t-fast) var(--e-sym)}
+.hd-nav a:not(.btn)::after{content:attr(data-text);position:absolute;inset:0;color:var(--ember);
+  transform:translateY(100%);transition:transform .35s var(--e-sym)}
+@media (hover:hover){
+  .hd-nav a:not(.btn):hover .rl{transform:translateY(-100%)}
+  .hd-nav a:not(.btn):hover::after{transform:none}
+}
+.btn{white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;border-radius:999px;
+  background:var(--ink);color:var(--paper);font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;
+  transition:opacity .15s}
+.btn:hover{opacity:.86}
+.btn .dot{width:6px;height:6px;border-radius:50%;background:var(--ember)}
+@media (max-width:899px){.hd-nav a:not(.btn){display:none}}
+@media (max-width:479px){
+  .hd-in{padding:0 16px;gap:12px}
+  header .logo{flex-direction:column;align-items:flex-start;gap:4px}
+  header .logo small{font-size:9.5px}
+  header .logo b{font-size:22px}
+  .hd-nav .btn{padding:10px 16px;font-size:12.5px}
+}
+
+/* ---------- FV marquee（references/marquee.md） ---------- */
+.fv{padding-top:4px}
+.mqs{position:relative;display:flex;flex-direction:column;overflow:hidden;user-select:none;-webkit-user-select:none;
+  touch-action:pan-y;gap:clamp(14px,2.2vw,26px);padding:clamp(16px,2.6vw,34px) 0 clamp(22px,3.6vw,44px)}
+.has-js .mqs{cursor:grab}
+.mqs.dragging{cursor:grabbing}
+@keyframes drift{from{transform:translate(0)}to{transform:translate(-50%)}}
+@keyframes drift-rev{from{transform:translate(-50%)}to{transform:translate(0)}}
+.mq-row{display:flex;align-items:flex-start;width:max-content;gap:clamp(14px,2.2vw,26px);animation:drift var(--d,60s) linear infinite}
+.mq-row.rev{animation-name:drift-rev}
+.mqs.js .mq-row{animation:none;will-change:transform,filter}
+.mq-cell{--cs:clamp(132px,19vw,244px);position:relative;flex:0 0 auto;width:var(--cs);height:var(--cs);overflow:hidden;border-radius:12px;
+  background:#e7d5b5 center/cover no-repeat}
+.mq-cell.hot{z-index:2}
+.mq-type{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.35em;text-align:center;padding:10px}
+.mq-type b{font-family:var(--min);font-weight:800;font-size:clamp(22px,3.2vw,40px);line-height:1.2;letter-spacing:.06em}
+.mq-type small{font-size:clamp(9.5px,.9vw,11.5px);font-weight:700;letter-spacing:.2em;opacity:.75;line-height:1.4}
+.mq-type em{font-style:normal;font-size:clamp(10px,1vw,12.5px);font-weight:700;letter-spacing:.06em;
+  padding:.3em .9em;border:1px solid currentColor;border-radius:99px;line-height:1.4}
+.t-ink{background:#1b1714;color:#f5eee2}
+.t-kraft{background:#e2cda6;color:#1b1714}
+.t-ember{background:#c8401e;color:#fbf3e6}
+.mqs.js .mq-cell{opacity:0;will-change:transform}
+.mqs.js .mq-cell.lead{opacity:1}
+@keyframes cell-pop{from{opacity:0;transform:scale(.55)}to{opacity:1;transform:scale(1)}}
+@keyframes lead-boing{0%{transform:scale(.97,.91)}44%{transform:scale(1.045)}74%{transform:scale(.988)}100%{transform:none}}
+.mqs.js.go .mq-cell{opacity:1;animation:cell-pop .45s var(--e-pop) var(--ed,0s) backwards}
+.mqs.js.go .mq-cell.lead.boing{animation:lead-boing .52s cubic-bezier(.3,.6,.4,1) both}
+.mq-hint{position:absolute;right:20px;bottom:4px;font-size:10.5px;font-weight:700;letter-spacing:.18em;color:var(--sub);pointer-events:none}
+@media (max-width:599px){ .mqs .marquee:nth-child(3){display:none} }
+
+/* FV copy */
+.fv-copy{display:grid;grid-template-columns:1.25fr 1fr;gap:40px;align-items:end;padding-bottom:clamp(56px,8vw,96px)}
+.fv-kicker{margin:0 0 14px;font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--sub)}
+.fv-h{margin:0;font-family:var(--min);font-weight:800;font-size:clamp(28px,7.4vw,70px);line-height:1.3;letter-spacing:.04em}
+.fv-h .em{color:var(--ember)}
+.ln{display:block;overflow:hidden;padding:.06em 0 .1em;margin:-.06em 0 -.1em}
+.ln>span{display:block;transform:translateY(112%);transition:transform var(--t-slow) var(--e-out) var(--rd,0s)}
+.fv-h[data-rev]{opacity:1;transform:none}
+.fv-h.in .ln>span{transform:none}
+.fv-side p{margin:0 0 20px;color:var(--ink2);font-size:14.5px}
+.fv-meta{display:flex;flex-wrap:wrap;gap:6px 16px;margin:18px 0 0;padding:0;list-style:none;font-size:12.5px;color:var(--sub)}
+.fv-meta li::before{content:"";display:inline-block;width:5px;height:5px;margin-right:7px;border-radius:50%;background:var(--ember);vertical-align:middle}
+@media (max-width:859px){.fv-copy{grid-template-columns:1fr;gap:26px}}
+
+/* ---------- order buttons（デリバリー導線の共通部品） ---------- */
+.order{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ob{display:flex;align-items:center;gap:10px;min-height:60px;padding:10px 16px 10px 18px;border-radius:14px;
+  text-decoration:none;color:#fff;line-height:1.25;transition:transform var(--t-fast) var(--e-out),opacity .15s}
+.ob:hover{transform:translateY(-2px)}
+.ob:active{transform:scale(.98)}
+.ob span{display:flex;flex-direction:column;min-width:0}
+.ob b{font-size:16px;font-weight:700;letter-spacing:.02em;white-space:nowrap}
+.ob small{font-size:11px;font-weight:500;opacity:.82;letter-spacing:.06em}
+.ob svg{flex:0 0 auto;width:18px;height:18px;margin-left:auto}
+.ob-uber{background:#111;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+.sp{display:none}
+@media (max-width:599px){.sp{display:inline}}
+.ob-uber b::before{content:"";display:inline-block;width:8px;height:8px;margin-right:7px;border-radius:50%;background:#06c167;vertical-align:.12em}
+.ob-demae{background:#d4151f}
+.order.lg .ob{min-height:76px;border-radius:16px}
+.order.lg .ob b{font-size:19px}
+@media (max-width:374px){.ob{padding:10px 12px}.ob b{font-size:14.5px}}
+
+/* ---------- reveal（references/reveal.md） ---------- */
+.sec-head{margin:-24px -12px 36px;padding:24px 12px 10px;overflow:hidden}
+.sec-main{display:block;font-family:var(--min);font-weight:800;font-size:clamp(30px,5.4vw,54px);line-height:1.2;letter-spacing:.06em}
+.sec-sub{display:block;margin-top:10px;font-size:11.5px;font-weight:700;line-height:1.2;letter-spacing:.24em;color:var(--sub)}
+.sec-sub::before{content:"";display:inline-block;width:18px;height:2px;margin-right:10px;background:var(--ember);vertical-align:middle}
+.sec-head[data-rev]{opacity:1;transform:none}
+.sec-head[data-rev] .sec-main{transform:translateY(112%);transition:transform var(--t-slow) var(--e-out) var(--rd,0s)}
+.sec-head[data-rev] .sec-sub{opacity:0;transform:translateY(12px);
+  transition:opacity var(--t-base) ease calc(var(--rd,0s) + .28s),transform var(--t-base) var(--e-out) calc(var(--rd,0s) + .28s)}
+.sec-head[data-rev].in .sec-main,.sec-head[data-rev].in .sec-sub{opacity:1;transform:none}
+[data-rev]{opacity:0;transform:translateY(18px);
+  transition:opacity var(--t-base) ease var(--rd,0s),transform var(--t-base) var(--e-out) var(--rd,0s)}
+[data-rev].in{opacity:1;transform:none}
+.no-js [data-rev],.no-js .ln>span,.no-js .sec-main,.no-js .sec-sub{opacity:1!important;transform:none!important}
+
+section{padding:clamp(72px,10vw,128px) 0}
+.sec-lead{max-width:640px;margin:0 0 40px;color:var(--ink2)}
+
+/* ---------- こだわり（theme-invert.md：この区間だけ炭の黒へ） ---------- */
+.craft{min-height:100svh;display:flex;flex-direction:column;justify-content:center}
+.craft-top{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;margin-bottom:64px}
+.craft-lead{margin:0;font-family:var(--min);font-weight:700;font-size:clamp(17px,2.3vw,26px);line-height:1.9;letter-spacing:.04em}
+.craft-img{aspect-ratio:1/1;border-radius:18px;background:#1b1714 center/cover no-repeat;max-width:440px;width:100%;justify-self:end}
+.mk{background-image:linear-gradient(transparent 64%,rgba(200,64,30,.6) 64%,rgba(200,64,30,.6) 92%,transparent 92%);
+  background-repeat:no-repeat;background-size:0% 100%;transition:background-size .85s var(--e-sym) .2s}
+.mk.on{background-size:100% 100%}
+.craft-list{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(28px,4vw,48px);margin:0;padding:0;list-style:none}
+.craft-list li{border-top:1px solid var(--line);padding-top:22px}
+.craft-no{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;
+  font-family:var(--min);font-size:28px;font-weight:800;color:var(--sub);line-height:1}
+.craft-no svg{width:40px;height:40px;color:var(--ember)}
+.craft-list h3{margin:0 0 10px;font-size:18px;font-weight:700;letter-spacing:.04em;line-height:1.5}
+.craft-list p{margin:0;font-size:14px;color:var(--ink2);line-height:1.95}
+@media (max-width:859px){
+  .craft-top{grid-template-columns:1fr;gap:32px;margin-bottom:48px}
+  .craft-img{justify-self:start;max-width:320px}
+  .craft-list{grid-template-columns:1fr}
+}
+
+/* ---------- menu ---------- */
+.menu-note{margin:-12px 0 36px;font-size:13px;color:var(--sub)}
+.dv{display:inline-block;margin:0 3px;padding:0 .6em;border:1px solid var(--ember);border-radius:99px;
+  color:var(--ember);font-size:10px;font-weight:700;font-style:normal;line-height:1.7;letter-spacing:.04em;vertical-align:.15em}
+.menu-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:28px 56px;align-items:start}
+.mg-kushi{grid-row:span 2}
+.mg{background:var(--mist);border-radius:16px;padding:28px 26px 18px}
+.mg-h{display:flex;align-items:baseline;gap:12px;margin:0 0 12px;padding-bottom:14px;border-bottom:1.5px solid var(--ink)}
+.mg-h span{font-family:var(--min);font-size:26px;font-weight:800;letter-spacing:.08em;line-height:1.2}
+.mg-h small{font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--sub)}
+.mg-h em{margin-left:auto;font-style:normal;font-size:11px;color:var(--sub)}
+.ml{margin:0;padding:0;list-style:none}
+.ml li{display:grid;grid-template-columns:auto 1fr auto;align-items:baseline;column-gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
+.ml li:last-child{border-bottom:0}
+.mi-n{font-weight:700;font-size:15px;line-height:1.5}
+.mi-l{border-bottom:1px dotted var(--sub);opacity:.5;transform:translateY(-5px);min-width:12px}
+.mi-p{font-weight:700;font-size:15.5px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.mi-p small{font-size:11px;font-weight:500;margin-left:1px}
+.mi-d{grid-column:1/-1;font-size:12px;color:var(--sub);line-height:1.6;margin-top:2px}
+.tg{display:inline-block;margin-left:6px;padding:0 .55em;border-radius:4px;background:var(--ember);color:#fbf3e6;
+  font-size:10px;font-style:normal;font-weight:700;line-height:1.75;vertical-align:.18em}
+.menu-cta{display:grid;grid-template-columns:auto 1fr;gap:18px 32px;align-items:center;margin-top:44px;padding:26px 28px;
+  border:1.5px solid var(--ink);border-radius:18px}
+.menu-cta p{margin:0;font-weight:700;font-size:15px;line-height:1.6}
+.menu-cta p small{display:block;font-weight:500;font-size:12px;color:var(--sub)}
+@media (max-width:859px){
+  .menu-grid{grid-template-columns:1fr}
+  .mg-kushi{grid-row:auto}
+  .mg{padding:22px 18px 12px}
+  .menu-cta{grid-template-columns:1fr;padding:22px 18px}
+}
+
+/* ---------- delivery ---------- */
+.dl-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:start}
+.dl-facts{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;margin:28px 0 0;font-size:14px}
+.dl-facts dt{font-weight:700;color:var(--sub);font-size:12.5px;letter-spacing:.06em}
+.dl-facts dd{margin:0}
+.dl-sets{display:grid;gap:16px}
+.set{display:grid;grid-template-columns:112px 1fr;gap:18px;align-items:center;padding:14px;border-radius:16px;background:var(--mist)}
+.set-img{aspect-ratio:1/1;border-radius:10px;background:#e7d5b5 center/cover no-repeat}
+.set h3{margin:0 0 4px;font-size:16px;font-weight:700;line-height:1.5}
+.set p{margin:0;font-size:12.5px;color:var(--sub);line-height:1.7}
+.set-price{display:block;margin-top:6px;font-size:18px;font-weight:700;color:var(--ink)}
+.set-price small{font-size:11px;font-weight:500;color:var(--sub)}
+.dl-note{margin:14px 0 0;font-size:11.5px;color:var(--sub)}
+@media (max-width:859px){.dl-grid{grid-template-columns:1fr;gap:40px}.set{grid-template-columns:92px 1fr;gap:14px}}
+
+/* ---------- coupon ---------- */
+.ticket{--r:14px;position:relative;display:grid;grid-template-columns:1fr 220px;max-width:860px;border-radius:20px;
+  background:var(--ember);color:#fbf3e6;overflow:hidden}
+.tk-main{padding:34px 36px}
+.tk-k{margin:0;font-size:12.5px;font-weight:700;letter-spacing:.16em;opacity:.85}
+.tk-h{margin:6px 0 10px;font-family:var(--min);font-weight:800;font-size:clamp(30px,5vw,48px);line-height:1.25;letter-spacing:.04em}
+.tk-h b{font-size:1.35em;color:#fff3c9}
+.tk-s{margin:0;font-size:13.5px;line-height:1.8;opacity:.92}
+.tk-stub{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:26px 20px;
+  border-left:2px dashed rgba(251,243,230,.55);text-align:center}
+.tk-stub::before,.tk-stub::after{content:"";position:absolute;left:calc(var(--r) * -1 - 1px);width:calc(var(--r)*2);height:calc(var(--r)*2);
+  border-radius:50%;background:var(--paper)}
+.tk-stub::before{top:calc(var(--r) * -1)}
+.tk-stub::after{bottom:calc(var(--r) * -1)}
+.tk-stub span{font-size:11px;font-weight:700;letter-spacing:.3em;opacity:.8}
+.tk-stub b{font-size:22px;letter-spacing:.12em;font-variant-numeric:tabular-nums}
+.tk-stub small{font-size:11.5px;opacity:.85}
+.tk-terms{max-width:860px;margin:22px 0 0;padding:0;list-style:none;font-size:12.5px;color:var(--sub);line-height:1.9}
+.tk-terms li::before{content:"※ "}
+@media (max-width:639px){
+  .ticket{grid-template-columns:1fr}
+  .tk-main{padding:28px 22px 24px}
+  .tk-stub{border-left:0;border-top:2px dashed rgba(251,243,230,.55);flex-direction:row;flex-wrap:wrap;gap:4px 14px;padding:18px 22px}
+  .tk-stub::before,.tk-stub::after{top:calc(var(--r) * -1 - 1px);bottom:auto}
+  .tk-stub::before{left:calc(var(--r) * -1)}
+  .tk-stub::after{left:auto;right:calc(var(--r) * -1)}
+  .tk-stub small{flex-basis:100%}
+}
+
+/* ---------- instagram ---------- */
+.ig-top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px}
+.ig-acc{margin:-20px 0 28px;font-weight:700;font-size:14px;letter-spacing:.04em}
+.ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(6px,1.2vw,14px);max-width:900px}
+.ig-tile{position:relative;display:block;aspect-ratio:1/1;border-radius:8px;overflow:hidden;background:var(--mist) center/cover no-repeat}
+.ig-tile::after{content:attr(data-like);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(27,23,20,.55);color:#fff;font-size:14px;font-weight:700;letter-spacing:.06em;opacity:0;transition:opacity var(--t-fast)}
+@media (hover:hover){.ig-tile:hover::after{opacity:1}}
+.ig-note{margin:16px 0 0;font-size:11.5px;color:var(--sub)}
+.btn-line{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border:1.5px solid var(--ink);border-radius:999px;
+  font-size:13px;font-weight:700;text-decoration:none;color:var(--ink);transition:background var(--t-fast),color var(--t-fast)}
+.btn-line:hover{background:var(--ink);color:var(--paper)}
+
+/* ---------- access ---------- */
+.ac-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.info{margin:0;display:grid;grid-template-columns:7.2em 1fr;font-size:14px}
+.info dt,.info dd{padding:14px 0;border-bottom:1px solid var(--line);line-height:1.75}
+.info dt{font-weight:700;font-size:12.5px;letter-spacing:.06em;color:var(--sub)}
+.info dd{margin:0}
+.info a{text-underline-offset:3px}
+.map{position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:var(--mist)}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+.map-label{position:absolute;left:14px;right:14px;bottom:14px;display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;
+  padding:12px 16px;border-radius:12px;background:color-mix(in srgb,var(--paper) 94%,transparent);font-size:12px;line-height:1.6}
+.map-label b{font-size:13px}
+.map-label span{color:var(--sub);flex:1 1 180px}
+.map-label a{font-weight:700;text-underline-offset:3px}
+@media (max-width:859px){.ac-grid{grid-template-columns:1fr;gap:32px}}
+@media (max-width:599px){.map{aspect-ratio:1/1}.map-label{left:10px;right:10px;bottom:10px;padding:10px 12px}}
+
+/* ---------- FAQ（sections.md、button+aria-expanded 版） ---------- */
+.faq-list{max-width:860px;border-top:1px solid var(--line)}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-q{display:flex;gap:14px;align-items:baseline;width:100%;padding:20px 4px;border:0;background:none;color:var(--ink);
+  font:inherit;font-weight:700;font-size:15px;line-height:1.6;text-align:left;cursor:pointer}
+.faq-q .q{flex:0 0 auto;font-family:var(--min);font-size:19px;font-weight:800;color:var(--ember);line-height:1}
+.faq-q::after{content:"";flex:0 0 auto;align-self:center;margin-left:auto;width:14px;height:14px;
+  background:linear-gradient(var(--ink),var(--ink)) center/14px 1.5px no-repeat,
+             linear-gradient(var(--ink),var(--ink)) center/1.5px 14px no-repeat;
+  transition:transform var(--t-fast) var(--e-sym)}
+.faq-item.open .faq-q::after{transform:rotate(45deg)}
+.faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--t-base) var(--e-sym)}
+.faq-a>div{overflow:hidden}
+.faq-a p{margin:0;padding:0 4px 22px 33px;color:var(--ink2);font-size:14px;line-height:1.9}
+.faq-item.open .faq-a{grid-template-rows:1fr}
+
+/* ---------- footer ---------- */
+footer{padding:64px 0 40px;border-top:1px solid var(--line)}
+.ft-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px 56px;align-items:end}
+.ft-addr{margin:12px 0 0;font-size:13px;color:var(--ink2);line-height:1.9}
+.ft-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 20px;margin-top:48px;font-size:11px;color:var(--sub)}
+@media (max-width:859px){.ft-grid{grid-template-columns:1fr}}
+
+/* ---------- 追従CTA：PCは回転する円、SPは下部バー ---------- */
+.fcta{position:fixed;right:24px;bottom:calc(24px + env(safe-area-inset-bottom));z-index:60;width:116px;height:116px;display:block;
+  border-radius:50%;transition:transform var(--t-fast) var(--e-out),opacity var(--t-fast)}
+.fcta circle{fill:var(--ember)}
+.fcta text{fill:#fbf3e6;font-family:var(--sans);font-size:9.5px;font-weight:700;letter-spacing:.16em}
+.fcta .ar{stroke:#fbf3e6;stroke-width:1.8;fill:none}
+@keyframes fcta-spin{to{transform:rotate(360deg)}}
+.fcta .rot{transform-origin:60px 60px;animation:fcta-spin 16s linear infinite}
+.fcta:hover{transform:scale(1.06)}
+.sob{position:fixed;left:0;right:0;bottom:0;z-index:60;display:none;gap:8px;padding:8px 10px calc(8px + env(safe-area-inset-bottom));
+  background:color-mix(in srgb,var(--paper) 92%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  border-top:1px solid var(--line);transition:transform var(--t-base) var(--e-out)}
+.sob .ob{flex:1;min-height:52px;border-radius:12px;padding:8px 12px}
+.sob .ob b{font-size:14.5px}
+.cta-off .fcta{opacity:0;transform:scale(.9);pointer-events:none}
+.cta-off .sob{transform:translateY(110%)}
+@media (max-width:767px){
+  .fcta{display:none}
+  .sob{display:flex}
+  body{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
+}
+
+/* ---------- custom cursor（references/cursor.md、マーキーとInstagramのみ） ---------- */
+.cur{position:fixed;left:0;top:0;width:0;height:0;z-index:80;pointer-events:none}
+.cur-ring{position:absolute;left:-36px;top:-36px;width:72px;height:72px;border-radius:50%;
+  display:grid;place-items:center;background:var(--ember);color:#fbf3e6;
+  opacity:0;transform:scale(.5);transition:opacity .22s,transform var(--t-fast) var(--e-out)}
+.cur-ring i{font-style:normal;font-size:11px;font-weight:700;letter-spacing:.16em;display:none}
+.cur-ring svg{width:24px;height:24px;display:none}
+.cur[data-mode="drag"] .cur-ring i,.cur[data-mode="view"] .cur-ring svg{display:block}
+.cur.on .cur-ring{opacity:1;transform:scale(1)}
+.cur.press .cur-ring{transform:scale(.86)}
+.has-cur .mqs,.has-cur .mqs *,.has-cur .ig-tile{cursor:none}
+@media (hover:none),(pointer:coarse){.cur{display:none}}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .cur{display:none}
+  [data-rev],.ln>span,.sec-head[data-rev] .sec-main,.sec-head[data-rev] .sec-sub{opacity:1!important;transform:none!important}
+  .mq-row,.fcta .rot{animation:none}
+  .mqs.js .mq-cell{opacity:1}
+  .mk{background-size:100% 100%}
+}
+</style>
+</head>
+<body class="no-js">
+
+<div class="demo-band" role="note">
+  <p>これは Table Web の制作デモです（架空の店舗です）</p>
+  <a href="../../izakaya-torimaru/">← 事例ページへ戻る</a>
+</div>
+
+<div class="cur" aria-hidden="true">
+  <span class="cur-ring"><i>DRAG</i>
+    <svg viewBox="0 0 24 24" fill="none"><path d="M6.5 17.5L17.5 6.5M8.5 6.5h9v9" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/></svg>
+  </span>
+</div>
+
+<header>
+  <div class="hd-in">
+    <a class="logo" href="#top" aria-label="炭火やきとり とりまる トップへ"><small>炭火やきとり</small><b>とりまる</b></a>
+    <nav class="hd-nav" aria-label="メインメニュー">
+      <a href="#craft" data-text="こだわり"><span class="rl">こだわり</span></a>
+      <a href="#menu" data-text="メニュー"><span class="rl">メニュー</span></a>
+      <a href="#coupon" data-text="クーポン"><span class="rl">クーポン</span></a>
+      <a href="#access" data-text="店舗情報"><span class="rl">店舗情報</span></a>
+      <a href="#faq" data-text="よくある質問"><span class="rl">よくある質問</span></a>
+      <a class="btn" href="#delivery"><span class="dot"></span>デリバリー注文</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<!-- ============ FV ============ -->
+<section class="fv" style="padding-bottom:0">
+  <div class="mqs" role="img" aria-label="ねぎま・つくね・皮・七輪・生ビールなど、炭火やきとりのイラストが流れる帯（ドラッグで動かせます）" data-cursor="drag">
+    <div class="marquee" aria-hidden="true"><div class="mq-row" style="--d:62s" data-row="0"></div></div>
+    <div class="marquee" aria-hidden="true"><div class="mq-row rev" style="--d:74s" data-row="1"></div></div>
+    <div class="marquee" aria-hidden="true"><div class="mq-row" style="--d:66s" data-row="2"></div></div>
+    <span class="mq-hint" aria-hidden="true">← DRAG →</span>
+  </div>
+
+  <div class="wrap fv-copy">
+    <div>
+      <p class="fv-kicker">炭火やきとり とりまる ｜ 〇〇駅 東口 徒歩3分</p>
+      <h1 class="fv-h" data-rev>
+        <span class="ln"><span>炭の香りを、</span></span>
+        <span class="ln"><span style="--rd:.1s">そのまま<span class="em">おうち</span>まで。</span></span>
+      </h1>
+    </div>
+    <div class="fv-side" data-rev style="--rd:.2s">
+      <p>紀州備長炭で一本ずつ焼き上げる、町のやきとり屋です。焼きたての串を Uber Eats・出前館でお届けします。</p>
+      <div class="order" id="fvOrder">
+        <a class="ob ob-uber" href="#"><span><b>Uber Eats</b><small>で注文する</small></span><svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="2"/></svg></a>
+        <a class="ob ob-demae" href="#"><span><b>出前館</b><small>で注文する</small></span><svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="2"/></svg></a>
+      </div>
+      <ul class="fv-meta">
+        <li>17:00–23:30</li><li>月曜定休</li><li><a href="#coupon">初回ドリンク1杯無料</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ こだわり（dark） ============ -->
+<section class="craft" id="craft" data-theme="dark">
+  <div class="wrap">
+    <div class="sec-head" data-rev><span class="sec-main">こだわり</span><span class="sec-sub">OUR CRAFT</span></div>
+    <div class="craft-top">
+      <p class="craft-lead marker-block" data-rev>炭は、紀州備長炭だけ。<br>鶏は、その朝に届いた国産の銘柄鶏。<br><span class="mk">串打ちから焼きまで、<br class="sp">ぜんぶ店のなかで。</span></p>
+      <div class="craft-img" id="craftImg" role="img" aria-label="七輪で焼かれる串のイラスト" data-rev style="--rd:.1s"></div>
+    </div>
+    <ol class="craft-list">
+      <li data-rev style="--rd:0s">
+        <div class="craft-no">01
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M5 30l6-9 10-2 5 7-4 8-13 1z"/><path d="M19 22l8-9 9 2 1 9-8 6"/><path d="M13 23l3 4M25 17l3 4"/></svg>
+        </div>
+        <h3>紀州備長炭だけで焼く</h3>
+        <p>火力が強く、煙の少ない備長炭。表面はパリッと、中はふっくら。焼き台は開店から閉店まで、同じ職人がひとりで守ります。</p>
+      </li>
+      <li data-rev style="--rd:.08s">
+        <div class="craft-no">02
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 34L34 6"/><rect x="11" y="18" width="9" height="9" rx="3" transform="rotate(-45 15.5 22.5)"/><rect x="18" y="11" width="9" height="9" rx="3" transform="rotate(-45 22.5 15.5)"/><path d="M26 6l8 8"/></svg>
+        </div>
+        <h3>その朝に届いた国産鶏</h3>
+        <p>仕入れは毎朝。部位ごとに切り分けて、一本ずつ串を打ちます。作り置きや冷凍の串は使いません。</p>
+      </li>
+      <li data-rev style="--rd:.16s">
+        <div class="craft-no">03
+          <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M9 14h22l-2 18q-9 4-18 0z"/><path d="M7 14h26M14 9q6-5 12 0"/><path d="M13 22q7 3 14 0"/></svg>
+        </div>
+        <h3>継ぎ足しのタレ</h3>
+        <p>開店から継ぎ足してきた、甘さ控えめの醤油ダレ。塩は部位ごとに粒の大きさを変えて振っています。</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ MENU ============ -->
+<section class="menu" id="menu">
+  <div class="wrap">
+    <div class="sec-head" data-rev><span class="sec-main">お品書き</span><span class="sec-sub">MENU</span></div>
+    <p class="menu-note">価格はすべて税込です。串は「塩」「タレ」をお選びいただけます。<i class="dv">配達可</i>はデリバリーでもご注文いただけます。</p>
+
+    <div class="menu-grid">
+      <div class="mg mg-kushi" data-rev>
+        <h3 class="mg-h"><span>串</span><small>KUSHI</small><em>1本の価格</em></h3>
+        <ul class="ml">
+          <li><span class="mi-n">ねぎま<i class="tg">人気</i></span><span class="mi-l"></span><span class="mi-p">198<small>円</small></span><span class="mi-d">もも肉と白ねぎ。まずはこの一本から <i class="dv">配達可</i></span></li>
+          <li><span class="mi-n">もも</span><span class="mi-l"></span><span class="mi-p">187<small>円</small></span><span class="mi-d">脂と歯ごたえのバランスが良い定番 <i class="dv">配達可</i></span></li>
+          <li><span class="mi-n">月見つくね<i class="tg">名物</i></span><span class="mi-l"></span><span class="mi-p">286<small>円</small></span><span class="mi-d">軟骨入りの手ごねつくねを卵黄にくぐらせて <i class="dv">配達可</i></span></li>
+          <li><span class="mi-n">皮</span><span class="mi-l"></span><span class="mi-p">165<small>円</small></span><span class="mi-d">じっくり脂を落としてパリパリに。塩がおすすめ <i class="dv">配達可</i></span></li>
+          <li><span class="mi-n">ぼんじり</span><span class="mi-l"></span><span class="mi-p">187<small>円</small></span><span class="mi-d">1羽から少ししか取れない、ぷりっとした尾の身 <i class="dv">配達可</i></span></li>
+          <li><span class="mi-n">ハツ</span><span class="mi-l"></span><span class="mi-p">176<small>円</small></span><span class="mi-d">心臓。コリッとした食感 <i class="dv">配達可</i></span></li>
+          <li><span class="mi-n">レバー</span><span class="mi-l"></span><span class="mi-p">176<small>円</small></span><span class="mi-d">半生に近い仕上げのため店内限定</span></li>
+          <li><span class="mi-n">砂肝</span><span class="mi-l"></span><span class="mi-p">165<small>円</small></span><span class="mi-d">粗塩とレモンで <i class="dv">配達可</i></span></li>
+          <li><span class="mi-n">せせり</span><span class="mi-l"></span><span class="mi-p">209<small>円</small></span><span class="mi-d">首まわりの身。よく動く部位で旨みが濃い <i class="dv">配達可</i></span></li>
+          <li><span class="mi-n">手羽先</span><span class="mi-l"></span><span class="mi-p">242<small>円</small></span><span class="mi-d">皮目を香ばしく、黒胡椒をきかせて <i class="dv">配達可</i></span></li>
+          <li><span class="mi-n">ささみ梅しそ</span><span class="mi-l"></span><span class="mi-p">220<small>円</small></span><span class="mi-d">さっぱり派に。大葉と梅肉をのせて <i class="dv">配達可</i></span></li>
+          <li><span class="mi-n">うずら</span><span class="mi-l"></span><span class="mi-p">165<small>円</small></span><span class="mi-d">タレでとろりと <i class="dv">配達可</i></span></li>
+          <li><span class="mi-n">おまかせ5本盛り<i class="tg">おすすめ</i></span><span class="mi-l"></span><span class="mi-p">935<small>円</small></span><span class="mi-d">その日いちばんの部位を、塩とタレで5本 <i class="dv">配達可</i></span></li>
+        </ul>
+      </div>
+
+      <div class="mg" data-rev style="--rd:.08s">
+        <h3 class="mg-h"><span>一品</span><small>DISHES</small></h3>
+        <ul class="ml">
+          <li><span class="mi-n">とりまるポテサラ</span><span class="mi-l"></span><span class="mi-p">495<small>円</small></span><span class="mi-d">燻製たまごと粗挽き胡椒 <i class="dv">配達可</i></span></li>
+          <li><span class="mi-n">鶏皮ポン酢</span><span class="mi-l"></span><span class="mi-p">440<small>円</small></span><span class="mi-d"><i class="dv">配達可</i></span></li>
+          <li><span class="mi-n">冷やしトマト</span><span class="mi-l"></span><span class="mi-p">385<small>円</small></span></li>
+          <li><span class="mi-n">自家製ぬか漬け盛り</span><span class="mi-l"></span><span class="mi-p">418<small>円</small></span></li>
+          <li><span class="mi-n">焼きおにぎり（2個）</span><span class="mi-l"></span><span class="mi-p">462<small>円</small></span><span class="mi-d">継ぎ足しダレを塗って炭火で <i class="dv">配達可</i></span></li>
+          <li><span class="mi-n">親子丼<i class="tg">人気</i></span><span class="mi-l"></span><span class="mi-p">880<small>円</small></span><span class="mi-d">炭火で炙ったもも肉を、半熟たまごで <i class="dv">配達可</i></span></li>
+          <li><span class="mi-n">鶏白湯の〆雑炊</span><span class="mi-l"></span><span class="mi-p">660<small>円</small></span></li>
+        </ul>
+      </div>
+
+      <div class="mg" data-rev style="--rd:.16s">
+        <h3 class="mg-h"><span>飲み物</span><small>DRINKS</small></h3>
+        <ul class="ml">
+          <li><span class="mi-n">生ビール（中）</span><span class="mi-l"></span><span class="mi-p">638<small>円</small></span></li>
+          <li><span class="mi-n">瓶ビール（中瓶）</span><span class="mi-l"></span><span class="mi-p">715<small>円</small></span></li>
+          <li><span class="mi-n">とりまるハイボール</span><span class="mi-l"></span><span class="mi-p">495<small>円</small></span></li>
+          <li><span class="mi-n">生レモンサワー</span><span class="mi-l"></span><span class="mi-p">528<small>円</small></span></li>
+          <li><span class="mi-n">梅酒（ロック／ソーダ）</span><span class="mi-l"></span><span class="mi-p">550<small>円</small></span></li>
+          <li><span class="mi-n">季節の地酒（一合）</span><span class="mi-l"></span><span class="mi-p">770<small>円〜</small></span></li>
+          <li><span class="mi-n">烏龍茶</span><span class="mi-l"></span><span class="mi-p">330<small>円</small></span></li>
+          <li><span class="mi-n">自家製ジンジャーエール</span><span class="mi-l"></span><span class="mi-p">385<small>円</small></span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="menu-cta" data-rev>
+      <p>おうちでも、焼きたてを。<small>配達可のメニューはデリバリーアプリから注文できます</small></p>
+      <div class="order">
+        <a class="ob ob-uber" href="#"><span><b>Uber Eats</b><small>で注文する</small></span><svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="2"/></svg></a>
+        <a class="ob ob-demae" href="#"><span><b>出前館</b><small>で注文する</small></span><svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="2"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DELIVERY ============ -->
+<section class="delivery" id="delivery">
+  <div class="wrap">
+    <div class="sec-head" data-rev><span class="sec-main">おうちで、とりまる。</span><span class="sec-sub">DELIVERY</span></div>
+    <div class="dl-grid">
+      <div data-rev>
+        <p class="sec-lead" style="margin-bottom:28px">焼き上がりから逆算して串を打ち、専用の容器でタレがなじんだ状態でお届けします。ご自宅での家飲みや、在宅ワークのお昼にもどうぞ。</p>
+        <div class="order lg">
+          <a class="ob ob-uber" href="#"><span><b>Uber Eats</b><small>で注文する</small></span><svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="2"/></svg></a>
+          <a class="ob ob-demae" href="#"><span><b>出前館</b><small>で注文する</small></span><svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="2"/></svg></a>
+        </div>
+        <dl class="dl-facts">
+          <dt>受付時間</dt><dd>17:00–22:00（月曜定休）</dd>
+          <dt>配達エリア</dt><dd>店舗からおおむね3km圏内</dd>
+          <dt>お届け目安</dt><dd>30〜45分</dd>
+        </dl>
+      </div>
+      <div>
+        <div class="dl-sets">
+          <div class="set" data-rev style="--rd:0s"><div class="set-img" data-art="box" role="img" aria-label="串10本盛りのイラスト"></div>
+            <div><h3>とりまる 串10本盛り</h3><p>ねぎま・つくね・皮など定番を塩とタレで</p><span class="set-price">2,480<small>円（税込）</small></span></div></div>
+          <div class="set" data-rev style="--rd:.08s"><div class="set-img" data-art="oyako" role="img" aria-label="親子丼のイラスト"></div>
+            <div><h3>親子丼 &amp; 串3本セット</h3><p>ランチにもちょうどいい、いちばん人気の組み合わせ</p><span class="set-price">1,580<small>円（税込）</small></span></div></div>
+          <div class="set" data-rev style="--rd:.16s"><div class="set-img" data-art="tsukimi" role="img" aria-label="月見つくねのイラスト"></div>
+            <div><h3>月見つくね3本 &amp; 焼きおにぎり</h3><p>名物のつくねを、卵黄ソース付きで</p><span class="set-price">1,280<small>円（税込）</small></span></div></div>
+        </div>
+        <p class="dl-note">※ デリバリー価格は店内価格と異なります。最新の価格・在庫は各アプリでご確認ください。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COUPON ============ -->
+<section class="coupon" id="coupon">
+  <div class="wrap">
+    <div class="sec-head" data-rev><span class="sec-main">クーポン</span><span class="sec-sub">COUPON</span></div>
+    <div class="ticket" data-rev>
+      <div class="tk-main">
+        <p class="tk-k">はじめてご来店の方へ</p>
+        <p class="tk-h">ドリンク<b>1</b>杯 無料</p>
+        <p class="tk-s">生ビール・ハイボール・サワー・ソフトドリンクから、お好きな1杯をサービスします。</p>
+      </div>
+      <div class="tk-stub"><span>COUPON</span><b>TM-001</b><small>有効期限 2026.12.28</small></div>
+    </div>
+    <ul class="tk-terms">
+      <li>ご注文時にこの画面をスタッフにご提示ください。</li>
+      <li>店内でのご飲食に限ります。お一人さま1回限り、他のクーポン・割引との併用はできません。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ INSTAGRAM ============ -->
+<section class="insta" id="instagram">
+  <div class="wrap">
+    <div class="sec-head" data-rev><span class="sec-main">Instagram</span><span class="sec-sub">LATEST POSTS</span></div>
+    <div class="ig-top">
+      <p class="ig-acc">@torimaru_yakitori</p>
+    </div>
+    <div class="ig-grid" id="igGrid" data-cursor="view"></div>
+    <p class="ig-note">※ 公開サイトでは Instagram の最新投稿9件が自動で表示されます（デモのため仮のタイルです）。</p>
+    <p style="margin:24px 0 0"><a class="btn-line" href="#">Instagram をフォローする ↗</a></p>
+  </div>
+</section>
+
+<!-- ============ ACCESS ============ -->
+<section class="access" id="access">
+  <div class="wrap">
+    <div class="sec-head" data-rev><span class="sec-main">店舗情報</span><span class="sec-sub">SHOP &amp; ACCESS</span></div>
+    <div class="ac-grid">
+      <dl class="info" data-rev>
+        <dt>店名</dt><dd>炭火やきとり とりまる</dd>
+        <dt>住所</dt><dd>〒000-0000<br>東京都〇〇区〇〇1-2-3 〇〇ビル1F</dd>
+        <dt>電話</dt><dd><a href="tel:0300000000">03-0000-0000</a></dd>
+        <dt>営業時間</dt><dd>火〜金 17:00–23:30（L.O. 22:45）<br>土日祝 16:00–23:00（L.O. 22:15）</dd>
+        <dt>定休日</dt><dd>月曜日（祝日の場合は翌火曜）</dd>
+        <dt>席数</dt><dd>32席（カウンター10席・テーブル22席）</dd>
+        <dt>アクセス</dt><dd>〇〇線「〇〇駅」東口より徒歩3分</dd>
+        <dt>デリバリー</dt><dd>17:00–22:00（Uber Eats／出前館）</dd>
+        <dt>その他</dt><dd>全席禁煙／各種カード・交通系IC・QR決済可</dd>
+      </dl>
+      <div class="map" data-rev style="--rd:.08s">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="400" height="300" fill="var(--mist)"/>
+          <g fill="var(--paper)">
+            <rect x="12" y="14" width="96" height="62" rx="4"/><rect x="132" y="14" width="110" height="62" rx="4"/><rect x="266" y="14" width="122" height="62" rx="4"/>
+            <rect x="12" y="102" width="96" height="84" rx="4"/><rect x="132" y="102" width="110" height="84" rx="4"/><rect x="266" y="102" width="122" height="84" rx="4"/>
+            <rect x="12" y="212" width="96" height="76" rx="4"/><rect x="132" y="212" width="110" height="76" rx="4"/><rect x="266" y="212" width="122" height="76" rx="4"/>
+          </g>
+          <g stroke="var(--line)" stroke-width="14" fill="none"><path d="M0 89H400M0 199H400M120 0V300M254 0V300"/></g>
+          <path d="M0 250 L400 232" stroke="var(--ink2)" stroke-width="5" opacity=".5"/>
+          <path d="M0 250 L400 232" stroke="var(--mist)" stroke-width="2.4" stroke-dasharray="10 10"/>
+          <rect x="30" y="232" width="70" height="30" rx="4" fill="var(--ink)"/>
+          <text x="65" y="252" text-anchor="middle" font-size="13" font-weight="700" fill="var(--paper)">〇〇駅</text>
+          <path d="M100 247 C150 240 170 205 192 199 S226 160 226 140" stroke="var(--ember)" stroke-width="3" stroke-dasharray="2 7" stroke-linecap="round" fill="none"/>
+          <g transform="translate(226 140)"><path d="M0 0 C-4 -12 -18 -18 -18 -34 A18 18 0 1 1 18 -34 C18 -18 4 -12 0 0Z" fill="var(--ember)"/><circle cx="0" cy="-34" r="7" fill="#fbf3e6"/></g>
+          <text x="248" y="118" font-size="12" font-weight="700" fill="var(--ink)">とりまる</text>
+        </svg>
+        <div class="map-label"><b>Googleマップ埋め込みエリア</b><span>公開サイトでは、ここに店舗の地図が表示されます</span><a href="#">Googleマップで開く ↗</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="sec-head" data-rev><span class="sec-main">よくあるご質問</span><span class="sec-sub">FAQ</span></div>
+    <div class="faq-list" id="faqList" data-rev></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="ft-grid">
+      <div>
+        <a class="logo" href="#top"><small>炭火やきとり</small><b>とりまる</b></a>
+        <p class="ft-addr">東京都〇〇区〇〇1-2-3 〇〇ビル1F<br>TEL <a href="tel:0300000000">03-0000-0000</a>／月曜定休</p>
+      </div>
+      <div class="order">
+        <a class="ob ob-uber" href="#"><span><b>Uber Eats</b><small>で注文する</small></span><svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="2"/></svg></a>
+        <a class="ob ob-demae" href="#"><span><b>出前館</b><small>で注文する</small></span><svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="2"/></svg></a>
+      </div>
+    </div>
+    <div class="ft-bottom"><span>© 炭火やきとり とりまる（架空の店舗）</span><span>Web制作：Table Web（制作デモ）</span></div>
+  </div>
+</footer>
+
+<!-- 追従CTA -->
+<a class="fcta" href="#delivery" aria-label="デリバリー注文へ">
+  <svg viewBox="0 0 120 120" aria-hidden="true">
+    <circle cx="60" cy="60" r="60"/>
+    <g class="rot"><path id="fctaPath" fill="none" d="M60,19 a41,41 0 1,1 -0.1,0"/>
+      <text><textPath href="#fctaPath" textLength="255" lengthAdjust="spacing">DELIVERY · デリバリー注文 · DELIVERY · </textPath></text></g>
+    <path class="ar" d="M51 69 L69 51 M55 51 h14 v14"/>
+  </svg>
+</a>
+<nav class="sob" aria-label="デリバリー注文">
+  <a class="ob ob-uber" href="#"><span><b>Uber Eats</b><small>で注文</small></span></a>
+  <a class="ob ob-demae" href="#"><span><b>出前館</b><small>で注文</small></span></a>
+</nav>
+
+<script>
+'use strict';
+document.body.classList.remove('no-js');
+document.documentElement.classList.add('has-js');
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* =========================================================
+   料理イラスト（写真なしのため、すべてインラインSVGで生成）
+   ========================================================= */
+const DEFS=
+ '<linearGradient id="tare" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c06b2f"/><stop offset=".5" stop-color="#8c4016"/><stop offset="1" stop-color="#57240a"/></linearGradient>'+
+ '<linearGradient id="shio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6d9a8"/><stop offset=".55" stop-color="#dba466"/><stop offset="1" stop-color="#a9692f"/></linearGradient>'+
+ '<linearGradient id="negi" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbf9ea"/><stop offset=".6" stop-color="#e9e8c6"/><stop offset="1" stop-color="#b9b07a"/></linearGradient>'+
+ '<linearGradient id="liver" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7c3222"/><stop offset="1" stop-color="#3a120a"/></linearGradient>'+
+ '<linearGradient id="beer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8cb4f"/><stop offset="1" stop-color="#d4850f"/></linearGradient>'+
+ '<linearGradient id="yaki" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ecc07a"/><stop offset="1" stop-color="#a45f28"/></linearGradient>'+
+ '<radialGradient id="glow"><stop offset="0" stop-color="#ffc061"/><stop offset=".45" stop-color="#ff6a1f" stop-opacity=".7"/><stop offset="1" stop-color="#ff3d00" stop-opacity="0"/></radialGradient>';
+const SV=(bg,body)=>'url("data:image/svg+xml;utf8,'+encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><defs>'+DEFS+'</defs><rect width="300" height="300" fill="'+bg+'"/>'+body+'</svg>')+'")';
+
+const salt=x=>[[-10,-12],[6,-16],[-2,4],[10,8],[-12,14]].map(([a,b])=>`<circle cx="${x+a}" cy="${150+b}" r="2" fill="#fff" opacity=".85"/>`).join('');
+const burn=(x,a)=>`<path d="${a.map(([p,q,r,s])=>`M${x+p} ${150+q}l${r} ${s}`).join('')}" stroke="#2a1004" stroke-width="4" stroke-linecap="round" opacity=".45"/>`;
+const PC={
+  momo:[48,(x,g='tare')=>`<rect x="${x-24}" y="124" width="48" height="52" rx="17" fill="url(#${g})"/>${burn(x,[[-14,-14,10,-6],[-6,14,14,-8],[6,-2,9,-5]])}<ellipse cx="${x-8}" cy="134" rx="10" ry="4" fill="#fff" opacity=".38"/>${g==='shio'?salt(x):''}`],
+  negi:[28,x=>`<rect x="${x-14}" y="127" width="28" height="46" rx="9" fill="url(#negi)"/><path d="M${x-5} 132v36M${x+5} 132v36" stroke="#fff" stroke-width="2.5" opacity=".7"/><circle cx="${x+4}" cy="162" r="4.5" fill="#5e3a14" opacity=".45"/>`],
+  tsukune:[104,x=>`<rect x="${x-52}" y="123" width="104" height="54" rx="27" fill="url(#tare)"/>${burn(x,[[-36,-12,12,-6],[-14,12,14,-8],[10,-10,12,-6],[28,10,12,-7]])}<ellipse cx="${x-12}" cy="133" rx="30" ry="5" fill="#fff" opacity=".32"/>`],
+  kawa:[44,x=>`<path d="M${x-22} 128q5.5-7 11 0t11 0t11 0t11 0v44q-5.5 7-11 0t-11 0t-11 0t-11 0z" fill="url(#shio)"/><path d="M${x-11} 131v38M${x} 131v38M${x+11} 131v38" stroke="#8a4f1f" stroke-width="2" opacity=".45"/>${salt(x)}`],
+  liver:[42,x=>`<rect x="${x-21}" y="126" width="42" height="48" rx="19" fill="url(#liver)"/><ellipse cx="${x-6}" cy="136" rx="10" ry="4" fill="#fff" opacity=".35"/>`],
+  hatsu:[30,x=>`<ellipse cx="${x}" cy="150" rx="15" ry="20" fill="url(#liver)"/><ellipse cx="${x-4}" cy="139" rx="5" ry="3" fill="#fff" opacity=".4"/>`],
+  suna:[30,x=>`<circle cx="${x}" cy="139" r="14" fill="url(#shio)"/><circle cx="${x}" cy="161" r="14" fill="url(#shio)"/><path d="M${x-8} 139h16M${x-8} 161h16" stroke="#8a5028" stroke-width="2" opacity=".55"/>`],
+  bonji:[40,x=>`<path d="M${x-19} 170Q${x-23} 127 ${x} 125Q${x+23} 127 ${x+19} 170Q${x} 179 ${x-19} 170z" fill="url(#shio)"/><ellipse cx="${x-6}" cy="136" rx="8" ry="3.5" fill="#fff" opacity=".5"/>${salt(x)}`],
+  uzura:[36,x=>`<ellipse cx="${x}" cy="150" rx="18" ry="21" fill="#f7eed8"/><ellipse cx="${x+5}" cy="157" rx="12" ry="12" fill="#c7823f" opacity=".5"/><ellipse cx="${x-6}" cy="139" rx="5" ry="3" fill="#fff"/>`],
+  sasami:[48,x=>`<rect x="${x-24}" y="128" width="48" height="44" rx="14" fill="url(#shio)"/><path d="M${x-18} 134q18-16 36 0q-18 14-36 0z" fill="#5f8f3a"/><circle cx="${x+2}" cy="154" r="7" fill="#b3263a"/>`]
+};
+const STEAM='<g fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".26"><path d="M112 84q-12-14 0-28t0-28"/><path d="M150 72q-12-14 0-28t0-28"/><path d="M188 84q-12-14 0-28t0-28"/></g>';
+function kushi(bg,list,extra=''){
+  const tot=list.reduce((a,[k])=>a+PC[k][0]+4,0)-4;
+  let x=160-tot/2, body='';
+  for(const [k,g] of list){ const w=PC[k][0]; body+=PC[k][1](x+w/2,g); x+=w+4; }
+  return SV(bg,`<ellipse cx="156" cy="252" rx="108" ry="9" fill="#000" opacity=".16"/><g transform="rotate(-24 150 150)"><rect x="14" y="146.5" width="262" height="7" rx="3.5" fill="#d9b782"/><path d="M276 150h16" stroke="#d9b782" stroke-width="4" stroke-linecap="round"/>${body}</g>${extra}`);
+}
+const YOLK='<circle cx="226" cy="230" r="42" fill="#fbf7ee"/><circle cx="226" cy="230" r="42" fill="none" stroke="#2c4a6e" stroke-width="4"/><circle cx="226" cy="226" r="20" fill="#f7a600"/><ellipse cx="219" cy="219" rx="6" ry="4" fill="#fff" opacity=".6"/>';
+
+const coals=[[100,143,11],[124,146,12],[148,141,13],[172,146,11],[196,142,12],[114,137,8],[160,136,9],[206,138,8]]
+  .map(([x,y,r])=>`<circle cx="${x}" cy="${y}" r="${r}" fill="#ff6a1f"/><circle cx="${x}" cy="${y-2}" r="${r*.5}" fill="#ffc061"/>`).join('');
+const miniKushi=y=>`<rect x="78" y="${y}" width="150" height="4" rx="2" fill="#d9b782"/>`+[96,126,156,186].map((x,i)=>`<rect x="${x}" y="${y-8}" width="24" height="20" rx="7" fill="url(#${i%2?'shio':'tare'})"/>`).join('');
+const ribs=[86,106,126,146,166,186,206,226].map(y=>{const hw=84*Math.sqrt(Math.max(0,1-((y-156)/96)**2));
+  return `<path d="M${(150-hw).toFixed(1)} ${y}Q150 ${y+10} ${(150+hw).toFixed(1)} ${y}" stroke="#8e2a10" stroke-width="2.5" fill="none" opacity=".55"/>`}).join('');
+
+const ART={
+  negima:kushi('#e7d5b5',[['momo'],['negi'],['momo'],['negi'],['momo']]),
+  negimaS:kushi('#1f1a17',[['momo','shio'],['negi'],['momo','shio'],['negi'],['momo','shio']],STEAM),
+  tsukune:kushi('#f3ece0',[['tsukune']]),
+  tsukimi:kushi('#e7d5b5',[['tsukune']],YOLK),
+  kawa:kushi('#1f1a17',[['kawa'],['kawa'],['kawa'],['kawa']],STEAM),
+  liver:kushi('#e9e1d2',[['liver'],['liver'],['liver'],['liver']]),
+  hatsu:kushi('#c8401e',[['hatsu'],['hatsu'],['hatsu'],['hatsu'],['hatsu'],['hatsu']]),
+  suna:kushi('#f3ece0',[['suna'],['suna'],['suna'],['suna'],['suna']]),
+  bonji:kushi('#2b2420',[['bonji'],['bonji'],['bonji'],['bonji']],STEAM),
+  uzura:kushi('#c8401e',[['uzura'],['uzura'],['uzura'],['uzura']]),
+  sasami:kushi('#e7d5b5',[['sasami'],['sasami'],['sasami']]),
+  shichirin:SV('#1f1a17',`<ellipse cx="150" cy="138" rx="130" ry="72" fill="url(#glow)" opacity=".55"/><ellipse cx="150" cy="262" rx="104" ry="9" fill="#000" opacity=".4"/>
+    <path d="M62 142h176l-14 108q-74 14-148 0z" fill="#d2b183"/><path d="M62 142h176l-2.6 20H64.6z" fill="#b48c5a"/><path d="M72 236q78 12 156 0" stroke="#b48c5a" stroke-width="5" fill="none"/>
+    <rect x="120" y="190" width="60" height="36" rx="4" fill="#2b1c12"/><rect x="127" y="197" width="46" height="22" rx="3" fill="#ff7a2a"/><rect x="127" y="197" width="46" height="22" rx="3" fill="url(#glow)"/>
+    <ellipse cx="150" cy="142" rx="88" ry="15" fill="#2a1a10"/>${coals}<path d="M70 132H230" stroke="#6b625a" stroke-width="3"/>${miniKushi(122)}${miniKushi(100)}${STEAM}`),
+  sumi:SV('#15110f',`<ellipse cx="150" cy="180" rx="150" ry="110" fill="url(#glow)" opacity=".5"/>
+    <path d="M90 122l34-30 44 10 4 34-40 20-36-8z" fill="#2a221e"/><path d="M40 212l30-40 50-6 22 34-18 40-60 6z" fill="#2c2420"/>
+    <path d="M130 198l40-50 56 8 28 44-26 46-70 4z" fill="#332923"/><path d="M204 232l30-24 40 10 6 34-44 12z" fill="#241d19"/>
+    <g stroke="#ff6a1f" stroke-width="3" fill="none" stroke-linecap="round"><path d="M70 180l20 16 8 26"/><path d="M170 158l12 30-16 26"/><path d="M200 170l22 12"/><path d="M118 110l14 14"/><path d="M240 222l8 16"/></g>
+    <g fill="#ffb347">${[[80,70,3],[120,52,2],[160,78,2.5],[196,46,2],[226,90,3],[140,34,1.8],[250,60,2]].map(([x,y,r])=>`<circle cx="${x}" cy="${y}" r="${r}"/>`).join('')}</g>`),
+  beer:SV('#e7d5b5',`<ellipse cx="150" cy="258" rx="84" ry="8" fill="#000" opacity=".15"/>
+    <path d="M200 126h16q20 0 20 20v48q0 20-20 20h-16" fill="none" stroke="#fbf5e6" stroke-width="14"/>
+    <rect x="84" y="98" width="120" height="158" rx="14" fill="#fbf5e6" opacity=".7"/><rect x="92" y="112" width="104" height="136" rx="8" fill="url(#beer)"/>
+    <rect x="102" y="122" width="10" height="112" rx="5" fill="#fff" opacity=".3"/>
+    <g fill="#fff" opacity=".55">${[[140,220,3],[160,190,2.5],[128,176,2],[176,160,3],[150,140,2]].map(([x,y,r])=>`<circle cx="${x}" cy="${y}" r="${r}"/>`).join('')}</g>
+    <path d="M84 120V104q0-20 22-18q8-16 28-10q14-14 32-2q20-8 30 10q16 4 12 20V120z" fill="#fffaf0"/>`),
+  highball:SV('#1f1a17',`<ellipse cx="150" cy="258" rx="70" ry="7" fill="#000" opacity=".35"/>
+    <path d="M100 66h100l-10 186q-40 8-80 0z" fill="#f3e3ae" opacity=".92"/>
+    <g fill="#fff" opacity=".45"><rect x="116" y="100" width="36" height="36" rx="6" transform="rotate(12 134 118)"/><rect x="148" y="132" width="34" height="34" rx="6" transform="rotate(-10 165 149)"/><rect x="118" y="160" width="32" height="32" rx="6" transform="rotate(20 134 176)"/></g>
+    <g fill="#fff" opacity=".7">${[[130,220,2.5],[166,206,2],[150,236,2],[176,184,2.5]].map(([x,y,r])=>`<circle cx="${x}" cy="${y}" r="${r}"/>`).join('')}</g>
+    <path d="M100 66h100l-10 186q-40 8-80 0z" fill="none" stroke="#fff" stroke-width="4" opacity=".55"/>
+    <circle cx="196" cy="70" r="30" fill="#f2c200"/><circle cx="196" cy="70" r="24" fill="#fbe57a"/>
+    <path d="M196 46v48M172 70h48M179 53l34 34M213 53l-34 34" stroke="#f2c200" stroke-width="3"/>`),
+  onigiri:SV('#e9dcc4',`<ellipse cx="150" cy="246" rx="112" ry="12" fill="#000" opacity=".12"/>
+    <path d="M150 64Q172 64 232 188Q248 236 204 238H96Q52 236 68 188Q128 64 150 64z" fill="url(#yaki)"/>
+    <path d="M104 148l46-28M92 184l84-50M104 214l96-58" stroke="#6b3412" stroke-width="7" stroke-linecap="round" opacity=".42"/>
+    <ellipse cx="128" cy="116" rx="14" ry="7" fill="#fff" opacity=".35" transform="rotate(-50 128 116)"/>
+    <rect x="112" y="190" width="76" height="49" rx="4" fill="#1e2a20"/>`),
+  chochin:SV('#1a1512',`<circle cx="150" cy="156" r="146" fill="url(#glow)" opacity=".45"/><path d="M150 18v36" stroke="#666" stroke-width="3"/>
+    <ellipse cx="150" cy="156" rx="84" ry="96" fill="#d24a22"/>${ribs}<ellipse cx="122" cy="126" rx="16" ry="40" fill="#fff" opacity=".12"/>
+    <rect x="112" y="54" width="76" height="16" rx="3" fill="#111"/><rect x="112" y="242" width="76" height="16" rx="3" fill="#111"/>
+    <circle cx="150" cy="156" r="30" fill="none" stroke="#fbe9d0" stroke-width="7"/><path d="M150 258v24" stroke="#111" stroke-width="4"/>`),
+  tebasaki:SV('#f3ece0',`<ellipse cx="150" cy="226" rx="128" ry="34" fill="#fbf8f1" stroke="#d6cbb8" stroke-width="3"/>
+    <path d="M58 190C66 118 150 86 208 104C244 115 256 144 238 162C222 178 192 170 178 176C150 194 118 220 86 220C64 220 54 206 58 190Z" fill="url(#tare)"/>
+    <path d="M84 170C98 134 150 112 196 118" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" opacity=".32"/>
+    <g fill="#1b1714" opacity=".55">${[[120,150],[150,136],[176,150],[106,182],[140,170],[200,128],[92,200]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="2.2"/>`).join('')}</g>`),
+  box:SV('#f3ece0',`<ellipse cx="150" cy="250" rx="118" ry="9" fill="#000" opacity=".14"/>
+    <rect x="36" y="76" width="228" height="166" rx="12" fill="#1b1714"/><rect x="46" y="86" width="208" height="146" rx="6" fill="#2d2521"/>
+    ${[108,142,176,210].map((y,j)=>`<rect x="56" y="${y}" width="188" height="4" rx="2" fill="#d9b782"/>`+[76,112,148,184].map((x,i)=>`<rect x="${x}" y="${y-9}" width="30" height="22" rx="8" fill="url(#${['tare','shio','negi','tare'][(i+j)%4]})"/>`).join('')).join('')}
+    <path d="M228 90l14 14-14 14 14 14-14 14" fill="none" stroke="#4f8a3a" stroke-width="5"/>`),
+  oyako:SV('#e7d5b5',`<ellipse cx="150" cy="250" rx="100" ry="10" fill="#000" opacity=".15"/>
+    <path d="M48 138h204q-8 104-102 108q-94-4-102-108z" fill="#1b1714"/><path d="M62 156q88 20 176 0" stroke="#c8401e" stroke-width="5" fill="none"/>
+    <ellipse cx="150" cy="138" rx="102" ry="27" fill="#f4c65a"/>
+    <g fill="#fbf1d2"><ellipse cx="112" cy="134" rx="22" ry="9"/><ellipse cx="184" cy="142" rx="24" ry="8"/><ellipse cx="150" cy="128" rx="14" ry="6"/></g>
+    <g fill="url(#tare)"><rect x="88" y="126" width="26" height="16" rx="6"/><rect x="132" y="136" width="28" height="15" rx="6"/><rect x="176" y="124" width="24" height="15" rx="6"/></g>
+    <g fill="#5f9a3a"><path d="M150 118q10-12 20 0q-10 8-20 0z"/><path d="M160 122q12-6 18 6q-12 4-18-6z"/></g>
+    <ellipse cx="150" cy="138" rx="102" ry="27" fill="none" stroke="#2a221d" stroke-width="6"/>`)
+};
+
+/* =========================================================
+   FV marquee（kinetic-marquee-site / initMarquee を移植）
+   ========================================================= */
+const TYPE={
+  T1:['t-ink','<b>炭火</b><small>SUMIBI YAKITORI</small>'],
+  T2:['t-kraft','<b>毎朝、<br>串打ち。</b>'],
+  T3:['t-ember','<small>炭火やきとり</small><b>とりまる</b>'],
+  T4:['t-ink','<small>DELIVERY</small><b>おうちで<br>とりまる</b><em>Uber Eats／出前館</em>']
+};
+const ROWS=[
+  ['negima','T1','tsukimi','shichirin','kawa','beer','bonji','T2','liver','chochin','tebasaki','onigiri'],
+  ['highball','negimaS','T3','suna','sumi','hatsu','tsukune','T4','uzura','box','sasami','oyako'],
+  ['chochin','sasami','T2','negimaS','onigiri','tebasaki','beer','T1','kawa','shichirin','tsukimi','hatsu']
+];
+document.querySelectorAll('.mq-row').forEach(row=>{
+  const keys=ROWS[+row.dataset.row], frag=document.createDocumentFragment();
+  for(let rep=0;rep<2;rep++){                       // ループ単位の「ちょうど2倍」
+    keys.forEach((k,i)=>{
+      const c=document.createElement('div');
+      if(TYPE[k]){ c.className='mq-cell mq-type '+TYPE[k][0]; c.innerHTML=TYPE[k][1]; }
+      else{ c.className='mq-cell'; c.style.backgroundImage=ART[k]; }
+      if(rep===0&&i===0) c.classList.add('lead');
+      const d=Math.abs(i-keys.length/2)/(keys.length/2);   // 中央から外へスタガー
+      c.style.setProperty('--ed',(.15+d*.4).toFixed(2)+'s');
+      frag.appendChild(c);
+    });
+  }
+  row.appendChild(frag);
+});
+
+(function initMarquee(){
+  const root=document.querySelector('.mqs');
+  if(RM) return;
+  root.classList.add('js');
+
+  const rows=[...root.querySelectorAll('.mq-row')].map(el=>{
+    const dur=parseFloat(el.style.getPropertyValue('--d'))||60;
+    const dir=el.classList.contains('rev')?1:-1;
+    return {el,dur,dir,half:0,base:0,x:0,v:0};
+  });
+  function measure(){
+    for(const r of rows){
+      const prev=r.half; r.half=r.el.scrollWidth/2;
+      r.base=r.half?(r.half/r.dur)*r.dir:0;
+      if(!prev){ r.x=r.dir<0?0:-r.half; r.v=r.base; }
+    }
+  }
+  measure();
+  addEventListener('resize',measure,{passive:true});
+
+  const cells=[...root.querySelectorAll('.mq-cell')].map(el=>({el,s:1,target:1,freq:.5+Math.random()*.6,phase:Math.random()*Math.PI*2}));
+  const cellOf=new Map(cells.map(c=>[c.el,c]));
+  root.addEventListener('pointerover',e=>{
+    if(e.pointerType!=='mouse') return;
+    const el=e.target.closest('.mq-cell'); const o=el&&cellOf.get(el); if(o){o.target=1.16; el.classList.add('hot');}
+  });
+  root.addEventListener('pointerout',e=>{
+    const el=e.target.closest('.mq-cell'); const o=el&&cellOf.get(el); if(o){o.target=1; el.classList.remove('hot');}
+  });
+
+  let dragging=false,lastX=0,hist=[];
+  root.addEventListener('pointerdown',e=>{
+    if(e.button>0) return;
+    dragging=true; lastX=e.clientX; hist=[];
+    root.classList.add('dragging'); root.setPointerCapture(e.pointerId);
+  });
+  root.addEventListener('pointermove',e=>{
+    if(!dragging) return;
+    const dx=e.clientX-lastX; lastX=e.clientX;
+    for(const r of rows) r.x+=dx;
+    hist.push([performance.now(),dx]); if(hist.length>5) hist.shift();
+  });
+  const endDrag=()=>{
+    if(!dragging) return;
+    dragging=false; root.classList.remove('dragging');
+    const now=performance.now(), recent=hist.filter(h=>now-h[0]<120);
+    const sum=recent.reduce((a,h)=>a+h[1],0), span=recent.length?Math.max(now-recent[0][0],16):16;
+    const v=Math.max(-4000,Math.min(4000,sum/(span/1000)));
+    for(const r of rows) r.v=v;
+  };
+  root.addEventListener('pointerup',endDrag);
+  root.addEventListener('pointercancel',endDrag);
+
+  let raf=null,last=performance.now(),visible=true;
+  function tick(now){
+    const dt=Math.min((now-last)/1000,.05); last=now;
+    for(const r of rows){
+      if(!r.half) continue;                              // SPで非表示の行はスキップ
+      if(!dragging) r.v+=(r.base-r.v)*(1-Math.pow(.001,dt));
+      r.x+=r.v*dt;
+      r.x=((r.x%r.half)+r.half)%r.half-r.half;
+      const sk=Math.max(-2.5,Math.min(2.5,-r.v*.0041));
+      const bl=Math.min(Math.abs(r.v)*.0008,.6);
+      r.el.style.transform=`translate3d(${r.x.toFixed(2)}px,0,0) skewX(${sk.toFixed(2)}deg)`;
+      r.el.style.filter=bl>.02?`blur(${bl.toFixed(2)}px)`:'';
+    }
+    const t=now/1000;
+    for(const c of cells){
+      c.s+=(c.target-c.s)*(1-Math.pow(.002,dt));
+      const br=1+Math.sin(t*c.freq+c.phase)*.017, fy=Math.sin(t*c.freq*.7+c.phase)*3;
+      c.el.style.transform=`translateY(${fy.toFixed(2)}px) scale(${(c.s*br).toFixed(4)})`;
+    }
+    raf=requestAnimationFrame(tick);
+  }
+  const start=()=>{ if(raf||!visible||document.hidden) return; last=performance.now(); raf=requestAnimationFrame(tick); };
+  const stop=()=>{ if(raf) cancelAnimationFrame(raf); raf=null; };
+  document.addEventListener('visibilitychange',()=>document.hidden?stop():start());
+  new IntersectionObserver(([e])=>{ visible=e.isIntersecting; visible?start():stop(); }).observe(root);
+
+  // 登場：セルのポップイン → アニメ終了後に呼吸ループへ引き継ぐ
+  root.classList.add('go');
+  const lead=root.querySelector('.mq-cell.lead');
+  if(lead) setTimeout(()=>lead.classList.add('boing'),140);
+  start();
+  setTimeout(()=>cells.forEach(c=>c.el.style.animation='none'),1150);   // lead-boing の fill を解除して呼吸へ
+})();
+
+/* ---------- other images ---------- */
+document.getElementById('craftImg').style.backgroundImage=ART.shichirin;
+document.querySelectorAll('[data-art]').forEach(el=>el.style.backgroundImage=ART[el.dataset.art]);
+(function(){
+  const g=document.getElementById('igGrid');
+  const posts=[['negima','ねぎま','214'],['beer','生ビール','98'],['chochin','提灯','176'],['tsukimi','月見つくね','302'],['shichirin','七輪','251'],
+               ['highball','ハイボール','87'],['kawa','皮','143'],['oyako','親子丼','265'],['tebasaki','手羽先','129']];
+  g.innerHTML=posts.map(([k,l,n])=>`<a class="ig-tile" href="#" data-like="♥ ${n}" aria-label="Instagram投稿：${l}（仮）" style="background-image:${ART[k].replace(/"/g,"'")}"></a>`).join('');
+})();
+
+/* ---------- FAQ ---------- */
+(function(){
+  const F=[
+    ['予約はできますか？','お電話（03-0000-0000）で承ります。当日のご予約も、空きがあればご案内できます。'],
+    ['デリバリーの配達エリアを教えてください。','店舗からおおむね3km圏内です。正確なエリアは Uber Eats／出前館のアプリでお届け先住所を入力してご確認ください。'],
+    ['テイクアウトはできますか？','できます。お電話でご注文いただければ、ご来店のお時間に合わせて焼き上げます。'],
+    ['クーポンは他の割引と併用できますか？','初回ドリンク1杯無料クーポンは、他のクーポン・割引との併用はできません。お一人さま1回限りです。'],
+    ['子ども連れでも入れますか？','はい、テーブル席でお子さま連れも歓迎しています。取り皿や子ども用のカトラリーもご用意しています。'],
+    ['貸切はできますか？','20〜32名さまで貸切を承ります。日程やご予算はお気軽にご相談ください。'],
+    ['支払い方法は？','現金のほか、各種クレジットカード・交通系IC・QRコード決済がご利用いただけます。']
+  ];
+  const list=document.getElementById('faqList');
+  list.innerHTML=F.map(([q,a],i)=>`<div class="faq-item"><button class="faq-q" type="button" aria-expanded="false" aria-controls="fa${i}" id="fq${i}"><span class="q">Q</span><span>${q}</span></button>
+    <div class="faq-a" id="fa${i}" role="region" aria-labelledby="fq${i}"><div><p>${a}</p></div></div></div>`).join('');
+  list.addEventListener('click',e=>{
+    const b=e.target.closest('.faq-q'); if(!b) return;
+    const open=b.getAttribute('aria-expanded')!=='true';
+    b.setAttribute('aria-expanded',String(open));
+    b.parentElement.classList.toggle('open',open);
+  });
+})();
+
+/* ---------- reveal ---------- */
+const io=new IntersectionObserver(es=>{
+  for(const e of es){
+    if(!e.isIntersecting) continue;
+    e.target.classList.add('in');
+    e.target.querySelectorAll('.mk').forEach(m=>m.classList.add('on'));
+    io.unobserve(e.target);
+  }
+},{rootMargin:'0px 0px -12% 0px',threshold:.15});
+document.querySelectorAll('[data-rev]').forEach(el=>io.observe(el));
+
+/* ---------- theme inversion（こだわり区間を炭の黒へ） ---------- */
+(function(){
+  const LIGHT={paper:[245,240,230],mist:[236,229,216],line:[221,212,196],ink:[27,23,20],ink2:[74,66,59],sub:[122,111,100]};
+  const DARK ={paper:[22,19,17],  mist:[34,29,26],  line:[58,51,46],   ink:[243,237,227],ink2:[206,197,185],sub:[160,150,138]};
+  const SECS=[...document.querySelectorAll('[data-theme="dark"]')];
+  if(!SECS.length) return;
+  const W_P=RM?.001:.45, W_I=RM?.001:.12, I_START=RM?.001:.285;
+  const sm=t=>{t=Math.min(1,Math.max(0,t));return t*t*(3-2*t)};
+  const mix=(k,t)=>`rgb(${LIGHT[k].map((v,i)=>Math.round(v+(DARK[k][i]-v)*t)).join(',')})`;
+  const meta=document.querySelector('meta[name="theme-color"]');
+  function paint(){
+    const vh=innerHeight; let p=0,iv=0;
+    for(const s of SECS){
+      const r=s.getBoundingClientRect(), d=Math.max(r.top,-r.bottom,0);
+      p=Math.max(p,sm(1-d/(vh*W_P)));
+      iv=Math.max(iv,sm((vh*I_START-d)/(vh*W_I)));
+    }
+    const st=document.body.style;
+    st.background=mix('paper',p);
+    for(const k of ['paper','mist','line']) st.setProperty('--'+k,mix(k,p));
+    for(const k of ['ink','ink2','sub']) st.setProperty('--'+k,mix(k,iv));
+    meta.content=mix('paper',p);
+  }
+  let tick=false;
+  const on=()=>{ if(tick) return; tick=true; requestAnimationFrame(()=>{paint();tick=false}); };
+  addEventListener('scroll',on,{passive:true});
+  addEventListener('resize',on,{passive:true});
+  paint();
+})();
+
+/* ---------- header ---------- */
+(function(){
+  const h=document.querySelector('header');
+  const f=()=>h.classList.toggle('scrolled',scrollY>40);
+  addEventListener('scroll',f,{passive:true}); f();
+})();
+
+/* ---------- 追従CTA：注文ボタンが見えている間は隠す ---------- */
+(function(){
+  const zones=[document.getElementById('fvOrder'),document.getElementById('delivery'),document.querySelector('footer')];
+  const vis=new Set();
+  const ob=new IntersectionObserver(es=>{
+    es.forEach(e=>e.isIntersecting?vis.add(e.target):vis.delete(e.target));
+    document.body.classList.toggle('cta-off',vis.size>0);
+  });
+  zones.forEach(z=>z&&ob.observe(z));
+})();
+
+/* ---------- custom cursor（マーキー=DRAG／Instagram=↗） ---------- */
+(function(){
+  if(RM||!matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  document.documentElement.classList.add('has-cur');
+  const cur=document.querySelector('.cur');
+  let tx=-100,ty=-100,x=-100,y=-100,raf=null;
+  function loop(){
+    x+=(tx-x)*.35; y+=(ty-y)*.35;
+    cur.style.transform=`translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0)`;
+    raf=(Math.abs(tx-x)+Math.abs(ty-y)>.2)?requestAnimationFrame(loop):null;
+  }
+  addEventListener('pointermove',e=>{
+    if(e.pointerType!=='mouse') return;
+    tx=e.clientX; ty=e.clientY;
+    const hot=e.target.closest('[data-cursor]');
+    cur.classList.toggle('on',!!hot);
+    if(hot) cur.dataset.mode=hot.dataset.cursor;
+    if(!raf) raf=requestAnimationFrame(loop);
+  },{passive:true});
+  addEventListener('pointerdown',()=>cur.classList.add('press'));
+  addEventListener('pointerup',()=>cur.classList.remove('press'));
+  document.addEventListener('pointerleave',()=>cur.classList.remove('on'));
+})();
+</script>
+</body>
+</html>

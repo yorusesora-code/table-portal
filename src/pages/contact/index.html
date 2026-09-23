@@ -1,0 +1,93 @@
+<!--{"title":"無料相談・お問い合わせ","desc":"飲食店HP制作の無料相談フォーム。店名・業態・HPの有無・希望プラン・デリバリー導入予定を選ぶだけ。代理店経由の方は代理店コードをご入力ください。","bodyClass":"page-contact","nocta":true,"crumbs":[["無料相談"]]}-->
+<section class="sh">
+  <div class="sh__in">
+    <div class="sh__txt">
+      <p class="sh__k">無料相談・お問い合わせ</p>
+      <p class="sh__en" data-chars>CONTACT</p>
+      <h1 class="sh__t">選ぶだけで、<br><span class="hl">相談できます。</span></h1>
+      <p class="sh__lead">選ぶだけの項目がほとんどです。1〜2営業日以内に、担当からメールまたはお電話でご連絡します。無理な営業はいたしません。</p>
+      <ul class="sh__zero"><li>相談・お見積りは無料</li><li>決まっていなくても大丈夫</li></ul>
+    </div>
+    <div class="sh__ill">{{ill k=contact}}</div>
+  </div>
+</section>
+
+<section class="blk" id="form">
+  <div class="cform">
+    <div>
+      <form class="form" data-contact-form novalidate>
+        <div class="f-grid2">
+          <div class="f-row" data-req><label class="f-lab" for="c-shop">店名 <span class="f-req">必須</span></label><input type="text" id="c-shop" name="shop" autocomplete="organization"><span class="f-err">店名をご入力ください。</span></div>
+          <div class="f-row" data-req><label class="f-lab" for="c-name">ご担当者名 <span class="f-req">必須</span></label><input type="text" id="c-name" name="name" autocomplete="name"><span class="f-err">お名前をご入力ください。</span></div>
+          <div class="f-row" data-req><label class="f-lab" for="c-email">メールアドレス <span class="f-req">必須</span></label><input type="email" id="c-email" name="email" autocomplete="email" inputmode="email"><span class="f-err">正しいメールアドレスをご入力ください。</span></div>
+          <div class="f-row"><label class="f-lab" for="c-tel">電話番号 <span class="f-opt">任意</span></label><input type="tel" id="c-tel" name="tel" autocomplete="tel" inputmode="tel"></div>
+        </div>
+
+        <fieldset class="f-row" data-req><legend class="f-lab">業態 <span class="f-req">必須</span></legend>
+          <div class="pills">
+            <label class="pill"><input type="radio" name="genre" value="居酒屋"><span>居酒屋</span></label>
+            <label class="pill"><input type="radio" name="genre" value="カフェ"><span>カフェ</span></label>
+            <label class="pill"><input type="radio" name="genre" value="ラーメン"><span>ラーメン</span></label>
+            <label class="pill"><input type="radio" name="genre" value="寿司・和食"><span>寿司・和食</span></label>
+            <label class="pill"><input type="radio" name="genre" value="焼肉・韓国料理"><span>焼肉・韓国料理</span></label>
+            <label class="pill"><input type="radio" name="genre" value="中華"><span>中華</span></label>
+            <label class="pill"><input type="radio" name="genre" value="イタリアン・洋食"><span>イタリアン・洋食</span></label>
+            <label class="pill"><input type="radio" name="genre" value="スイーツ・パン"><span>スイーツ・パン</span></label>
+            <label class="pill"><input type="radio" name="genre" value="その他"><span>その他</span></label>
+          </div><span class="f-err">業態をお選びください。</span>
+        </fieldset>
+
+        <fieldset class="f-row" data-req><legend class="f-lab">現在のHP <span class="f-req">必須</span></legend>
+          <div class="pills">
+            <label class="pill"><input type="radio" name="hp" value="none"><span>HPはない（Table Web）</span></label>
+            <label class="pill"><input type="radio" name="hp" value="old"><span>HPはあるが古い（Table Shift）</span></label>
+            <label class="pill"><input type="radio" name="hp" value="unknown"><span>わからない</span></label>
+          </div><span class="f-err">いずれかをお選びください。</span>
+        </fieldset>
+
+        <fieldset class="f-row"><legend class="f-lab">希望プラン <span class="f-opt">任意</span></legend>
+          <div class="pills">
+            <label class="pill"><input type="radio" name="plan" value="standard"><span>スタンダード</span></label>
+            <label class="pill"><input type="radio" name="plan" value="upgrade"><span>アップグレード</span></label>
+            <label class="pill"><input type="radio" name="plan" value="premium"><span>プレミアム</span></label>
+            <label class="pill"><input type="radio" name="plan" value="undecided"><span>相談して決めたい</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="f-row"><legend class="f-lab">デリバリー導入予定 <span class="f-opt">任意</span></legend>
+          <p class="f-help">Uber Eats・Rocket Now を新規でお申込みいただくと、1社5万円・2社10万円を割引します。</p>
+          <div class="pills">
+            <label class="pill"><input type="radio" name="delivery" value="both"><span>2社とも新規で申し込みたい</span></label>
+            <label class="pill"><input type="radio" name="delivery" value="one"><span>1社を新規で申し込みたい</span></label>
+            <label class="pill"><input type="radio" name="delivery" value="already"><span>すでに登録済み</span></label>
+            <label class="pill"><input type="radio" name="delivery" value="no"><span>予定なし</span></label>
+            <label class="pill"><input type="radio" name="delivery" value="ask"><span>話を聞きたい</span></label>
+          </div>
+        </fieldset>
+
+        <div class="f-row"><label class="f-lab" for="c-msg">ご相談内容 <span class="f-opt">任意</span></label><textarea id="c-msg" name="message" placeholder="例）今のHPの月額は2万円くらいです。英語メニューも載せたいです。"></textarea></div>
+
+        <div class="agent-box" data-agent-box>
+          <label class="consent"><input type="checkbox" name="via_agent" value="yes"><span><b>代理店経由でのご相談</b>（代理店の担当者からご紹介を受けた方）</span></label>
+          <div class="f-row"><label class="f-lab" for="c-agent">代理店コード <span class="f-opt">任意</span></label><input type="text" id="c-agent" name="agent_code" placeholder="例）TA-0123" autocomplete="off" maxlength="12"><span class="f-help">担当者からお伝えしたコードをご入力ください。ご紹介リンクから来られた方は自動で入力されています。</span><span class="agent-box__ok">✓ 代理店コードを受け付けました。担当代理店と連携してご案内します。</span></div>
+        </div>
+
+        <div class="f-row" data-req><label class="consent"><input type="checkbox" name="consent" value="yes"><span><a href="/legal/privacy/" target="_blank">プライバシーポリシー</a>に同意します <span class="f-req">必須</span></span></label><span class="f-err">同意が必要です。</span></div>
+
+        <button type="submit" class="send"><span>送信する</span><i aria-hidden="true"><svg viewBox="0 0 44 13"><path d="M3 3.5h11a3 3 0 0 1 0 6H3a3 3 0 0 1 0-6z"/><path d="M16 4.4h1.6V3.2H33c6 0 10.5 1.3 10.5 3 0 1.9-3.8 3.4-10 3.4H17.6V8.6H16z"/></svg></i></button>
+        <p class="form-note">送信後、1〜2営業日以内にご連絡します。</p>
+      </form>
+      <div class="form form-done" data-form-done hidden>
+        <div class="form-done__i">{{check}}</div>
+        <h2 class="h3" style="margin:0">ご相談を受け付けました</h2>
+        <p>担当より、1〜2営業日以内にご連絡いたします。<br>お急ぎの場合は {{email}} までご連絡ください。</p>
+        <p><a href="/column/">待っている間にお役立ち記事を読む</a></p>
+      </div>
+    </div>
+    <aside class="aside">
+      <section><h3>ご相談だけでも大丈夫です</h3><p>プランの選び方、キャンペーンの適用可否、今のHPの契約の見直しなど、決まっていないことがあっても構いません。</p></section>
+      <section><h3>Table Shift の無料診断</h3><p>今のHPのURLと月額がわかれば、最適なプランとドメインの引き継ぎ可否を診断します。</p>{{btn href="/service/table-shift/#simulator" t="先に月額を試算する"}}</section>
+      <section><h3>メールでのご相談</h3><p>{{email}}</p></section>
+    </aside>
+  </div>
+</section>

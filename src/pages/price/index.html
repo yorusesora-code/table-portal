@@ -1,0 +1,65 @@
+<!--{"title":"プラン","desc":"飲食店HP制作のプラン。スタンダード・アップグレード・プレミアムの3プラン、すべて買い切り・月額0円。プラン比較、選べるオプション、デリバリー新規申込割引の条件。","crumbs":[["プラン"]]}-->
+<section class="sh">
+  <div class="sh__in">
+    <div class="sh__txt">
+      <p class="sh__k">プラン・オプション</p>
+      <p class="sh__en" data-chars>PLAN</p>
+      <h1 class="sh__t">3つのプラン。<br>どれも<span class="hl">月額0円</span>です。</h1>
+      <p class="sh__lead">Table Web（新規制作）も Table Shift（リプレイス）も同じプランです。すべて買い切りで、サーバー費用込み。料金は、お店の状況とご希望をうかがってご案内します。</p>
+      <ul class="sh__zero"><li>サーバー費用・SSL 込み</li><li>契約期間のしばりなし</li><li>完成したHPの権利はお店に</li></ul>
+      <div class="sh__btns">{{btn href="#compare" t="COMPARE"}}{{btn href="/contact/" t="料金を問い合わせる"}}</div>
+    </div>
+    <div class="sh__ill">{{kvPrice}}</div>
+  </div>
+</section>
+
+<section class="blk" id="compare">
+  <h2 class="ttl"><span class="en">COMPARE</span><small>プラン比較</small></h2>
+  <p class="lead">ページ数・メニュー掲載数と、SNSや集客機能の量で選べます。迷ったら、いまのお店に近いものをお伝えください。一緒に選びます。</p>
+  <div class="ptable-wrap">{{planTable noprice}}</div>
+</section>
+
+<section class="zero zero--static">
+  <div class="zero__in">
+    <p class="zero__k en">MONTHLY FEE</p>
+    <p class="zero__num en" aria-label="月額0円"><span class="zero__y">¥</span><span class="zero__val" aria-hidden="true"><b>0</b></span></p>
+    <div class="zero__txt">
+      <h2 class="zero__t">公開したあとに、<br><span class="hl">毎月のお金は</span>かかりません。</h2>
+      <p>サーバー代は料金に含まれています。更新したいときだけ、必要な分だけご依頼ください。独自ドメインをお使いの場合のみ、2年目以降にドメインの更新費用がかかります。</p>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="options">
+  <h2 class="ttl"><span class="en">OPTIONS</span><small>何が選べるか、触って確かめる</small></h2>
+  <p class="lead">プランを選ぶと、そのプランに含まれるものに印がつきます。足したいオプションを選んで、そのまま相談できます。</p>
+  {{optionPicker}}
+</section>
+
+<section class="blk">
+  <h2 class="ttl"><span class="en">OPTION LIST</span><small>プランごとに含まれるもの・追加できるもの</small></h2>
+  {{optionTable}}
+  <div class="btns">{{btn href="/service/options/" t="OPTIONS DETAIL"}}</div>
+</section>
+
+{{campaign full}}
+
+<section class="blk">
+  <h2 class="ttl"><span class="en">PAYMENT</span><small>お支払いについて</small></h2>
+  <ul class="feats">
+    <li><span class="feats__n en">01</span><strong>請求書で一括払い</strong><p>当社発行の請求書による銀行振込です。ご入金の確認後に制作に着手します。</p></li>
+    <li><span class="feats__n en">02</span><strong>公開後の更新は必要なときだけ</strong><p>無償期間のあとは、1回ごとのご依頼で承ります。月額の契約はありません。</p></li>
+    <li><span class="feats__n en">03</span><strong>追加の費用は事前にご案内</strong><p>規定を超える修正、独自ドメインの更新などは、発生する前に必ずお伝えします。</p></li>
+  </ul>
+</section>
+
+<section class="blk">
+  <div class="cols">
+    <div class="cols__h">
+      <h2 class="ttl"><span class="en">FAQ</span><small>料金・お支払いの質問</small></h2>
+      {{btn href="/faq/" t="ALL QUESTIONS"}}
+    </div>
+    {{faq cat=料金}}
+  </div>
+</section>
+{{cta t="料金のご案内は、無料相談で。組み合わせに迷ったら、そのままご相談ください。"}}

@@ -1,0 +1,22 @@
+# ビルドで作られるもの（Cloudflare Pages が node tools/build.mjs で毎回作り直す）
+/dist/
+/index.html
+/404.html
+/sitemap.xml
+/column/
+/company/
+/contact/
+/faq/
+/flow/
+/industry/
+/legal/
+/partner/
+/price/
+/service/
+/works/*
+!/works/demo/
+# ローカル設定
+/.claude/
+node_modules/
+.DS_Store
+Thumbs.db

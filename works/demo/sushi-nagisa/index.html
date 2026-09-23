@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>鮨 なぎさ｜江戸前鮨・カウンター八席</title>
+<meta name="description" content="檜のカウンター八席で、その日いちばんの魚を。おまかせコース、お品書き、ご予約のご案内。">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#161512">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Shippori+Mincho:wght@500;600&family=Noto+Serif+SC:wght@500;600&family=Nanum+Myeongjo:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sumi:#161512; --sumi-2:#201e1a; --sumi-3:#2b2823;
+  --kinari:#f3eee4; --kinari-2:#ebe4d7; --paper:#fbf8f2;
+  --ink:#1c1a17; --muted:#665e53; --line:rgba(28,26,23,.12);
+  --gold:#a8894f; --gold-soft:#cdb47f;
+  --serif:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho","YuMincho",serif;
+  --latin:"Cormorant Garamond","Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic UI","Meiryo",sans-serif;
+  /* size-specific tracking & leading (CJK default) */
+  --tr-display:.06em; --tr-title:.04em; --tr-body:.03em; --tr-small:.04em;
+  --lh-display:1.25; --lh-title:1.4; --lh-body:1.95;
+  --nav-h:56px;
+  --ease-out:cubic-bezier(.22,1,.36,1);
+}
+html:lang(en){
+  --serif:"Cormorant Garamond","Shippori Mincho",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,"Helvetica Neue",Arial,sans-serif;
+  --tr-display:-.01em; --tr-title:-.015em; --tr-body:0; --tr-small:.01em;
+  --lh-display:1.05; --lh-title:1.1; --lh-body:1.65;
+}
+html:lang(zh-Hans){
+  --serif:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif;
+  --tr-body:.02em; --lh-body:1.85;
+}
+html:lang(ko){
+  --serif:"Nanum Myeongjo","AppleMyungjo","Batang",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+  --tr-display:.02em; --tr-title:0; --tr-body:-.005em; --lh-body:1.8;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 12px)}
+body{margin:0;background:var(--kinari);color:var(--ink);font:1rem/var(--lh-body) var(--sans);letter-spacing:var(--tr-body);overflow-x:clip;-webkit-font-smoothing:antialiased;line-break:strict}
+html:lang(ko) body{word-break:keep-all}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit;letter-spacing:inherit}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:600;margin:0}
+p{margin:0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.defs{position:absolute;width:0;height:0;overflow:hidden}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+
+/* ---------- demo band ---------- */
+.demobar{position:relative;z-index:60;background:#0c0b0a;color:#cfc6b6;font:12px/1.5 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;letter-spacing:.02em;display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:space-between;align-items:center;padding:6px 16px}
+.demobar a{color:#f3eee4;text-underline-offset:3px}
+.demobar a[aria-current]{color:var(--gold-soft);text-decoration:none;font-weight:600}
+.demobar .sep{opacity:.4;margin:0 .35em}
+
+/* ---------- nav (translucent material + scroll edge) ---------- */
+.nav{position:sticky;top:0;z-index:50;height:var(--nav-h);margin-bottom:calc(var(--nav-h) * -1);color:var(--kinari)}
+.nav::before{content:"";position:absolute;inset:0;background:rgba(22,21,18,.8);-webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);opacity:0;transition:opacity .24s ease}
+.nav::after{content:"";position:absolute;left:0;right:0;top:100%;height:18px;background:linear-gradient(rgba(22,21,18,.22),rgba(22,21,18,0));opacity:0;transition:opacity .24s ease;pointer-events:none}
+.nav.scrolled::before,.nav.scrolled::after{opacity:1}
+.nav-in{position:relative;height:100%;max-width:1120px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:12px}
+.brand{display:flex;flex-direction:column;text-decoration:none;line-height:1.1;margin-right:auto}
+.brand b{font-family:"Shippori Mincho",serif;font-weight:600;font-size:1.08rem;letter-spacing:.14em}
+.brand small{font-family:var(--latin);font-size:.62rem;letter-spacing:.28em;opacity:.7;margin-top:3px}
+.nav-links{display:none;gap:26px;list-style:none;margin:0 12px 0 0;padding:0;font-size:.84rem;letter-spacing:var(--tr-small)}
+.nav-links a{text-decoration:none;opacity:.82;transition:opacity .15s}
+.nav-links a:hover{opacity:1}
+@media (min-width:900px){.nav-links{display:flex}}
+.pill{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;border-radius:999px;font-size:.8rem;font-weight:600;text-decoration:none;border:0;cursor:pointer;white-space:nowrap}
+.pill-light{background:var(--kinari);color:var(--sumi)}
+.pill-glass{background:rgba(243,238,228,.12);color:var(--kinari);box-shadow:inset 0 0 0 1px rgba(243,238,228,.22)}
+.pill svg{width:16px;height:16px}
+
+/* language popover — anchored to its trigger */
+.lang{position:relative}
+.lang-menu{position:absolute;right:0;top:calc(100% + 10px);min-width:196px;margin:0;padding:6px;list-style:none;border-radius:16px;background:rgba(32,30,26,.82);-webkit-backdrop-filter:blur(24px) saturate(170%);backdrop-filter:blur(24px) saturate(170%);box-shadow:0 18px 50px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.08);transform-origin:top right;transform:scale(.9);opacity:0;filter:blur(6px);visibility:hidden;transition:transform .22s var(--ease-out),opacity .18s ease,filter .22s ease,visibility 0s linear .22s}
+.lang.open .lang-menu{transform:none;opacity:1;filter:none;visibility:visible;transition:transform .28s var(--ease-out),opacity .18s ease,filter .24s ease}
+.lang-menu button{display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border:0;background:none;border-radius:10px;font-size:.92rem;letter-spacing:.02em;text-align:left;cursor:pointer;color:var(--kinari)}
+.lang-menu button:hover{background:rgba(255,255,255,.07)}
+.lang-menu button .ck{width:16px;height:16px;opacity:0;color:var(--gold-soft)}
+.lang-menu button[aria-checked="true"] .ck{opacity:1}
+.lang-menu small{opacity:.55;font-size:.72rem;letter-spacing:.08em}
+
+/* instant press feedback (pointer-down) */
+.pressable{transition:transform .28s var(--ease-out),background-color .2s ease}
+.pressable:active,.pressable.is-pressed{transform:scale(.97);transition:transform .09s ease-out,background-color 0s}
+
+/* ---------- hero ---------- */
+.hero{position:relative;background:radial-gradient(120% 70% at 50% 0%,#2e2a23 0%,var(--sumi) 62%);color:var(--kinari);padding-top:calc(var(--nav-h) + 44px);overflow:hidden}
+.hero-in{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 16px}
+.eyebrow{font:600 .7rem/1.4 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.hero .eyebrow{color:var(--gold-soft)}
+.hero h1{font-family:"Shippori Mincho",serif;font-weight:500;font-size:clamp(3rem,13vw,5.8rem);line-height:1.1;letter-spacing:.08em;margin:18px 0 6px}
+.hero .latin{font:italic 500 clamp(1.1rem,3.6vw,1.45rem)/1.2 var(--latin);letter-spacing:.02em;color:var(--gold-soft)}
+.hero-lead{margin-top:22px;max-width:30em;font-size:clamp(.95rem,2.6vw,1.05rem);color:rgba(243,238,228,.86)}
+html:lang(ja) .hero-lead,html:lang(zh-Hans) .hero-lead{word-break:auto-phrase}
+.hero-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:999px;font-size:.92rem;font-weight:600;text-decoration:none;border:0;cursor:pointer;letter-spacing:var(--tr-small)}
+.btn svg{width:18px;height:18px;flex:none}
+.btn-light{background:var(--kinari);color:var(--sumi)}
+.btn-ghost{background:transparent;color:var(--kinari);box-shadow:inset 0 0 0 1px rgba(243,238,228,.35)}
+.btn-dark{background:var(--sumi);color:var(--kinari)}
+.btn-line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px rgba(28,26,23,.28)}
+.badge{display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-size:.78rem;color:rgba(243,238,228,.7);letter-spacing:var(--tr-small)}
+.badge i{display:inline-flex;gap:4px;font-style:normal}
+.badge i span{white-space:nowrap;font:600 .62rem/1 var(--sans);padding:4px 6px;border-radius:5px;background:rgba(243,238,228,.1);letter-spacing:.04em;color:var(--kinari)}
+.scene{display:block;width:100%;height:clamp(230px,44vw,440px);margin-top:18px}
+
+/* ---------- sections ---------- */
+section{padding:84px 0}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+.sec-head{max-width:40em;margin-bottom:34px}
+.sec-head h2{font-size:clamp(1.8rem,6.4vw,2.7rem);line-height:var(--lh-title);letter-spacing:var(--tr-title);margin-top:12px}
+.sec-head p{margin-top:14px;color:var(--muted);font-size:.95rem}
+html:lang(ja) .sec-head h2,html:lang(zh-Hans) .sec-head h2{word-break:auto-phrase}
+
+/* reveal */
+.js .reveal{opacity:0;transform:translateY(18px);transition:opacity .9s var(--ease-out),transform .9s var(--ease-out)}
+.js .reveal.in{opacity:1;transform:none}
+
+/* ---------- omakase carousel ---------- */
+#courses{padding-bottom:72px}
+.car{position:relative;overflow:hidden;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+.car.dragging{cursor:grabbing}
+.car.static{cursor:auto}
+.car-track{display:flex;gap:14px;width:max-content;padding:4px max(16px,calc((100vw - 1120px) / 2 + 16px)) 16px;will-change:transform}
+.car.static .car-track{margin:0 auto;padding-left:16px;padding-right:16px}
+.card{position:relative;display:flex;flex-direction:column;width:min(82vw,340px);padding:0;border:0;text-align:left;background:var(--paper);border-radius:22px;overflow:hidden;box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 0 0 1px var(--line),0 14px 36px -18px rgba(28,26,23,.35);cursor:inherit;-webkit-tap-highlight-color:transparent}
+.card-vis{display:block;height:176px;background:radial-gradient(90% 90% at 50% 20%,#34302a 0%,#1a1916 70%)}
+.card-vis svg{width:100%;height:100%}
+.card-body{display:flex;flex-direction:column;flex:1;padding:20px 20px 18px}
+.card-rec{position:absolute;top:14px;left:14px;font:600 .66rem/1 var(--sans);letter-spacing:.12em;color:var(--sumi);background:var(--gold-soft);padding:6px 9px;border-radius:999px}
+.card-kanji{display:flex;align-items:baseline;gap:10px;font-family:"Shippori Mincho",serif;font-size:2.5rem;line-height:1;font-weight:500}
+.card-roman{font:600 .68rem/1 var(--sans);letter-spacing:.26em;color:var(--gold)}
+.card-name{display:block;margin-top:10px;font-family:var(--serif);font-weight:600;font-size:1.12rem;letter-spacing:var(--tr-title);line-height:1.3}
+.card-desc{display:block;margin-top:8px;font-size:.88rem;color:var(--muted);flex:1}
+.card-foot{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+.price{font-family:var(--latin);font-weight:600;font-size:1.7rem;letter-spacing:-.01em;font-variant-numeric:lining-nums tabular-nums;line-height:1}
+.price small{font:500 .7rem/1 var(--sans);letter-spacing:.06em;color:var(--muted);margin-left:6px}
+.card-min{font-size:.78rem;color:var(--muted);white-space:nowrap}
+.card-more{display:flex;align-items:center;gap:4px;margin-top:12px;font-size:.8rem;font-weight:600;color:var(--gold)}
+.card-more svg{width:14px;height:14px}
+.car-ctl{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:10px}
+.car-ctl.off{visibility:hidden}
+.dots{display:flex;gap:6px;align-items:center}
+.dots button{width:28px;height:28px;border:0;background:none;padding:0;display:grid;place-items:center;cursor:pointer}
+.dots button::before{content:"";width:6px;height:6px;border-radius:99px;background:rgba(28,26,23,.22);transition:width .3s var(--ease-out),background-color .3s}
+.dots button[aria-current="true"]::before{width:20px;background:var(--ink)}
+.hint{font-size:.76rem;color:var(--muted);letter-spacing:var(--tr-small)}
+.arrows{display:flex;gap:8px}
+.arrows button{width:42px;height:42px;border-radius:50%;border:0;background:var(--paper);box-shadow:0 0 0 1px var(--line);display:grid;place-items:center;cursor:pointer}
+.arrows button:disabled{opacity:.35;cursor:default}
+.arrows svg{width:18px;height:18px}
+
+/* ---------- menu ---------- */
+#menu{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.menu-grid{display:grid;gap:40px}
+@media (min-width:880px){.menu-grid{grid-template-columns:1.25fr 1fr;column-gap:56px}.menu-grid .col-b{display:grid;gap:40px;align-content:start}}
+.cat h3{display:flex;align-items:baseline;justify-content:space-between;font-size:1.25rem;letter-spacing:var(--tr-title);padding-bottom:12px;border-bottom:1px solid var(--ink)}
+.cat h3 small{font:600 .66rem/1 var(--sans);letter-spacing:.24em;color:var(--gold)}
+.items{list-style:none;margin:0;padding:0}
+.item{display:grid;grid-template-columns:60px 1fr auto;align-items:center;gap:14px;width:100%;padding:12px 8px;margin:0 -8px;width:calc(100% + 16px);border:0;border-bottom:1px solid var(--line);background:transparent;text-align:left;cursor:pointer;border-radius:12px;-webkit-tap-highlight-color:transparent}
+.item:hover{background:rgba(28,26,23,.03)}
+.item:active,.item.is-pressed{background:var(--kinari-2)}
+.thumb{width:60px;height:60px;border-radius:14px;background:radial-gradient(100% 100% at 50% 20%,#34302a,#1a1916);display:grid;place-items:center;overflow:hidden}
+.thumb svg{width:56px;height:40px}
+.item-name{display:block;font-weight:600;font-size:.98rem;line-height:1.45;letter-spacing:var(--tr-small)}
+.item-sub{display:block;font:600 .64rem/1.4 var(--sans);letter-spacing:.2em;color:var(--muted);margin-top:2px}
+.item-price{font-family:var(--latin);font-weight:600;font-size:1.2rem;font-variant-numeric:tabular-nums;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.item-price svg{width:14px;height:14px;color:rgba(28,26,23,.35)}
+.menu-note{margin-top:14px;font-size:.78rem;color:var(--muted)}
+
+/* ---------- chef ---------- */
+#chef{background:var(--sumi);color:var(--kinari)}
+#chef .sec-head p{color:rgba(243,238,228,.65)}
+.chef-grid{display:grid;gap:36px}
+@media (min-width:880px){.chef-grid{grid-template-columns:5fr 7fr;gap:64px;align-items:start}.chef-vis{position:sticky;top:calc(var(--nav-h) + 24px)}}
+.chef-vis{border-radius:24px;overflow:hidden;background:radial-gradient(120% 80% at 30% 10%,#34302a,#141311 70%);aspect-ratio:4/5;max-height:560px}
+.chef-vis svg{width:100%;height:100%}
+.chef-role{font-size:.8rem;color:var(--gold-soft);letter-spacing:.12em;margin-top:10px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:28px 0 30px;padding:18px 0;border-top:1px solid rgba(243,238,228,.14);border-bottom:1px solid rgba(243,238,228,.14)}
+.stats b{display:block;font:600 2rem/1 var(--latin);color:var(--kinari);letter-spacing:-.01em}
+.stats span{display:block;margin-top:6px;font-size:.72rem;color:rgba(243,238,228,.62);line-height:1.5}
+.article p{font-size:1rem;color:rgba(243,238,228,.86)}
+.article p+p{margin-top:1.3em}
+.article p:first-of-type::first-letter{font-family:var(--serif)}
+.quote{margin:34px 0;padding:0 0 0 20px;border-left:1px solid var(--gold);font-family:var(--serif);font-weight:600;font-size:clamp(1.2rem,4.2vw,1.5rem);line-height:1.65;letter-spacing:var(--tr-title);color:var(--kinari)}
+html:lang(en) .quote{line-height:1.3;font-size:clamp(1.35rem,4.6vw,1.75rem)}
+.credit{margin-top:28px;font-size:.74rem;color:rgba(243,238,228,.5);letter-spacing:.08em}
+
+/* ---------- reservation ---------- */
+#reserve{background:var(--kinari-2)}
+.res-grid{display:grid;gap:12px}
+@media (min-width:720px){.res-grid{grid-template-columns:1fr 1fr;gap:16px}}
+.res-card{display:flex;align-items:center;gap:16px;padding:22px 20px;border-radius:20px;text-decoration:none;min-height:96px}
+.res-card .ic{flex:none;width:48px;height:48px;border-radius:50%;display:grid;place-items:center}
+.res-card .ic svg{width:22px;height:22px}
+.res-card b{display:block;font-size:1.05rem;letter-spacing:var(--tr-small)}
+.res-card span{display:block;font-size:.8rem;margin-top:2px;opacity:.72}
+.res-card .num{font-family:var(--latin);font-size:1.3rem;letter-spacing:.02em;opacity:1;margin-top:0}
+.res-web{background:var(--sumi);color:var(--kinari)}
+.res-web .ic{background:rgba(243,238,228,.12)}
+.res-tel{background:var(--paper);color:var(--ink);box-shadow:0 0 0 1px var(--line)}
+.res-tel .ic{background:var(--kinari-2)}
+.res-hint{margin-top:16px;font-size:.84rem;color:var(--muted);display:flex;gap:8px;align-items:flex-start}
+.res-hint svg{width:16px;height:16px;flex:none;margin-top:.3em;color:var(--gold)}
+
+/* ---------- notes ---------- */
+.notes{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.note{padding:22px 20px;border-radius:20px;background:var(--paper);box-shadow:0 0 0 1px var(--line)}
+.note.key{background:#fff;box-shadow:0 0 0 1px rgba(168,137,79,.55)}
+.note h3{display:flex;align-items:center;gap:10px;font-family:var(--sans);font-size:1rem;letter-spacing:var(--tr-small)}
+.note h3 svg{width:22px;height:22px;flex:none;color:var(--gold)}
+.note p{margin-top:10px;font-size:.88rem;color:var(--muted)}
+
+/* ---------- info ---------- */
+#info{background:var(--paper);border-top:1px solid var(--line)}
+.info-grid{display:grid;gap:32px}
+@media (min-width:880px){.info-grid{grid-template-columns:1fr 1fr;gap:56px;align-items:start}}
+dl.info{margin:0;display:grid;grid-template-columns:6.5em 1fr;border-top:1px solid var(--line)}
+html:lang(en) dl.info{grid-template-columns:5.5em 1fr}
+dl.info dt,dl.info dd{margin:0;padding:14px 0;border-bottom:1px solid var(--line);font-size:.92rem}
+dl.info dt{color:var(--muted);font-size:.8rem;padding-top:16px;letter-spacing:var(--tr-small)}
+dl.info dd a{text-decoration:none;font-family:var(--latin);font-size:1.1rem;font-weight:600}
+.map{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:4/3;background:#e7e1d4;box-shadow:0 0 0 1px var(--line)}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+.map-label{position:absolute;left:12px;right:12px;bottom:12px;display:flex;flex-direction:column;gap:2px;padding:12px 14px;border-radius:14px;background:rgba(251,248,242,.78);-webkit-backdrop-filter:blur(16px) saturate(160%);backdrop-filter:blur(16px) saturate(160%);box-shadow:0 6px 20px rgba(28,26,23,.12)}
+.map-label b{font-size:.86rem}
+.map-label span{font-size:.72rem;color:var(--muted)}
+
+.num,dl.info dd a,.stats b,.item-price,.price{font-variant-numeric:lining-nums tabular-nums}
+footer{background:var(--sumi);color:rgba(243,238,228,.62);padding:48px 0 calc(40px + env(safe-area-inset-bottom));font-size:.78rem}
+footer .brand{color:var(--kinari);margin-bottom:18px}
+footer .row{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between;align-items:flex-end}
+
+/* ---------- bottom sheet ---------- */
+.scrim{position:fixed;inset:0;z-index:80;background:rgba(10,9,8,.5);opacity:0;touch-action:none}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:90;width:min(100%,620px);margin:0 auto;max-height:min(88vh,88dvh);display:flex;flex-direction:column;border-radius:26px 26px 0 0;background:rgba(246,242,234,.94);-webkit-backdrop-filter:blur(30px) saturate(180%);backdrop-filter:blur(30px) saturate(180%);box-shadow:0 -1px 0 rgba(255,255,255,.6) inset,0 -18px 60px rgba(0,0,0,.28);transform:translate3d(0,110%,0);will-change:transform;padding-bottom:env(safe-area-inset-bottom)}
+.sheet-grab{position:relative;flex:none;padding:10px 16px 0;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+.sheet.dragging .sheet-grab{cursor:grabbing}
+.handle{display:block;width:40px;height:5px;border-radius:99px;background:rgba(28,26,23,.22);margin:0 auto 10px}
+.sheet-vis{height:150px;border-radius:18px;overflow:hidden;background:radial-gradient(90% 100% at 50% 15%,#34302a,#171613 72%)}
+.sheet-vis svg{width:100%;height:100%}
+.sheet-head{padding:18px 4px 4px}
+.sheet-sub{font:600 .66rem/1.4 var(--sans);letter-spacing:.22em;color:var(--gold)}
+.sheet-head h3{font-size:1.5rem;line-height:1.3;letter-spacing:var(--tr-title);margin-top:6px}
+.sheet-head .price{display:block;margin-top:10px;font-size:1.5rem}
+.sheet-x{position:absolute;top:20px;right:26px;width:34px;height:34px;border-radius:50%;border:0;background:rgba(22,21,18,.55);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:#fff;display:grid;place-items:center;cursor:pointer}
+.sheet-x svg{width:16px;height:16px}
+.sheet-body{flex:1;overflow:auto;overscroll-behavior:contain;padding:8px 20px 28px}
+.sheet-body > p{font-size:.95rem;color:var(--ink)}
+.sheet-body h4{font-family:var(--sans);font-size:.72rem;letter-spacing:.16em;color:var(--muted);margin:22px 0 10px;font-weight:600}
+.flow{list-style:none;margin:0;padding:0;counter-reset:f}
+.flow li{counter-increment:f;display:flex;gap:14px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--line);font-size:.92rem}
+.flow li::before{content:counter(f,decimal-leading-zero);font:600 .8rem/1 var(--latin);color:var(--gold);min-width:1.6em}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:.8rem;padding:5px 11px;border-radius:999px;background:#fff;box-shadow:0 0 0 1px var(--line)}
+.chip.none{color:var(--muted)}
+.fine{margin-top:16px;font-size:.78rem;color:var(--muted)}
+.sheet-body .btn{width:100%;margin-top:20px}
+html.sheet-open{overflow:hidden}
+
+/* ---------- motion & material preferences ---------- */
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .js .reveal{transform:none;transition:opacity .4s ease}
+  .pressable:active,.pressable.is-pressed{transform:none;opacity:.7}
+  .lang-menu,.lang.open .lang-menu{transform:none;filter:none;transition:opacity .15s ease,visibility 0s linear .15s}
+  .lang.open .lang-menu{transition:opacity .15s ease}
+  .sheet{transition:opacity .2s ease;opacity:0}
+  .sheet.shown{opacity:1}
+  .scrim{transition:opacity .2s ease}
+  .dots button::before{transition:none}
+}
+@media (prefers-reduced-transparency: reduce){
+  .nav::before{background:var(--sumi);-webkit-backdrop-filter:none;backdrop-filter:none}
+  .lang-menu{background:#262420;-webkit-backdrop-filter:none;backdrop-filter:none}
+  .sheet{background:var(--kinari);-webkit-backdrop-filter:none;backdrop-filter:none}
+  .map-label{background:var(--paper);-webkit-backdrop-filter:none;backdrop-filter:none}
+  .sheet-x{background:var(--sumi)}
+}
+@media (prefers-contrast: more){
+  .nav::before{background:var(--sumi)}
+  .card,.note,.res-tel{box-shadow:0 0 0 1.5px var(--ink)}
+}
+</style>
+</head>
+<body>
+
+<!-- shared SVG materials -->
+<svg class="defs" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="gRice" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffdf8"/><stop offset="1" stop-color="#ddd2bf"/></linearGradient>
+    <linearGradient id="gAkami" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b8303a"/><stop offset="1" stop-color="#76121e"/></linearGradient>
+    <linearGradient id="gChutoro" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e07d82"/><stop offset="1" stop-color="#a93945"/></linearGradient>
+    <linearGradient id="gOtoro" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4c6bf"/><stop offset="1" stop-color="#d98a8a"/></linearGradient>
+    <linearGradient id="gKohada" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5d6f7c"/><stop offset=".35" stop-color="#aab7bf"/><stop offset="1" stop-color="#eef1f1"/></linearGradient>
+    <linearGradient id="gEbi" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3ea"/><stop offset="1" stop-color="#f6d3c0"/></linearGradient>
+    <linearGradient id="gAnago" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#94623b"/><stop offset="1" stop-color="#3f2413"/></linearGradient>
+    <linearGradient id="gTamago" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8dc78"/><stop offset=".8" stop-color="#e8b447"/><stop offset="1" stop-color="#b9772a"/></linearGradient>
+    <linearGradient id="gNori" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#101310"/><stop offset=".45" stop-color="#2d352b"/><stop offset="1" stop-color="#0e110d"/></linearGradient>
+    <linearGradient id="gUni" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbc15a"/><stop offset="1" stop-color="#df861b"/></linearGradient>
+    <linearGradient id="gHinoki" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ead4ad"/><stop offset="1" stop-color="#c9aa7b"/></linearGradient>
+    <linearGradient id="gLacquer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34302b"/><stop offset="1" stop-color="#0c0b0a"/></linearGradient>
+    <linearGradient id="gCeramic" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9c978b"/><stop offset=".4" stop-color="#dcd6c8"/><stop offset="1" stop-color="#8a8579"/></linearGradient>
+    <linearGradient id="gSteel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f4f1"/><stop offset=".5" stop-color="#b9bcbd"/><stop offset="1" stop-color="#7d8285"/></linearGradient>
+    <linearGradient id="gHo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e2d3ae"/><stop offset="1" stop-color="#b09a6b"/></linearGradient>
+    <radialGradient id="gSpot" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff0d2" stop-opacity=".2"/><stop offset="1" stop-color="#fff0d2" stop-opacity="0"/></radialGradient>
+    <radialGradient id="gShadow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#000" stop-opacity=".45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+    <clipPath id="cFish"><path d="M14 43C18 27 50 21 72 22C92 23 106 31 107 40C108 47 98 49 60 49C28 49 12 49 14 43Z"/></clipPath>
+  </defs>
+</svg>
+
+<div class="demobar">
+  <p>これは Table Shift の制作デモです（架空の店舗です）<span class="sep">｜</span><a href="before.html">Before</a> / <a href="index.html" aria-current="page">After</a></p>
+  <a href="../../sushi-nagisa/">← 事例ページへ戻る</a>
+</div>
+
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="brand" href="#top" aria-label="鮨 なぎさ"><b>鮨 なぎさ</b><small>SUSHI NAGISA</small></a>
+    <ul class="nav-links">
+      <li><a href="#courses" data-i18n="nav.course">おまかせ</a></li>
+      <li><a href="#menu" data-i18n="nav.menu">お品書き</a></li>
+      <li><a href="#chef" data-i18n="nav.chef">大将</a></li>
+      <li><a href="#visit" data-i18n="nav.visit">ご来店の前に</a></li>
+      <li><a href="#info" data-i18n="nav.info">店舗情報</a></li>
+    </ul>
+    <a class="pill pill-light pressable" href="#reserve" data-i18n="nav.reserve">ご予約</a>
+    <div class="lang" id="lang">
+      <button class="pill pill-glass pressable" id="langBtn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="langMenu" data-i18n-aria="nav.lang" aria-label="言語を選択">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3z"/></svg>
+        <span id="langCur">日本語</span>
+      </button>
+      <ul class="lang-menu" id="langMenu" role="menu">
+        <li role="none"><button role="menuitemradio" type="button" data-lang="ja" aria-checked="true"><span>日本語 <small>JA</small></span><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></button></li>
+        <li role="none"><button role="menuitemradio" type="button" data-lang="en" aria-checked="false"><span>English <small>EN</small></span><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></button></li>
+        <li role="none"><button role="menuitemradio" type="button" data-lang="zh" aria-checked="false"><span>简体中文 <small>ZH</small></span><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></button></li>
+        <li role="none"><button role="menuitemradio" type="button" data-lang="ko" aria-checked="false"><span>한국어 <small>KO</small></span><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></button></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-in">
+      <p class="eyebrow reveal" data-i18n="hero.eyebrow">江戸前鮨 ・ カウンター八席</p>
+      <h1 class="reveal">鮨 なぎさ</h1>
+      <p class="latin reveal">Sushi Nagisa</p>
+      <p class="hero-lead reveal" data-i18n="hero.lead">凪いだ朝の海のように、静かで澄んだひとときを。檜のカウンター越しに、その日いちばんの魚を一貫ずつ握ります。</p>
+      <div class="hero-cta reveal">
+        <a class="btn btn-light pressable" href="#courses" data-i18n="hero.cta1">コースを見る</a>
+        <a class="btn btn-ghost pressable" href="#reserve" data-i18n="hero.cta2">ご予約について</a>
+      </div>
+      <p class="badge reveal"><i aria-hidden="true"><span>EN</span><span>中文</span><span>한국어</span></i><span data-i18n="hero.badge">英語・中国語・韓国語でご案内しています</span></p>
+    </div>
+    <svg class="scene" id="heroScene" viewBox="0 0 800 340" preserveAspectRatio="xMidYMax slice" role="img" aria-label="檜のカウンターに置かれた握り" data-i18n-aria="hero.alt"></svg>
+  </div>
+
+  <!-- COURSES -->
+  <section id="courses" aria-labelledby="h-courses">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">01 — Omakase</p>
+        <h2 id="h-courses" data-i18n="course.title">おまかせコース</h2>
+        <p data-i18n="course.lead">すべてのコースは、その日の仕入れで内容が変わります。価格は税込、サービス料は頂いておりません。</p>
+      </div>
+    </div>
+    <div class="car" id="car" aria-roledescription="carousel" data-i18n-aria="course.title" aria-label="おまかせコース">
+      <div class="car-track" id="carTrack"></div>
+    </div>
+    <div class="wrap">
+      <div class="car-ctl" id="carCtl">
+        <div>
+          <div class="dots" id="carDots"></div>
+          <p class="hint" data-i18n="course.hint">横にスワイプ・タップで詳細</p>
+        </div>
+        <div class="arrows">
+          <button class="pressable" type="button" id="carPrev" data-i18n-aria="course.prev" aria-label="前のコース"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <button class="pressable" type="button" id="carNext" data-i18n-aria="course.next" aria-label="次のコース"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section id="menu" aria-labelledby="h-menu">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">02 — Menu</p>
+        <h2 id="h-menu" data-i18n="menu.title">お品書き</h2>
+        <p data-i18n="menu.lead">コースのあとに、お好みでの追加も承ります。</p>
+      </div>
+      <div class="menu-grid" id="menuGrid"></div>
+      <p class="menu-note" data-i18n="menu.note">価格はすべて税込です。タップすると説明と主な原材料をご覧いただけます。</p>
+    </div>
+  </section>
+
+  <!-- CHEF -->
+  <section id="chef" aria-labelledby="h-chef">
+    <div class="wrap">
+      <div class="chef-grid">
+        <div class="chef-vis reveal"><svg id="chefArt" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg></div>
+        <div>
+          <div class="sec-head reveal" style="margin-bottom:0">
+            <p class="eyebrow">03 — The Chef</p>
+            <h2 id="h-chef" data-i18n="chef.title">大将　汐田 恒一</h2>
+            <p class="chef-role" data-i18n="chef.role">店主・鮨職人</p>
+          </div>
+          <div class="stats reveal">
+            <div><b>18</b><span data-i18n="chef.s1">年、銀座で修業</span></div>
+            <div><b>8</b><span data-i18n="chef.s2">席のカウンター</span></div>
+            <div><b>5:00</b><span data-i18n="chef.s3">毎朝、豊洲へ</span></div>
+          </div>
+          <div class="article reveal">
+            <p data-i18n="chef.p1"></p>
+            <p data-i18n="chef.p2"></p>
+            <blockquote class="quote" data-i18n="chef.quote"></blockquote>
+            <p data-i18n="chef.p3"></p>
+            <p class="credit" data-i18n="chef.credit">取材・文　Table Web 編集部</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESERVE -->
+  <section id="reserve" aria-labelledby="h-reserve">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">04 — Reservations</p>
+        <h2 id="h-reserve" data-i18n="res.title">ご予約</h2>
+        <p data-i18n="res.lead"></p>
+      </div>
+      <div class="res-grid reveal">
+        <a class="res-card res-web pressable" href="#">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M8.5 14.5l2.5 2.5 4.5-4.5"/></svg></span>
+          <span><b data-i18n="res.web">ご予約サイトへ</b><span data-i18n="res.web.note"></span></span>
+        </a>
+        <a class="res-card res-tel pressable" href="#">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 4h3.5l1.8 4.4-2.2 1.4a11 11 0 0 0 6.1 6.1l1.4-2.2L20 15.5V19a1.5 1.5 0 0 1-1.6 1.5A16 16 0 0 1 3.5 5.6 1.5 1.5 0 0 1 5 4z"/></svg></span>
+          <span><b data-i18n="res.tel">お電話で予約する</b><span class="num">03-0000-0000</span><span data-i18n="res.tel.note"></span></span>
+        </a>
+      </div>
+      <p class="res-hint reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5v.5"/></svg><span data-i18n="res.hint"></span></p>
+    </div>
+  </section>
+
+  <!-- BEFORE YOUR VISIT -->
+  <section id="visit" aria-labelledby="h-visit">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">05 — Before your visit</p>
+        <h2 id="h-visit" data-i18n="notes.title">ご来店の前に</h2>
+        <p data-i18n="notes.lead"></p>
+      </div>
+      <div class="notes" id="notes"></div>
+    </div>
+  </section>
+
+  <!-- INFO -->
+  <section id="info" aria-labelledby="h-info">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">06 — Information</p>
+        <h2 id="h-info" data-i18n="info.title">店舗情報</h2>
+      </div>
+      <div class="info-grid">
+        <dl class="info reveal">
+          <dt data-i18n="info.addr.k">住所</dt><dd data-i18n="info.addr.v"></dd>
+          <dt data-i18n="info.tel.k">電話</dt><dd><a href="#">03-0000-0000</a></dd>
+          <dt data-i18n="info.hours.k">営業時間</dt><dd data-i18n-html="info.hours.v"></dd>
+          <dt data-i18n="info.closed.k">定休日</dt><dd data-i18n="info.closed.v"></dd>
+          <dt data-i18n="info.seats.k">席数</dt><dd data-i18n="info.seats.v"></dd>
+          <dt data-i18n="info.access.k">アクセス</dt><dd data-i18n="info.access.v"></dd>
+        </dl>
+        <div class="map reveal" role="img" data-i18n-aria="info.map" aria-label="Googleマップ 埋め込みエリア">
+          <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="400" height="300" fill="#e7e1d4"/>
+            <g fill="#dcd4c3"><rect x="20" y="20" width="110" height="70" rx="4"/><rect x="150" y="20" width="90" height="70" rx="4"/><rect x="262" y="20" width="118" height="70" rx="4"/><rect x="20" y="118" width="80" height="84" rx="4"/><rect x="262" y="118" width="118" height="84" rx="4"/><rect x="20" y="228" width="110" height="60" rx="4"/><rect x="150" y="228" width="90" height="60" rx="4"/></g>
+            <rect x="120" y="118" width="120" height="84" rx="4" fill="#d3dccb"/>
+            <path d="M-10 262C80 250 150 272 230 258S360 236 410 246" stroke="#bfccd0" stroke-width="14" fill="none"/>
+            <g stroke="#fbf8f2" fill="none"><path d="M0 104H400M246 0V300" stroke-width="12"/><path d="M0 214H400M140 0V300" stroke-width="7"/><path d="M110 104V214" stroke-width="5"/></g>
+            <g><rect x="280" y="136" width="60" height="22" rx="11" fill="#2b2823"/><text x="310" y="151" text-anchor="middle" font-size="10" fill="#f3eee4" font-family="sans-serif" letter-spacing="1">A1</text></g>
+            <path d="M246 104h0" stroke="#a8894f"/>
+            <g transform="translate(196 150)"><ellipse cx="0" cy="26" rx="12" ry="4" fill="#000" opacity=".18"/><path d="M0 26C-4 18-16 8-16-4a16 16 0 0 1 32 0c0 12-12 22-16 30z" fill="#161512"/><circle cx="0" cy="-4" r="5.5" fill="#cdb47f"/></g>
+          </svg>
+          <p class="map-label"><b data-i18n="info.map">Googleマップ 埋め込みエリア</b><span data-i18n="info.mapnote">※デモのため地図は表示していません</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#top"><b>鮨 なぎさ</b><small>SUSHI NAGISA</small></a>
+    <div class="row">
+      <p data-i18n="footer.addr"></p>
+      <p>© Sushi Nagisa</p>
+    </div>
+  </div>
+</footer>
+
+<!-- bottom sheet -->
+<div class="scrim" id="scrim" hidden></div>
+<section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" hidden>
+  <div class="sheet-grab" id="sheetGrab">
+    <span class="handle" aria-hidden="true"></span>
+    <div class="sheet-vis" id="sheetVis"></div>
+    <button class="sheet-x pressable" type="button" id="sheetX" data-i18n-aria="sheet.close" aria-label="閉じる"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="sheet-head">
+      <p class="sheet-sub" id="sheetSub"></p>
+      <h3 id="sheetTitle"></h3>
+      <p class="price" id="sheetPrice"></p>
+    </div>
+  </div>
+  <div class="sheet-body" id="sheetBody"></div>
+</section>
+
+<script>
+(() => {
+"use strict";
+document.documentElement.classList.add("js");
+
+/* =========================================================
+   i18n dictionary  [ja, en, zh-Hans, ko]
+   ========================================================= */
+const LANGS = ["ja","en","zh","ko"];
+const HTML_LANG = {ja:"ja", en:"en", zh:"zh-Hans", ko:"ko"};
+const NATIVE = {ja:"日本語", en:"English", zh:"简体中文", ko:"한국어"};
+const T = {
+ "meta.title":["鮨 なぎさ｜江戸前鮨・カウンター八席","Sushi Nagisa — Edomae sushi, eight counter seats","鮨 なぎさ（Sushi Nagisa）｜江户前寿司・吧台八席","스시 나기사｜에도마에 스시 · 카운터 8석"],
+ "meta.desc":["檜のカウンター八席で、その日いちばんの魚を。おまかせコース、お品書き、ご予約のご案内。","Eight seats at a hinoki counter and the day’s finest fish. Omakase courses, menu and reservations.","桧木吧台八个座位，品尝当日最好的鱼。主厨套餐、菜单与预约说明。","히노키 카운터 8석에서 그날 가장 좋은 생선을. 오마카세 코스, 메뉴, 예약 안내."],
+ "nav.course":["おまかせ","Omakase","主厨套餐","오마카세"],
+ "nav.menu":["お品書き","Menu","菜单","메뉴"],
+ "nav.chef":["大将","The chef","主厨","셰프"],
+ "nav.visit":["ご来店の前に","Before you visit","到店须知","방문 전 안내"],
+ "nav.info":["店舗情報","Access","店铺信息","매장 정보"],
+ "nav.reserve":["ご予約","Reserve","预约","예약"],
+ "nav.lang":["言語を選択","Choose language","选择语言","언어 선택"],
+ "hero.eyebrow":["江戸前鮨 ・ カウンター八席","Edomae sushi · Eight counter seats","江户前寿司 · 吧台八席","에도마에 스시 · 카운터 8석"],
+ "hero.lead":["凪いだ朝の海のように、静かで澄んだひとときを。檜のカウンター越しに、その日いちばんの魚を一貫ずつ握ります。","Like the sea on a windless morning — quiet and clear. Across a hinoki counter, we shape the day’s finest fish, one piece at a time.","如无风清晨的海面，宁静而澄澈。隔着桧木吧台，为您一贯一贯捏制当日最好的鱼。","바람 잔잔한 아침 바다처럼, 고요하고 맑은 시간을. 히노키 카운터 너머로 그날 가장 좋은 생선을 한 점씩 쥐어 드립니다."],
+ "hero.cta1":["コースを見る","View courses","查看套餐","코스 보기"],
+ "hero.cta2":["ご予約について","How to reserve","预约方式","예약 안내"],
+ "hero.badge":["英語・中国語・韓国語でご案内しています","Guidance in English, Chinese and Korean","提供英语・中文・韩语服务说明","영어 · 중국어 · 한국어로 안내해 드립니다"],
+ "hero.alt":["檜のカウンターに置かれた握り","Nigiri on a hinoki counter","桧木吧台上的握寿司","히노키 카운터 위의 니기리"],
+ "course.title":["おまかせコース","Omakase courses","主厨套餐","오마카세 코스"],
+ "course.lead":["すべてのコースは、その日の仕入れで内容が変わります。価格は税込、サービス料は頂いておりません。","Every course changes with the day’s catch. Prices include tax, and there is no service charge.","所有套餐内容随当日进货而变化。价格含税，不收取服务费。","모든 코스는 그날 들어온 재료에 따라 구성이 바뀝니다. 가격은 세금 포함이며 봉사료는 받지 않습니다."],
+ "course.hint":["横にスワイプ・タップで詳細","Swipe to browse · tap for details","左右滑动浏览 · 点击查看详情","옆으로 넘기고 · 탭하면 상세 보기"],
+ "course.prev":["前のコース","Previous course","上一个套餐","이전 코스"],
+ "course.next":["次のコース","Next course","下一个套餐","다음 코스"],
+ "course.detail":["内容を見る","See the course","查看详情","자세히 보기"],
+ "course.rec":["いちばん人気","Most popular","人气之选","가장 인기"],
+ "course.min":["約{n}分","approx. {n} min","约{n}分钟","약 {n}분"],
+ "tax":["税込","tax incl.","含税","세금 포함"],
+ "menu.title":["お品書き","Menu","菜单","메뉴"],
+ "menu.lead":["コースのあとに、お好みでの追加も承ります。仕入れにより内容が変わります。","After your course, you are welcome to add pieces à la carte. Availability changes with the market.","套餐之后可按喜好追加。内容随进货而变化。","코스 후 원하시는 메뉴를 추가하실 수 있습니다. 입고 상황에 따라 바뀝니다."],
+ "menu.note":["価格はすべて税込です。タップすると説明と主な原材料をご覧いただけます。","All prices include tax. Tap an item for its story and main ingredients.","价格均含税。点击可查看介绍与主要原料。","모든 가격은 세금 포함입니다. 탭하면 설명과 주요 원재료를 볼 수 있습니다."],
+ "cat.nigiri":["握り","Nigiri","握寿司","니기리"],
+ "cat.ippin":["一品","Small dishes","单品料理","요리"],
+ "cat.drink":["お飲み物","Drinks","饮品","음료"],
+ "per":["一貫","per piece","每贯","1점"],
+ "chef.title":["大将　汐田 恒一","Koichi Shiota, head chef","主厨　汐田恒一","주방장 시오타 고이치"],
+ "chef.role":["店主・鮨職人","Owner & sushi chef","店主・寿司职人","오너 · 스시 장인"],
+ "chef.s1":["年、銀座で修業","years training in Ginza","年银座修业","년 긴자 수련"],
+ "chef.s2":["席のカウンター","seats at the counter","席吧台","석 카운터"],
+ "chef.s3":["毎朝、豊洲へ","every morning at Toyosu","每天清晨前往丰洲","매일 아침 도요스로"],
+ "chef.p1":["午前五時、豊洲の場内。汐田さんは誰よりも長く、黙って魚の目を見ている。「いい魚は、向こうから呼んでくれるんです」。そう言って笑う顔は、仕込み場に立つときとはまるで別人だ。","Five a.m., inside Toyosu market. Shiota-san lingers longer than anyone, silently studying the eyes of the fish. “A good fish calls out to you,” he says, laughing — a face nothing like the one he wears at the prep board.","清晨五点，丰洲市场内。汐田先生比任何人都待得久，默默端详着鱼的眼睛。“好鱼会自己叫住你。”他笑着说。那张笑脸，与站在备料台前的他判若两人。","새벽 다섯 시, 도요스 시장 안. 시오타 씨는 누구보다 오래, 말없이 생선의 눈을 들여다본다. “좋은 생선은 저쪽에서 먼저 불러 줘요.” 그렇게 웃는 얼굴은 손질대 앞에 선 모습과는 전혀 딴사람이다."],
+ "chef.p2":["銀座の老舗で十八年。握りの基本を叩き込まれたのち、生まれ育った海辺の町の名を借りて、この店を開いた。赤酢と米酢を合わせたシャリは人肌の温度に。ネタに合わせて、一貫ごとに握りの強さを変えている。","Eighteen years at a long-established Ginza counter drilled the fundamentals into his hands. He then opened this place, borrowing the name of the seaside town where he grew up. His rice, seasoned with red and rice vinegars, is served at body temperature, and he adjusts the pressure of every piece to suit the fish.","在银座老字号修业十八年，打下扎实的握寿司功底后，他借用家乡海边小镇的名字开了这家店。混合赤醋与米醋的醋饭保持人体温度，并依鱼料调整每一贯的握力。","긴자의 노포에서 18년. 니기리의 기본을 몸에 새긴 뒤, 나고 자란 바닷가 마을의 이름을 빌려 이 가게를 열었다. 아카즈와 쌀식초를 섞은 샤리는 사람 체온에 맞추고, 재료에 따라 한 점마다 쥐는 힘을 달리한다."],
+ "chef.quote":["「言葉が違っても、一口目の顔は同じなんです。だから、いちばんいい状態で出すことだけを考えています」","“Whatever language you speak, the face you make at the first bite is the same. So all I think about is serving each piece at its best.”","“语言不同，吃下第一口时的表情却是一样的。所以我只想着，把每一贯都以最好的状态端出来。”","“말은 달라도, 첫 입을 먹었을 때의 표정은 똑같아요. 그래서 가장 좋은 상태로 내는 것만 생각합니다.”"],
+ "chef.p3":["海外からのお客さまが増えた今も、やることは変わらないという。カウンター八席、目の前で握られた一貫を口にすれば、その言葉の意味がわかる。","More guests now arrive from abroad, yet he says nothing about the work has changed. Take the first piece he sets before you at the eight-seat counter, and you will understand why.","即使海外客人日渐增多，他说自己要做的事从未改变。坐在八席吧台前，尝一口眼前刚捏好的寿司，便能明白这句话的意思。","해외 손님이 늘어난 지금도 하는 일은 달라지지 않았다고 한다. 여덟 석 카운터에서 눈앞에 놓인 한 점을 맛보면, 그 말의 뜻을 알게 된다."],
+ "chef.credit":["取材・文　Table Web 編集部","Interview & words: Table Web editorial","采访・撰文　Table Web 编辑部","취재 · 글　Table Web 편집부"],
+ "res.title":["ご予約","Reservations","预约","예약"],
+ "res.lead":["ご予約はお電話、またはご予約サイトにて承ります。ご来店日の二か月前の同日から受け付けています。","Reserve by phone or through our booking site. Bookings open two months ahead, on the same date.","可通过电话或预约网站预约。自到店日两个月前的同一天起开放预约。","예약은 전화 또는 예약 사이트에서 받습니다. 방문일 두 달 전 같은 날부터 접수합니다."],
+ "res.web":["ご予約サイトへ","Book online","前往预约网站","예약 사이트로 이동"],
+ "res.web.note":["24時間受付・英語／中国語／韓国語に対応","24 hours · English, Chinese and Korean","24小时受理・支持英语／中文／韩语","24시간 접수 · 영어/중국어/한국어 지원"],
+ "res.tel":["お電話で予約する","Call to reserve","电话预约","전화로 예약"],
+ "res.tel.note":["受付 11:00–17:00（日本語のみ）","11:00–17:00 · Japanese only","受理时间 11:00–17:00（仅限日语）","접수 11:00–17:00 (일본어만 가능)"],
+ "res.hint":["海外からお越しのお客さまには、各言語に対応したご予約サイトをおすすめしています。","Visiting from overseas? The booking site is the easiest way — it is available in your language.","海外客人建议使用支持多语言的预约网站，更加便捷。","해외에서 오시는 분께는 각 언어를 지원하는 예약 사이트를 추천합니다."],
+ "notes.title":["ご来店の前に","Before your visit","到店前须知","방문 전 안내"],
+ "notes.lead":["カウンターのすべてのお客さまに気持ちよく過ごしていただくための、いくつかのお願いです。","A few requests, so that every guest at the counter can enjoy the evening.","为了让吧台前的每位客人都能度过愉快的时光，敬请留意以下事项。","카운터의 모든 손님이 편안히 즐기실 수 있도록 몇 가지 부탁드립니다."],
+ "n1.t":["アレルギー・苦手な食材","Allergies & dietary needs","过敏与忌口","알레르기 · 못 드시는 음식"],
+ "n1.d":["ご予約時に必ずお知らせください。当日のご相談にはお応えできない場合があります。甲殻類・小麦など、完全な除去が難しい食材もございます。ヴィーガン・ハラールには対応しておりません。","Please tell us when you book — we may not be able to adjust on the day. Some ingredients, such as shellfish and wheat, cannot be fully removed. We are unable to offer vegan or halal courses.","请务必在预约时告知，当天可能无法应对。甲壳类、小麦等部分食材难以完全去除。本店无法提供纯素及清真餐。","예약 시 반드시 알려 주세요. 당일 요청은 대응이 어려울 수 있습니다. 갑각류 · 밀 등 완전히 제거하기 어려운 재료도 있습니다. 비건 · 할랄 코스는 제공하지 않습니다."],
+ "n2.t":["ドレスコード","Dress code","着装要求","드레스 코드"],
+ "n2.d":["スマートカジュアルでお越しください。繊細な香りを楽しんでいただくため、香水や香りの強い整髪料はお控えください。","Smart casual, please. To protect the delicate aromas of the sushi, we ask you to avoid perfume and strongly scented products.","请着休闲正装（Smart Casual）。为了不影响寿司细腻的香气，请避免使用香水及气味浓烈的美发产品。","스마트 캐주얼 차림으로 방문해 주세요. 섬세한 향을 즐기실 수 있도록 향수나 향이 강한 헤어 제품은 삼가 주세요."],
+ "n3.t":["お時間について","Punctuality","关于时间","시간 안내"],
+ "n3.d":["コースは全席一斉にはじまります。ご連絡なく十五分以上遅れた場合、お席をお取り消しすることがあります。","All guests begin the course together. If you are more than 15 minutes late without contacting us, your seats may be released.","所有座位的套餐同时开始。若未联系且迟到超过15分钟，座位可能会被取消。","코스는 모든 좌석이 동시에 시작합니다. 연락 없이 15분 이상 늦으시면 예약이 취소될 수 있습니다."],
+ "n4.t":["キャンセルについて","Cancellations","取消政策","취소 규정"],
+ "n4.d":["前日はコース料金の50%、当日は100%を頂戴します。人数の変更もお早めにご連絡ください。","We charge 50% of the course price the day before and 100% on the day. Please tell us of any change in party size as early as possible.","前一天取消收取套餐费用的50%，当天取消收取100%。人数变更也请尽早联系。","전날 취소 시 코스 요금의 50%, 당일 취소 시 100%를 받습니다. 인원 변경도 미리 알려 주세요."],
+ "n5.t":["お子さまのご来店","Children","儿童","어린이 동반"],
+ "n5.d":["中学生以上のお客さまからご案内しております。","We welcome guests aged 13 and over.","本店接待13岁（初中生）以上的客人。","중학생(만 13세) 이상부터 이용하실 수 있습니다."],
+ "n6.t":["撮影について","Photography","关于拍照","촬영 안내"],
+ "n6.d":["お料理の撮影は歓迎します。フラッシュのご使用と、他のお客さまが写り込む撮影はご遠慮ください。","You are welcome to photograph your food. Please don’t use flash or include other guests in your photos.","欢迎拍摄料理。请勿使用闪光灯，也请避免拍到其他客人。","요리 촬영은 환영합니다. 플래시 사용과 다른 손님이 찍히는 촬영은 삼가 주세요."],
+ "n7.t":["お支払い","Payment","付款方式","결제"],
+ "n7.d":["各種クレジットカード、交通系IC、QRコード決済（Alipay・WeChat Pay を含む）がご利用いただけます。","Major credit cards, IC transit cards and QR payments (including Alipay and WeChat Pay) are accepted.","可使用各类信用卡、交通IC卡及二维码支付（包括支付宝、微信支付）。","주요 신용카드, 교통계 IC 카드, QR 결제(Alipay · WeChat Pay 포함)를 이용하실 수 있습니다."],
+ "info.title":["店舗情報","Information & access","店铺信息","매장 정보"],
+ "info.addr.k":["住所","Address","地址","주소"],
+ "info.addr.v":["東京都〇〇区〇〇 0-0-0　〇〇ビル 1F","1F ○○ Bldg., 0-0-0 ○○, ○○-ku, Tokyo","东京都〇〇区〇〇 0-0-0　〇〇大楼 1层","도쿄도 〇〇구 〇〇 0-0-0 〇〇빌딩 1층"],
+ "info.tel.k":["電話","Phone","电话","전화"],
+ "info.hours.k":["営業時間","Hours","营业时间","영업시간"],
+ "info.hours.v":["昼　12:00 一斉スタート（土曜のみ）<br>夜　18:00／20:30 の二部制","Lunch — 12:00, one seating (Saturdays only)<br>Dinner — two seatings, 18:00 / 20:30","午餐　12:00 同时开始（仅周六）<br>晚餐　18:00／20:30 两轮","점심 12:00 일제 시작 (토요일만)<br>저녁 18:00 / 20:30 2부제"],
+ "info.closed.k":["定休日","Closed","休息日","정기 휴일"],
+ "info.closed.v":["日曜・祝日","Sundays and national holidays","周日及日本法定节假日","일요일 · 공휴일"],
+ "info.seats.k":["席数","Seats","座位","좌석"],
+ "info.seats.v":["カウンター 8席（全席禁煙）","8 counter seats (non-smoking)","吧台8席（全面禁烟）","카운터 8석 (전석 금연)"],
+ "info.access.k":["アクセス","Access","交通","오시는 길"],
+ "info.access.v":["〇〇線「〇〇駅」A1出口より徒歩3分","3 min walk from Exit A1, ○○ Station (○○ Line)","〇〇线「〇〇站」A1出口步行3分钟","〇〇선 〇〇역 A1 출구에서 도보 3분"],
+ "info.map":["Googleマップ 埋め込みエリア","Google Maps embed area","Google 地图嵌入区域","Google 지도 삽입 영역"],
+ "info.mapnote":["※デモのため地図は表示していません","The live map is not shown in this demo","※演示版不显示地图","※데모이므로 지도는 표시하지 않습니다"],
+ "footer.addr":["東京都〇〇区〇〇 0-0-0　TEL 03-0000-0000","○○-ku, Tokyo · +81 3-0000-0000","东京都〇〇区〇〇 0-0-0　电话 +81 3-0000-0000","도쿄도 〇〇구 〇〇 0-0-0 · +81 3-0000-0000"],
+ "sheet.close":["閉じる","Close","关闭","닫기"],
+ "sheet.flow":["コースの流れ","How the course unfolds","套餐流程","코스 구성"],
+ "sheet.al":["含まれる主な原材料","Contains","主要过敏原","주요 알레르기 성분"],
+ "sheet.alnone":["特定原材料の表示なし","No major allergens listed","无主要过敏原","주요 알레르기 성분 없음"],
+ "sheet.cnote":["内容は仕入れにより変わります。苦手な食材はご予約時にお知らせください。","The contents follow the day’s market. Please share any dietary needs when you book.","内容随进货而变化。如有忌口，请在预约时告知。","구성은 입고 상황에 따라 바뀝니다. 못 드시는 재료는 예약 시 알려 주세요."],
+ "sheet.anote":["表示は主な原材料です。同じ厨房で甲殻類・小麦などを扱っています。","Main ingredients only. Our kitchen also handles shellfish, wheat and other allergens.","仅标示主要原料。本店厨房同时处理甲壳类、小麦等食材。","주요 원재료만 표시했습니다. 같은 주방에서 갑각류 · 밀 등을 취급합니다."],
+ "sheet.reserve":["このコースを予約する","Reserve this course","预约此套餐","이 코스 예약하기"],
+ "al.fish":["魚","Fish","鱼类","생선"],
+ "al.shrimp":["えび","Shrimp","虾","새우"],
+ "al.wheat":["小麦","Wheat","小麦","밀"],
+ "al.soy":["大豆","Soy","大豆","대두"],
+ "al.egg":["卵","Egg","鸡蛋","달걀"],
+ "al.alcohol":["アルコール","Alcohol","酒精","알코올"]
+};
+
+const COURSES = [
+ {id:"nagi", kanji:"凪", roman:"NAGI", price:16500, min:90, pieces:["akami"],
+  name:["凪 コース","Nagi course","凪 套餐","나기 코스"],
+  desc:["握り十貫と椀物。はじめての方にも、鮨の流れをゆっくり楽しんでいただけるコースです。","Ten pieces of nigiri and a clear soup — an unhurried introduction to the rhythm of the sushi counter.","十贯握寿司与清汤。适合初次体验，从容感受寿司吧台的节奏。","니기리 10점과 맑은 국. 처음 오신 분도 스시 카운터의 흐름을 여유롭게 즐기실 수 있습니다."],
+  flow:[["先付","握り 十貫","椀物","玉子"],["Seasonal starter","Ten pieces of nigiri","Clear soup","Tamago"],["先付（季节前菜）","握寿司 十贯","清汤","玉子烧"],["사키즈케 (계절 전채)","니기리 10점","맑은 국","다마고"]]},
+ {id:"ushio", kanji:"潮", roman:"USHIO", price:24200, min:120, rec:true, pieces:["chutoro","kohada"],
+  name:["潮 コース","Ushio course","潮 套餐","우시오 코스"],
+  desc:["季節のつまみ五品と握り十貫。なぎさでいちばん多くのお客さまに選ばれている定番です。","Five seasonal small plates followed by ten pieces of nigiri — the course most of our guests choose.","五道季节小菜与十贯握寿司。本店最受欢迎的经典套餐。","계절 안주 다섯 가지와 니기리 10점. 나기사에서 가장 많은 분들이 선택하시는 대표 코스입니다."],
+  flow:[["先付","つまみ 五品","握り 十貫","椀物","玉子"],["Seasonal starter","Five small plates","Ten pieces of nigiri","Clear soup","Tamago"],["先付（季节前菜）","下酒小菜 五道","握寿司 十贯","清汤","玉子烧"],["사키즈케","안주 5가지","니기리 10점","맑은 국","다마고"]]},
+ {id:"nagisa", kanji:"渚", roman:"NAGISA", price:33000, min:150, pieces:["otoro","uni","ebi"], gari:true,
+  name:["渚 コース","Nagisa course","渚 套餐","나기사 코스"],
+  desc:["季節の珍味と、その日最上の握りを十二貫。記念日や、特別な夜のためのコースです。","Seasonal delicacies and twelve pieces of the day’s very best nigiri. For anniversaries and nights worth remembering.","季节珍味与当日最上等的十二贯握寿司。献给纪念日与特别的夜晚。","계절 진미와 그날 최상의 니기리 12점. 기념일과 특별한 밤을 위한 코스입니다."],
+  flow:[["先付","季節の珍味 三種","つまみ 五品","握り 十二貫","椀物","玉子","甘味"],["Seasonal starter","Three seasonal delicacies","Five small plates","Twelve pieces of nigiri","Clear soup","Tamago","Dessert"],["先付（季节前菜）","季节珍味 三种","下酒小菜 五道","握寿司 十二贯","清汤","玉子烧","甜品"],["사키즈케","계절 진미 3종","안주 5가지","니기리 12점","맑은 국","다마고","디저트"]]}
+];
+
+const ITEMS = [
+ {cat:"nigiri", v:"otoro", roman:"OTORO", price:1650, al:["fish","wheat","soy"],
+  name:["大とろ","Ōtoro — fatty tuna belly","大腹（金枪鱼大脂）","오토로 (참치 대뱃살)"],
+  desc:["本鮪の腹身、いちばん脂ののった部位。口に入れた瞬間にほどけます。","The richest cut of bluefin belly. It melts the moment it meets your tongue.","蓝鳍金枪鱼腹部油脂最丰富的部位，入口即化。","참다랑어 뱃살 중 기름이 가장 풍부한 부위. 입에 넣는 순간 녹아내립니다."]},
+ {cat:"nigiri", v:"akami", roman:"AKAMI-ZUKE", price:880, al:["fish","wheat","soy","alcohol"],
+  name:["赤身の漬け","Akami-zuke — marinated lean tuna","腌渍赤身（金枪鱼瘦肉）","아카미 즈케 (간장 절임 참치)"],
+  desc:["煮切り醤油にくぐらせ、半日寝かせた赤身。鮪本来の香りが際立ちます。","Lean bluefin rested for half a day in nikiri soy, bringing out the tuna’s own aroma.","在煮切酱油中浸渍半日的赤身，突显金枪鱼本来的香气。","니키리 간장에 담가 반나절 숙성한 살코기. 참치 본연의 향이 살아납니다."]},
+ {cat:"nigiri", v:"kohada", roman:"KOHADA", price:770, al:["fish"],
+  name:["小肌","Kohada — vinegar-cured gizzard shad","小鳍（醋腌斑鰶）","고하다 (초절임 전어)"],
+  desc:["塩と酢の加減で仕事の差が出る、江戸前の華。季節ごとに締め方を変えています。","The emblem of Edomae craft: salt and vinegar balanced by hand and adjusted with the season.","江户前寿司的代表。盐与醋的分寸最见功夫，随季节调整腌制方式。","소금과 식초의 가감에서 솜씨가 드러나는 에도마에의 꽃. 계절마다 절이는 방식을 바꿉니다."]},
+ {cat:"nigiri", v:"ebi", roman:"KURUMA-EBI", price:1100, al:["shrimp","wheat","soy"],
+  name:["車海老","Kuruma-ebi — Japanese tiger prawn","车虾（日本对虾）","구루마에비 (보리새우)"],
+  desc:["ご注文を受けてから茹で上げ、温かいまま握ります。甘みと香りがいちばん立つ瞬間に。","Boiled to order and served still warm, when its sweetness and aroma are at their peak.","接单后现煮，趁温热捏制，正值甜味与香气最盛之时。","주문을 받은 뒤 삶아 따뜻한 채로 쥡니다. 단맛과 향이 가장 살아나는 순간에."]},
+ {cat:"nigiri", v:"uni", roman:"UNI", price:1540, al:["wheat","soy"],
+  name:["雲丹","Uni — sea urchin","海胆","우니 (성게알)"],
+  desc:["その朝に届いた生雲丹だけを、軍艦で。産地は日によって変わります。","Only fresh uni delivered that morning, served gunkan-style. Its origin changes day to day.","只用当天早晨送达的新鲜海胆，以军舰卷呈现。产地每日不同。","그날 아침 들어온 생성게알만 군함말이로. 산지는 날마다 달라집니다."]},
+ {cat:"nigiri", v:"anago", roman:"ANAGO", price:990, al:["fish","wheat","soy","alcohol"],
+  name:["煮穴子","Anago — simmered sea eel","煮星鳗","니아나고 (조린 붕장어)"],
+  desc:["ふっくらと煮上げ、継ぎ足しの甘いツメで。コースの締めに好まれる一貫です。","Simmered until tender and brushed with our long-kept tsume glaze — a favourite way to close.","炖煮至松软，刷上代代相传的甜酱汁，常作为套餐的收尾。","폭신하게 조려 대대로 이어 온 달콤한 츠메 소스를 발랐습니다. 코스의 마무리로 사랑받는 한 점."]},
+ {cat:"nigiri", v:"tamago", roman:"TAMAGO", price:440, al:["egg","shrimp","wheat","soy"],
+  name:["玉子","Tamago — sweet egg","玉子烧","다마고 (달걀구이)"],
+  desc:["芝海老のすり身を合わせ、じっくり焼き上げたカステラ風。","Slow-baked with minced shiba shrimp into a soft, castella-like block.","加入芝虾虾泥，慢火烤成蛋糕般的口感。","시바새우 살을 섞어 천천히 구운 카스텔라 풍."]},
+ {cat:"ippin", v:"bowl", roman:"CHAWANMUSHI", price:1100, al:["egg","fish","wheat","soy"],
+  name:["茶碗蒸し","Chawanmushi — savoury egg custard","茶碗蒸（日式蒸蛋）","자완무시 (일본식 달걀찜)"],
+  desc:["一番出汁でのばした、とろりとやわらかな蒸し物。季節の餡をのせて。","A silky custard set with our first-press dashi, finished with a seasonal glaze.","以一番高汤调制的滑嫩蒸蛋，淋上季节芡汁。","이치반 다시로 부드럽게 쪄 낸 찜. 계절 소스를 올려서."]},
+ {cat:"ippin", v:"grill", roman:"YAKIMONO", price:1980, al:["fish","soy"],
+  name:["本日の焼物","Charcoal-grilled fish of the day","今日炭烤鱼","오늘의 숯불구이"],
+  desc:["炭火で皮目を香ばしく。魚は仕入れにより変わります。","Grilled over charcoal until the skin is fragrant. The fish depends on the day’s market.","炭火烤至鱼皮焦香，鱼种依当日进货而定。","숯불로 껍질을 고소하게. 생선은 그날 입고에 따라 바뀝니다."]},
+ {cat:"ippin", v:"soup", roman:"AKADASHI", price:550, al:["soy","fish"],
+  name:["赤出汁","Akadashi — red miso soup","红味噌汤","아카다시 (붉은 된장국)"],
+  desc:["八丁味噌の赤出汁。握りの合間に、口をととのえる一椀。","Hatchō red miso broth to refresh the palate between pieces.","八丁味噌红汤，在握寿司之间清口的一碗。","핫초 된장으로 끓인 국. 니기리 사이에 입안을 정돈해 주는 한 그릇."]},
+ {cat:"drink", v:"sake", roman:"SAKE FLIGHT", price:2750, al:["alcohol"],
+  name:["日本酒 飲み比べ三種","Sake flight — three pours","日本酒 品鉴三种","사케 비교 시음 3종"],
+  desc:["大将が鮨に合わせて選ぶ、その日の三種。英・中・韓の銘柄カードを添えて。","Three sakes chosen by the chef to match the sushi, with a tasting card in English, Chinese or Korean.","由主厨配合寿司挑选的当日三款，附英・中・韩文酒款说明卡。","셰프가 스시에 맞춰 고른 그날의 3종. 영어 · 중국어 · 한국어 설명 카드를 곁들입니다."]},
+ {cat:"drink", v:"glass", roman:"NON-ALCOHOL PAIRING", price:4400, al:[],
+  name:["ノンアルコール ペアリング","Non-alcoholic pairing","无酒精配餐饮品","논알코올 페어링"],
+  desc:["玉露、発酵ジュース、ほうじ茶など、コースに合わせた五杯。","Five glasses — gyokuro, fermented juices, hojicha — paced with your course.","玉露、发酵果汁、焙茶等，配合套餐的五杯饮品。","교쿠로, 발효 주스, 호지차 등 코스에 맞춘 다섯 잔."]},
+ {cat:"drink", v:"beer", roman:"BEER", price:990, al:["alcohol"],
+  name:["瓶ビール","Bottled beer","瓶装啤酒","병맥주"],
+  desc:["キレのある国産ラガー。鮨の余韻を邪魔しない一本を。","A crisp Japanese lager that leaves the sushi’s finish intact.","口感清爽的日本拉格，不会掩盖寿司的余韵。","깔끔한 일본 라거. 스시의 여운을 해치지 않는 한 병."]}
+];
+
+const NOTES = [
+ {k:"n1", key:true, ic:'<path d="M12 3.5l9 16H3z"/><path d="M12 10v4.5M12 17v.4"/>'},
+ {k:"n2", ic:'<path d="M12 7.2a2.2 2.2 0 1 1 2.2-2.2"/><path d="M12 7.2V9L3 16.5h18L12 9"/>'},
+ {k:"n3", ic:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>'},
+ {k:"n4", ic:'<rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M9.5 13.5l5 5M14.5 13.5l-5 5"/>'},
+ {k:"n5", ic:'<circle cx="12" cy="6" r="2.6"/><path d="M7 21v-5.5a5 5 0 0 1 10 0V21"/>'},
+ {k:"n6", ic:'<rect x="3" y="7" width="18" height="13" rx="2.5"/><circle cx="12" cy="13.5" r="3.6"/><path d="M8 7l1.6-2.6h4.8L16 7"/>'},
+ {k:"n7", ic:'<rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3 10h18M7 15h4"/>'}
+];
+
+/* =========================================================
+   SVG visuals — nigiri, vessels, scenes (no photos)
+   ========================================================= */
+const FISH = "M14 43C18 27 50 21 72 22C92 23 106 31 107 40C108 47 98 49 60 49C28 49 12 49 14 43Z";
+const RICE = '<ellipse cx="60" cy="66" rx="42" ry="4.5" fill="url(#gShadow)"/><path d="M22 47C22 39 34 36 60 36S98 39 98 48C98 58 86 64 60 64S22 58 22 47Z" fill="url(#gRice)"/><g fill="#fff" opacity=".8"><ellipse cx="34" cy="56" rx="2.2" ry="1.2"/><ellipse cx="48" cy="60" rx="2.2" ry="1.2"/><ellipse cx="66" cy="59" rx="2.2" ry="1.2"/><ellipse cx="82" cy="55" rx="2.2" ry="1.2"/></g>';
+const SHEEN = '<path d="M26 35C44 27 80 26 98 34" stroke="#fff" stroke-opacity=".28" stroke-width="2.5" fill="none" stroke-linecap="round"/>';
+function piece(kind){
+  switch(kind){
+    case "akami": return RICE+`<path d="${FISH}" fill="url(#gAkami)"/>`+SHEEN;
+    case "chutoro": return RICE+`<path d="${FISH}" fill="url(#gChutoro)"/><g stroke="#fff" stroke-opacity=".38" stroke-width="2" fill="none" stroke-linecap="round"><path d="M34 44C44 36 52 30 62 26"/><path d="M58 47C68 39 78 32 88 28"/></g>`+SHEEN;
+    case "otoro": return RICE+`<path d="${FISH}" fill="url(#gOtoro)"/><g stroke="#fff" stroke-opacity=".75" stroke-width="2.4" fill="none" stroke-linecap="round"><path d="M22 44C30 36 38 30 48 26"/><path d="M38 47C48 38 58 31 68 26"/><path d="M56 48C66 40 76 32 86 28"/><path d="M74 48C84 41 92 36 100 34"/></g>`+SHEEN;
+    case "kohada": return RICE+`<path d="${FISH}" fill="url(#gKohada)"/><path d="M18 36C36 25 80 21 104 35" stroke="#43525c" stroke-opacity=".7" stroke-width="3" fill="none"/><g fill="#34414a" opacity=".6"><circle cx="40" cy="33" r="1.6"/><circle cx="52" cy="31" r="1.4"/><circle cx="64" cy="30" r="1.6"/><circle cx="76" cy="31" r="1.3"/><circle cx="46" cy="38" r="1.2"/><circle cx="70" cy="36" r="1.4"/></g>`+SHEEN;
+    case "ebi": return RICE+`<path d="${FISH}" fill="url(#gEbi)"/><g clip-path="url(#cFish)" fill="#e0532d" opacity=".9"><path d="M22 20h9l-6 34h-9z"/><path d="M40 20h9l-6 34h-9z"/><path d="M58 20h9l-6 34h-9z"/><path d="M76 20h9l-6 34h-9z"/><path d="M94 20h9l-6 34h-9z"/></g><path d="M104 38L117 29L115 45Z" fill="#d6452a"/>`+SHEEN;
+    case "anago": return RICE+`<path d="${FISH}" fill="url(#gAnago)"/><g stroke="#2a170b" stroke-opacity=".55" stroke-width="1.6" stroke-linecap="round"><path d="M34 30l3 6M50 26l3 7M66 25l3 7M82 27l3 6"/></g><path d="M24 36C44 26 82 25 100 33" stroke="#ffd9a8" stroke-opacity=".35" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+    case "tamago": return RICE+`<rect x="17" y="22" width="86" height="26" rx="5" fill="url(#gTamago)"/><path d="M20 25H100" stroke="#fff3c2" stroke-opacity=".7" stroke-width="2"/><rect x="52" y="20" width="16" height="45" rx="2" fill="url(#gNori)"/>`;
+    case "uni": return '<ellipse cx="60" cy="66" rx="40" ry="4.5" fill="url(#gShadow)"/><rect x="24" y="28" width="72" height="37" rx="12" fill="url(#gNori)"/><path d="M34 34V60" stroke="#fff" stroke-opacity=".08" stroke-width="4"/><ellipse cx="60" cy="31" rx="36" ry="8" fill="#0d100c"/><g fill="url(#gUni)"><ellipse cx="38" cy="28" rx="10" ry="6.5"/><ellipse cx="52" cy="24" rx="10" ry="7"/><ellipse cx="67" cy="24.5" rx="10" ry="7"/><ellipse cx="81" cy="28" rx="9.5" ry="6.5"/><ellipse cx="60" cy="30" rx="11" ry="6"/></g><g fill="#fff" opacity=".45"><circle cx="50" cy="21" r="1.4"/><circle cx="65" cy="21.5" r="1.4"/><circle cx="37" cy="25" r="1.1"/></g>';
+    case "bowl": return '<ellipse cx="60" cy="68" rx="30" ry="4" fill="url(#gShadow)"/><path d="M34 32H86L82 60C81 64 75 66 60 66S39 64 38 60Z" fill="url(#gCeramic)"/><path d="M36 42H84" stroke="#35506b" stroke-opacity=".55" stroke-width="2"/><ellipse cx="60" cy="31" rx="27" ry="5" fill="#f1ede3"/><path d="M36 30C38 20 82 20 84 30Z" fill="url(#gCeramic)"/><rect x="55" y="13" width="10" height="6" rx="3" fill="#b4ae9f"/>';
+    case "grill": return '<ellipse cx="60" cy="64" rx="52" ry="4" fill="url(#gShadow)"/><rect x="8" y="46" width="104" height="14" rx="4" fill="#e9e3d6"/><path d="M8 50H112" stroke="#fff" stroke-opacity=".6"/><path d="M20 44C30 30 70 28 88 36L100 30L98 46L88 42C70 50 30 52 20 44Z" fill="#a47850"/><path d="M26 40C40 32 70 32 86 38" stroke="#5a3a20" stroke-opacity=".5" stroke-width="2" fill="none"/><g stroke="#3a2412" stroke-opacity=".5" stroke-width="1.5"><path d="M40 36l4 8M54 34l4 9M68 35l4 8"/></g><circle cx="102" cy="48" r="7" fill="#7aa34a"/><circle cx="102" cy="48" r="4.5" fill="#dfe8b5"/>';
+    case "soup": return '<ellipse cx="60" cy="68" rx="32" ry="4" fill="url(#gShadow)"/><path d="M26 34H94C92 54 80 64 60 64S28 54 26 34Z" fill="url(#gLacquer)"/><path d="M30 38C34 52 46 58 60 58" stroke="#fff" stroke-opacity=".12" stroke-width="3" fill="none"/><ellipse cx="60" cy="34" rx="34" ry="7" fill="#7a1d18"/><ellipse cx="60" cy="35" rx="29" ry="5" fill="#4a2d18"/><g fill="#6f8e3e"><circle cx="52" cy="34" r="1.8"/><circle cx="60" cy="35.5" r="1.6"/><circle cx="67" cy="34" r="1.8"/></g>';
+    case "sake": return '<ellipse cx="60" cy="68" rx="40" ry="4" fill="url(#gShadow)"/><path d="M40 8H50V14C50 18 58 24 58 40C58 58 52 66 45 66S32 58 32 40C32 24 40 18 40 14Z" fill="url(#gCeramic)"/><path d="M36 34C36 50 40 58 42 60" stroke="#fff" stroke-opacity=".3" stroke-width="2.5" fill="none"/><path d="M68 50H92L88 64C87 66 73 66 72 64Z" fill="url(#gCeramic)"/><ellipse cx="80" cy="50" rx="12" ry="3" fill="#efe9dd"/><g fill="none" stroke="#35506b" stroke-opacity=".6" stroke-width="1.2"><circle cx="80" cy="50.5" r="4" /></g>';
+    case "glass": return '<ellipse cx="60" cy="70" rx="22" ry="3.5" fill="url(#gShadow)"/><path d="M44 10H76C78 30 72 42 60 44C48 42 42 30 44 10Z" fill="#fff" fill-opacity=".12" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/><path d="M45.5 22H74.5C74 34 69 41 60 42.5C51 41 46 34 45.5 22Z" fill="#d9c27a" fill-opacity=".85"/><path d="M60 44V66M48 68H72" stroke="#fff" stroke-opacity=".6" stroke-width="1.6" stroke-linecap="round"/>';
+    case "beer": return '<ellipse cx="60" cy="69" rx="24" ry="4" fill="url(#gShadow)"/><path d="M46 14H74L71 66H49Z" fill="#d99a2b"/><path d="M46 14H74L73.4 24H46.6Z" fill="#f7efdf"/><path d="M52 28V60" stroke="#fff" stroke-opacity=".35" stroke-width="3" stroke-linecap="round"/><g fill="#fff" opacity=".5"><circle cx="62" cy="40" r="1"/><circle cx="66" cy="50" r="1"/><circle cx="58" cy="54" r="1"/></g>';
+  }
+  return "";
+}
+const pieceSVG = (k, cls="") => `<svg viewBox="0 0 120 80" ${cls} aria-hidden="true">${piece(k)}</svg>`;
+
+/* a lacquered geta with pieces, for course cards and sheets */
+function plateScene(kinds, gari){
+  const n = kinds.length, s = n === 1 ? 1.25 : n === 2 ? 1.05 : .92, gap = n === 3 ? 88 : 104;
+  const cx = gari ? 170 : 180;
+  let g = "";
+  kinds.forEach((k,i)=>{
+    const x = cx + (i-(n-1)/2)*gap - 60*s, y = 118 - 64*s;
+    g += `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${s})">${piece(k)}</g>`;
+  });
+  const gariSVG = gari ? '<g transform="translate(300 104)"><path d="M-14 12C-12 2 0-2 10 2C4 6-4 8-14 12Z" fill="#f2c2b6"/><path d="M-10 14C-6 6 6 4 14 10C6 12-2 14-10 14Z" fill="#ebb1a3"/><path d="M-4 8C0 0 10 0 16 4" stroke="#fff" stroke-opacity=".5" fill="none"/></g>' : "";
+  return `<svg viewBox="0 0 360 176" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <ellipse cx="180" cy="60" rx="200" ry="90" fill="url(#gSpot)"/>
+    <path d="M0 150H360V176H0Z" fill="url(#gHinoki)" opacity=".92"/><path d="M0 150H360" stroke="#f3e2c2" stroke-opacity=".8"/>
+    <g stroke="#b38f5f" stroke-opacity=".35" fill="none"><path d="M0 160C120 157 240 163 360 158"/><path d="M0 168C100 166 260 171 360 167"/></g>
+    <ellipse cx="180" cy="148" rx="150" ry="6" fill="url(#gShadow)"/>
+    <rect x="40" y="118" width="280" height="14" rx="3" fill="url(#gLacquer)"/><path d="M42 119H318" stroke="#fff" stroke-opacity=".14"/>
+    <rect x="62" y="132" width="16" height="14" fill="#0e0d0c"/><rect x="282" y="132" width="16" height="14" fill="#0e0d0c"/>
+    ${g}${gariSVG}
+  </svg>`;
+}
+
+function heroScene(){
+  let waves = "";
+  for (let i=0;i<9;i++){ const x = i*100 - 20; waves += `<path d="M${x} 150a50 50 0 0 1 100 0" /><path d="M${x+15} 150a35 35 0 0 1 70 0" />`; }
+  const p = (k,x,s=1.08) => `<g transform="translate(${x-60*s} ${196-64*s}) scale(${s})">${piece(k)}</g>`;
+  return `
+    <ellipse cx="400" cy="210" rx="420" ry="170" fill="url(#gSpot)"/>
+    <path d="M0 100H800" stroke="#cdb47f" stroke-opacity=".45"/>
+    <g fill="none" stroke="#cdb47f" stroke-opacity=".08" stroke-width="1.2">${waves}</g>
+    <rect x="0" y="222" width="800" height="118" fill="url(#gHinoki)"/>
+    <rect x="0" y="222" width="800" height="3" fill="#f7e8cb" opacity=".8"/>
+    <g fill="none" stroke="#b08a58" stroke-opacity=".35"><path d="M0 242C200 238 420 246 800 240"/><path d="M0 262C260 258 520 268 800 260"/><path d="M0 290C180 286 480 296 800 288"/><path d="M-20 314C240 310 520 318 820 312"/><path d="M300 232C360 236 420 236 470 232" stroke-opacity=".25"/></g>
+    <rect x="0" y="318" width="800" height="22" fill="#000" opacity=".12"/>
+    <ellipse cx="400" cy="224" rx="220" ry="9" fill="url(#gShadow)"/>
+    <rect x="200" y="196" width="400" height="20" rx="3" fill="url(#gLacquer)"/>
+    <path d="M203 197.5H597" stroke="#fff" stroke-opacity=".14"/>
+    <rect x="232" y="216" width="22" height="7" fill="#0b0a09"/><rect x="546" y="216" width="22" height="7" fill="#0b0a09"/>
+    ${p("akami",300)}${p("chutoro",400)}${p("kohada",500)}
+    <g transform="translate(566 186)"><path d="M-14 10C-12 0 0-4 10 0C4 4-4 6-14 10Z" fill="#f2c2b6"/><path d="M-10 12C-6 4 6 2 14 8C6 10-2 12-10 12Z" fill="#ebb1a3"/></g>
+    <ellipse cx="128" cy="226" rx="44" ry="6" fill="url(#gShadow)"/>
+    <path d="M98 150H158L154 218C154 222 146 226 128 226S102 222 102 218Z" fill="url(#gCeramic)"/>
+    <ellipse cx="128" cy="150" rx="30" ry="5" fill="#3a2d1f"/><path d="M98 150C98 147 158 147 158 150" stroke="#efe9dd" stroke-width="2" fill="none"/>
+    <path d="M104 170C112 176 146 176 152 168" stroke="#5c6d63" stroke-opacity=".55" stroke-width="5" fill="none"/>
+    <path d="M110 160V212" stroke="#fff" stroke-opacity=".22" stroke-width="4" stroke-linecap="round"/>
+    <ellipse cx="690" cy="226" rx="46" ry="6" fill="url(#gShadow)"/>
+    <ellipse cx="690" cy="220" rx="42" ry="9" fill="#ece6da"/><ellipse cx="690" cy="219" rx="31" ry="5.5" fill="#2b150b"/><ellipse cx="682" cy="218" rx="10" ry="1.6" fill="#fff" opacity=".18"/>
+    <rect x="610" y="262" width="26" height="10" rx="5" fill="#2b2823"/>
+    <path d="M560 276L790 258M566 283L794 266" stroke="#3a2616" stroke-width="5" stroke-linecap="round"/>
+    <path d="M560 274L700 263" stroke="#fff" stroke-opacity=".12" stroke-width="1.5"/>`;
+}
+
+function chefArt(){
+  return `
+    <circle cx="200" cy="190" r="118" fill="none" stroke="#cdb47f" stroke-opacity=".5" stroke-width="9" stroke-linecap="round" stroke-dasharray="620 120" transform="rotate(-70 200 190)"/>
+    <circle cx="200" cy="190" r="118" fill="none" stroke="#cdb47f" stroke-opacity=".18" stroke-width="2" stroke-dasharray="4 10" transform="rotate(20 200 190)"/>
+    <text x="200" y="222" text-anchor="middle" font-family="Shippori Mincho, serif" font-size="96" fill="#f3eee4" fill-opacity=".9">渚</text>
+    <rect x="0" y="360" width="400" height="140" fill="url(#gHinoki)"/>
+    <rect x="0" y="360" width="400" height="3" fill="#f7e8cb" opacity=".8"/>
+    <g fill="none" stroke="#b08a58" stroke-opacity=".35"><path d="M0 384C120 380 260 388 400 382"/><path d="M0 414C140 410 280 420 400 412"/><path d="M0 452C100 448 300 458 400 450"/></g>
+    <ellipse cx="200" cy="364" rx="170" ry="7" fill="url(#gShadow)"/>
+    <g transform="rotate(-6 200 340)">
+      <path d="M26 342C80 330 200 326 262 328L262 344C200 346 80 348 30 350Z" fill="url(#gSteel)"/>
+      <path d="M40 346C110 342 200 340 262 340" stroke="#fff" stroke-opacity=".5" stroke-width="1"/>
+      <rect x="262" y="326" width="14" height="20" rx="2" fill="#15120f"/>
+      <rect x="276" y="327" width="104" height="18" rx="8" fill="url(#gHo)"/>
+      <path d="M282 330H374" stroke="#fff" stroke-opacity=".3"/>
+    </g>`;
+}
+
+/* =========================================================
+   helpers
+   ========================================================= */
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const yen = n => "¥" + n.toLocaleString("en-US");
+let lang = "ja";
+const LI = () => LANGS.indexOf(lang);
+const t = k => (T[k] ? T[k][LI()] : k);
+const L = arr => arr[LI()];
+const chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>';
+
+const RMQ = matchMedia("(prefers-reduced-motion: reduce)");
+let reduced = RMQ.matches;
+(RMQ.addEventListener ? RMQ.addEventListener("change", e => reduced = e.matches) : RMQ.addListener(e => reduced = e.matches));
+
+/* ---- Apple's momentum projection & rubber-band ---- */
+function project(v, d = 0.998){ return (v / 1000) * d / (1 - d); }
+function rubberband(over, dim, c = 0.55){ return (over * dim * c) / (dim + c * Math.abs(over)); }
+
+/* ---- dependency-free spring (damping ratio + response), interruptible ---- */
+class Spring {
+  constructor(onUpdate){ this.x = 0; this.v = 0; this.target = 0; this.raf = 0; this.onUpdate = onUpdate; this.tick = this.tick.bind(this); }
+  set(x){ this.stop(); this.x = x; this.v = 0; this.onUpdate(x); }
+  stop(){ if (this.raf) cancelAnimationFrame(this.raf); this.raf = 0; }
+  to(target, o = {}){
+    this.target = target; this.z = o.damping ?? 1; this.r = o.response ?? .4; this.done = o.onDone;
+    if (o.velocity !== undefined) this.v = o.velocity;          // velocity hand-off from the gesture
+    if (reduced){ this.set(target); this.done && this.done(); return; }
+    if (!this.raf){ this.last = performance.now(); this.raf = requestAnimationFrame(this.tick); }
+  }
+  tick(now){
+    const dt = Math.min((now - this.last) / 1000, 1/30); this.last = now;
+    const k = Math.pow(2*Math.PI / this.r, 2), c = 4*Math.PI*this.z / this.r;   // mass = 1
+    const steps = 4, h = dt / steps;
+    for (let i=0;i<steps;i++){ const a = -k*(this.x - this.target) - c*this.v; this.v += a*h; this.x += this.v*h; }
+    if (Math.abs(this.v) < 4 && Math.abs(this.x - this.target) < .4){
+      this.x = this.target; this.v = 0; this.raf = 0; this.onUpdate(this.x); this.done && this.done(); return;
+    }
+    this.onUpdate(this.x);
+    this.raf = requestAnimationFrame(this.tick);
+  }
+}
+class Velocity {
+  constructor(){ this.s = []; }
+  reset(){ this.s = []; }
+  add(p, t){ this.s.push([p, t]); if (this.s.length > 12) this.s.shift(); }
+  get(now){
+    const s = this.s.filter(q => now - q[1] <= 100);
+    if (s.length < 2) return 0;
+    const a = s[0], b = s[s.length-1], dt = (b[1] - a[1]) / 1000;
+    return dt > 0 ? (b[0] - a[0]) / dt : 0;
+  }
+}
+
+/* ---- instant press feedback on pointer-down ---- */
+function clearPressed(){ $$(".is-pressed").forEach(el => el.classList.remove("is-pressed")); }
+document.addEventListener("pointerdown", e => { const el = e.target.closest(".pressable, .item"); if (el) el.classList.add("is-pressed"); }, {passive:true});
+["pointerup","pointercancel","dragstart"].forEach(ev => document.addEventListener(ev, clearPressed, {passive:true}));
+document.addEventListener("pointermove", e => { if (e.buttons && document.querySelector(".is-pressed") && (Math.abs(e.movementX) + Math.abs(e.movementY) > 6)) clearPressed(); }, {passive:true});
+
+/* =========================================================
+   Render
+   ========================================================= */
+$("#heroScene").innerHTML = heroScene();
+$("#chefArt").innerHTML = chefArt();
+
+function renderCourses(){
+  $("#carTrack").innerHTML = COURSES.map((c,i) => `
+    <button class="card pressable" type="button" data-course="${i}">
+      <span class="card-vis">${plateScene(c.pieces, c.gari)}</span>
+      ${c.rec ? `<span class="card-rec">${esc(t("course.rec"))}</span>` : ""}
+      <span class="card-body">
+        <span class="card-kanji">${c.kanji}<span class="card-roman">${c.roman}</span></span>
+        <span class="card-name">${esc(L(c.name))}</span>
+        <span class="card-desc">${esc(L(c.desc))}</span>
+        <span class="card-foot"><span class="price">${yen(c.price)}<small>${esc(t("tax"))}</small></span><span class="card-min">${esc(t("course.min").replace("{n}", c.min))}</span></span>
+        <span class="card-more">${esc(t("course.detail"))}${chevron}</span>
+      </span>
+    </button>`).join("");
+}
+function renderMenu(){
+  const block = cat => `
+    <div class="cat reveal in">
+      <h3>${esc(t("cat."+cat))}<small>${{nigiri:"NIGIRI",ippin:"À LA CARTE",drink:"DRINKS"}[cat]}</small></h3>
+      <ul class="items">${ITEMS.map((it,i) => it.cat !== cat ? "" : `
+        <li><button class="item" type="button" data-item="${i}">
+          <span class="thumb">${pieceSVG(it.v)}</span>
+          <span><span class="item-name">${esc(L(it.name))}</span><span class="item-sub">${it.roman}</span></span>
+          <span class="item-price">${yen(it.price)}${chevron}</span>
+        </button></li>`).join("")}
+      </ul>
+    </div>`;
+  $("#menuGrid").innerHTML = block("nigiri") + `<div class="col-b">${block("ippin")}${block("drink")}</div>`;
+}
+function renderNotes(){
+  $("#notes").innerHTML = NOTES.map(n => `
+    <article class="note${n.key ? " key" : ""} reveal in">
+      <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${n.ic}</svg>${esc(t(n.k+".t"))}</h3>
+      <p>${esc(t(n.k+".d"))}</p>
+    </article>`).join("");
+}
+
+/* =========================================================
+   Language switching
+   ========================================================= */
+function applyLang(next, persist){
+  if (!LANGS.includes(next)) next = "ja";
+  lang = next;
+  document.documentElement.lang = HTML_LANG[lang];
+  document.title = t("meta.title");
+  const md = document.querySelector('meta[name="description"]'); if (md) md.content = t("meta.desc");
+  $$("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
+  $$("[data-i18n-html]").forEach(el => { el.innerHTML = t(el.dataset.i18nHtml); });
+  $$("[data-i18n-aria]").forEach(el => { el.setAttribute("aria-label", t(el.dataset.i18nAria)); });
+  $("#langCur").textContent = NATIVE[lang];
+  $$("#langMenu [data-lang]").forEach(b => b.setAttribute("aria-checked", String(b.dataset.lang === lang)));
+  renderCourses(); renderMenu(); renderNotes();
+  car.measure();
+  if (sheet.visible && sheet.render) sheet.render();
+  if (persist){ try { localStorage.setItem("nagisa-lang", lang); } catch(e){} }
+}
+function initialLang(){
+  try { const q = new URLSearchParams(location.search).get("lang"); if (q && LANGS.includes(q)) return q; } catch(e){}
+  try { const s = localStorage.getItem("nagisa-lang"); if (s && LANGS.includes(s)) return s; } catch(e){}
+  return "ja";
+}
+
+/* language popover */
+const langWrap = $("#lang"), langBtn = $("#langBtn"), langMenu = $("#langMenu");
+function setLangMenu(open, focusCurrent){
+  langWrap.classList.toggle("open", open);
+  langBtn.setAttribute("aria-expanded", String(open));
+  if (open && focusCurrent){ const cur = langMenu.querySelector('[aria-checked="true"]'); cur && cur.focus({preventScroll:true}); }
+}
+langBtn.addEventListener("click", e => { setLangMenu(!langWrap.classList.contains("open"), e.detail === 0); });
+langMenu.addEventListener("click", e => {
+  const b = e.target.closest("[data-lang]"); if (!b) return;
+  applyLang(b.dataset.lang, true); setLangMenu(false); langBtn.focus({preventScroll:true});
+});
+langMenu.addEventListener("keydown", e => {
+  const items = $$("#langMenu [data-lang]"), i = items.indexOf(document.activeElement);
+  if (e.key === "ArrowDown"){ e.preventDefault(); items[(i+1)%items.length].focus(); }
+  if (e.key === "ArrowUp"){ e.preventDefault(); items[(i-1+items.length)%items.length].focus(); }
+});
+document.addEventListener("pointerdown", e => { if (!langWrap.contains(e.target)) setLangMenu(false); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && langWrap.classList.contains("open")){ setLangMenu(false); langBtn.focus(); } });
+
+/* =========================================================
+   Nav scroll-edge effect
+   ========================================================= */
+const nav = $("#nav"); let navTick = false;
+function navState(){ navTick = false; nav.classList.toggle("scrolled", window.scrollY > nav.offsetTop + 4 || window.scrollY > 40); }
+addEventListener("scroll", () => { if (!navTick){ navTick = true; requestAnimationFrame(navState); } }, {passive:true});
+navState();
+
+/* =========================================================
+   Omakase carousel — 1:1 drag, momentum projection, spring snap
+   ========================================================= */
+const car = (() => {
+  const vp = $("#car"), track = $("#carTrack"), dots = $("#carDots"), ctl = $("#carCtl"), prev = $("#carPrev"), next = $("#carNext");
+  const st = { x:0, pages:[0], idx:0, min:0, enabled:true };
+  const spring = new Spring(x => { st.x = x; track.style.transform = `translate3d(${x}px,0,0)`; syncDots(); });
+  const vel = new Velocity();
+  let drag = null, suppressClick = false;
+
+  function nearest(x){ let b = 0; st.pages.forEach((p,i) => { if (Math.abs(p - x) < Math.abs(st.pages[b] - x)) b = i; }); return b; }
+  function syncDots(){
+    const i = nearest(st.x);
+    $$("#carDots button").forEach((d,j) => d.setAttribute("aria-current", String(j === i)));
+    prev.disabled = st.idx <= 0; next.disabled = st.idx >= st.pages.length - 1;
+  }
+  function measure(){
+    const vw = vp.clientWidth, tw = track.scrollWidth;
+    st.enabled = tw > vw + 1;
+    vp.classList.toggle("static", !st.enabled);
+    ctl.classList.toggle("off", !st.enabled);
+    if (!st.enabled){ st.pages = [0]; st.idx = 0; spring.set(0); dots.innerHTML = ""; return; }
+    st.min = vw - tw;
+    const pad = parseFloat(getComputedStyle(track).paddingLeft) || 16;
+    const raw = Array.from(track.children).map(c => Math.max(st.min, Math.min(0, -(c.offsetLeft - pad))));
+    st.pages = raw.filter((p,i) => raw.findIndex(q => Math.abs(q - p) < 2) === i);
+    st.idx = Math.min(st.idx, st.pages.length - 1);
+    dots.innerHTML = st.pages.map((_,i) => `<button type="button" aria-label="${i+1} / ${st.pages.length}"></button>`).join("");
+    spring.set(st.pages[st.idx]);
+  }
+  function go(i, velocity){
+    st.idx = Math.max(0, Math.min(st.pages.length - 1, i));
+    const bouncy = velocity !== undefined && Math.abs(velocity) > 300;       // bounce only when a flick carried momentum
+    spring.to(st.pages[st.idx], { damping: bouncy ? .8 : 1, response: .4, velocity: velocity ?? spring.v });
+    syncDots();
+  }
+
+  vp.addEventListener("pointerdown", e => {
+    if (!st.enabled || (e.pointerType === "mouse" && e.button !== 0)) return;
+    spring.stop();                                   // grab mid-flight: start from the presentation value
+    drag = { id:e.pointerId, x0:e.clientX, y0:e.clientY, start:st.x, active:false, startIdx: nearest(st.x) };
+    vel.reset(); vel.add(e.clientX, e.timeStamp);
+  });
+  vp.addEventListener("pointermove", e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const dx = e.clientX - drag.x0, dy = e.clientY - drag.y0;
+    if (!drag.active){
+      if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)){        // ~10px hysteresis, then 1:1
+        drag.active = true; drag.x0 = e.clientX; vp.setPointerCapture(e.pointerId); vp.classList.add("dragging"); clearPressed();
+      } else if (Math.abs(dy) > 10){ drag = null; go(nearest(st.x)); return; }
+      else return;
+    }
+    vel.add(e.clientX, e.timeStamp);
+    let x = drag.start + (e.clientX - drag.x0);
+    if (x > 0) x = rubberband(x, vp.clientWidth);
+    else if (x < st.min) x = st.min - rubberband(st.min - x, vp.clientWidth);
+    spring.set(x);
+  });
+  function end(e){
+    if (!drag || e.pointerId !== drag.id) return;
+    const d = drag; drag = null; vp.classList.remove("dragging");
+    if (!d.active){ if (spring.x !== st.pages[st.idx]) go(nearest(st.x)); return; }
+    suppressClick = true; setTimeout(() => suppressClick = false, 250);
+    const v = e.type === "pointercancel" ? 0 : vel.get(e.timeStamp);
+    const projected = st.x + project(v);                     // where the flick is going
+    let i = nearest(projected);
+    i = Math.max(d.startIdx - 1, Math.min(d.startIdx + 1, i));
+    go(i, v);
+  }
+  vp.addEventListener("pointerup", end);
+  vp.addEventListener("pointercancel", end);
+  vp.addEventListener("click", e => {
+    if (suppressClick){ e.preventDefault(); e.stopPropagation(); return; }
+    const card = e.target.closest("[data-course]"); if (card) openCourse(+card.dataset.course, card);
+  }, true);
+  vp.addEventListener("dragstart", e => e.preventDefault());
+  vp.addEventListener("scroll", () => { vp.scrollLeft = 0; });          // focus must not scroll the clip
+  vp.addEventListener("focusin", e => {
+    const card = e.target.closest("[data-course]"); if (!card || !st.enabled) return;
+    const target = Math.max(st.min, Math.min(0, -(card.offsetLeft - (parseFloat(getComputedStyle(track).paddingLeft)||16))));
+    go(nearest(target));
+  });
+  vp.addEventListener("keydown", e => {
+    if (e.key === "ArrowRight"){ e.preventDefault(); go(st.idx + 1); }
+    if (e.key === "ArrowLeft"){ e.preventDefault(); go(st.idx - 1); }
+  });
+  let wheelAcc = 0, wheelLock = false, wheelT;
+  vp.addEventListener("wheel", e => {
+    if (!st.enabled || Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+    e.preventDefault(); wheelAcc += e.deltaX; clearTimeout(wheelT); wheelT = setTimeout(() => { wheelAcc = 0; wheelLock = false; }, 180);
+    if (!wheelLock && Math.abs(wheelAcc) > 30){ wheelLock = true; go(st.idx + Math.sign(wheelAcc)); }
+  }, {passive:false});
+  prev.addEventListener("click", () => go(st.idx - 1));
+  next.addEventListener("click", () => go(st.idx + 1));
+  dots.addEventListener("click", e => { const b = e.target.closest("button"); if (b) go(Array.from(dots.children).indexOf(b)); });
+  if ("ResizeObserver" in window) new ResizeObserver(() => measure()).observe(vp); else addEventListener("resize", measure);
+  return { measure };
+})();
+
+/* =========================================================
+   Bottom sheet — drag to dismiss, velocity decides, springs
+   ========================================================= */
+const sheet = (() => {
+  const el = $("#sheet"), scrim = $("#scrim"), grab = $("#sheetGrab"), xBtn = $("#sheetX");
+  const st = { y:0, H:600, open:false, visible:false, render:null, lastFocus:null };
+  const spring = new Spring(y => {
+    st.y = y;
+    el.style.transform = `translate3d(0,${y}px,0)`;
+    scrim.style.opacity = String(Math.max(0, Math.min(1, 1 - y / st.H)));
+  });
+  const vel = new Velocity();
+  let drag = null, hideT;
+
+  function measureH(){ st.H = el.offsetHeight + 24; }
+  function show(render, from){
+    st.render = render; render();
+    if (!st.visible){ st.lastFocus = from || document.activeElement; }
+    clearTimeout(hideT);
+    el.hidden = false; scrim.hidden = false; measureH();
+    if (!st.visible) spring.set(st.H);
+    st.visible = true; st.open = true;
+    document.documentElement.classList.add("sheet-open");
+    if (reduced){ spring.set(0); el.classList.remove("shown"); void el.offsetWidth; el.classList.add("shown"); scrim.style.opacity = "0"; void scrim.offsetWidth; scrim.style.opacity = "1"; }
+    else { el.classList.add("shown"); spring.to(0, { damping: 1, response: .35 }); }    // no gesture → no bounce
+    $("#sheetBody").scrollTop = 0;
+    xBtn.focus({ preventScroll: true });
+  }
+  function hide(velocity = 0){
+    if (!st.visible) return;
+    st.open = false; measureH();
+    document.documentElement.classList.remove("sheet-open");
+    const finish = () => { if (!st.open){ el.hidden = true; scrim.hidden = true; st.visible = false; } };
+    if (reduced){ el.classList.remove("shown"); scrim.style.opacity = "0"; hideT = setTimeout(finish, 220); }
+    else spring.to(st.H, { damping: 1, response: .3, velocity, onDone: finish });  // exits along the path it entered
+    if (st.lastFocus && document.contains(st.lastFocus)) st.lastFocus.focus({ preventScroll: true });
+  }
+
+  grab.addEventListener("pointerdown", e => {
+    if (e.target.closest("button") || (e.pointerType === "mouse" && e.button !== 0)) return;
+    spring.stop(); measureH();
+    grab.setPointerCapture(e.pointerId);
+    drag = { id:e.pointerId, y0:e.clientY, start:st.y };
+    vel.reset(); vel.add(e.clientY, e.timeStamp);
+    el.classList.add("dragging");
+  });
+  grab.addEventListener("pointermove", e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    vel.add(e.clientY, e.timeStamp);
+    let y = drag.start + (e.clientY - drag.y0);
+    if (y < 0) y = -rubberband(-y, st.H);                  // resist pulling past fully open
+    spring.set(y);
+  });
+  function end(e){
+    if (!drag || e.pointerId !== drag.id) return;
+    drag = null; el.classList.remove("dragging");
+    const v = e.type === "pointercancel" ? 0 : vel.get(e.timeStamp);
+    const projected = st.y + project(v);
+    const close = v > 600 ? true : v < -600 ? false : projected > st.H * .45;   // velocity first, projection second
+    if (close) hide(v);
+    else { st.open = true; document.documentElement.classList.add("sheet-open"); spring.to(0, { damping: .8, response: .3, velocity: v }); }
+  }
+  grab.addEventListener("pointerup", end);
+  grab.addEventListener("pointercancel", end);
+  scrim.addEventListener("click", () => hide());
+  xBtn.addEventListener("click", () => hide());
+  el.addEventListener("click", e => { if (e.target.closest("[data-close]")) hide(); });
+  document.addEventListener("keydown", e => {
+    if (!st.open) return;
+    if (e.key === "Escape"){ e.preventDefault(); hide(); }
+    if (e.key === "Tab"){
+      const f = $$("#sheet button, #sheet a[href]").filter(n => n.offsetParent !== null);
+      if (!f.length) return;
+      const first = f[0], last = f[f.length-1];
+      if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+  });
+  return { show, hide, get visible(){ return st.visible; }, get render(){ return st.render; } };
+})();
+
+function openCourse(i, from){
+  const c = COURSES[i];
+  sheet.show(() => {
+    $("#sheetVis").innerHTML = plateScene(c.pieces, c.gari);
+    $("#sheetSub").textContent = `${c.roman} · ${t("course.min").replace("{n}", c.min)}`;
+    $("#sheetTitle").textContent = L(c.name);
+    $("#sheetPrice").innerHTML = `${yen(c.price)}<small>${esc(t("tax"))}</small>`;
+    $("#sheetBody").innerHTML = `
+      <p>${esc(L(c.desc))}</p>
+      <h4>${esc(t("sheet.flow"))}</h4>
+      <ol class="flow">${L(c.flow).map(f => `<li>${esc(f)}</li>`).join("")}</ol>
+      <p class="fine">${esc(t("sheet.cnote"))}</p>
+      <a class="btn btn-dark pressable" href="#reserve" data-close>${esc(t("sheet.reserve"))}</a>`;
+  }, from);
+}
+function openItem(i, from){
+  const it = ITEMS[i];
+  sheet.show(() => {
+    $("#sheetVis").innerHTML = `<svg viewBox="-30 -8 180 90" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><ellipse cx="60" cy="40" rx="90" ry="50" fill="url(#gSpot)"/>${piece(it.v)}</svg>`;
+    $("#sheetSub").textContent = it.roman;
+    $("#sheetTitle").textContent = L(it.name);
+    $("#sheetPrice").innerHTML = `${yen(it.price)}<small>${esc(t("tax"))}${it.cat === "nigiri" ? " · " + esc(t("per")) : ""}</small>`;
+    $("#sheetBody").innerHTML = `
+      <p>${esc(L(it.desc))}</p>
+      <h4>${esc(t("sheet.al"))}</h4>
+      <div class="chips">${it.al.length ? it.al.map(a => `<span class="chip">${esc(t("al."+a))}</span>`).join("") : `<span class="chip none">${esc(t("sheet.alnone"))}</span>`}</div>
+      <p class="fine">${esc(t("sheet.anote"))}</p>`;
+  }, from);
+}
+$("#menuGrid").addEventListener("click", e => { const b = e.target.closest("[data-item]"); if (b) openItem(+b.dataset.item, b); });
+
+/* =========================================================
+   Reveal on scroll
+   ========================================================= */
+const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); } }), { rootMargin: "0px 0px -8% 0px" }) : null;
+$$(".reveal").forEach(el => io ? io.observe(el) : el.classList.add("in"));
+
+/* boot */
+applyLang(initialLang(), false);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => car.measure());
+})();
+</script>
+</body>
+</html>

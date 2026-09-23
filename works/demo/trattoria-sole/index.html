@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>トラットリア ソーレ｜ナポリの日常を味わうイタリアン（Table Web 制作デモ）</title>
+<meta name="description" content="Table Web の制作デモ。架空のイタリアン「トラットリア ソーレ」の日英2か国語対応ホームページです。">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Old+Mincho:wght@600&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   Trattoria Sole — Table Web demo
+   動きは css-microanimation の作法に従う：
+   ・トリガーは hover / focus / 状態クラスのみ（常時ループなし）
+   ・transform と opacity が基本。角丸の伸縮は width
+   ・出現だけ弾ませる（snap）。消えるときは素直に（exit）
+   ・クラス / keyframes は ts- プレフィックス
+   ========================================================= */
+:root{
+  --ts-cream:#f6efe3;
+  --ts-paper:#fffaf2;
+  --ts-sand:#efe4d2;
+  --ts-line:#e2d4bf;
+  --ts-ink:#2a211c;
+  --ts-ink-2:#57483e;
+  --ts-mute:#86766a;
+  --ts-terra:#b3452a;
+  --ts-terra-2:#8f3420;
+  --ts-olive:#5b6835;
+  --ts-basil:#3f7a3a;
+  --ts-wine:#6e1f33;
+  --ts-gold:#e0a93f;
+  --ts-sun:#f2c14e;
+
+  /* tokens (css-microanimation) */
+  --ts-e-snap:cubic-bezier(.34,1.4,.5,1);
+  --ts-e-soft:cubic-bezier(.4,0,.2,1);
+  --ts-e-firm:cubic-bezier(.5,0,.2,1);
+  --ts-e-exit:cubic-bezier(.4,0,1,1);
+  --ts-t-tap:.14s;
+  --ts-t-hover:.22s;
+  --ts-t-open:.34s;
+  --ts-t-pop:.42s;
+
+  --ts-serif:"Cormorant Garamond","Zen Old Mincho",serif;
+  --ts-mincho:"Zen Old Mincho","Cormorant Garamond",serif;
+  --ts-sans:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;overflow-x:clip}
+body{margin:0;font-variant-numeric:lining-nums;background:var(--ts-cream);color:var(--ts-ink);font-family:var(--ts-sans);
+  font-size:15px;line-height:1.8;-webkit-font-smoothing:antialiased;overflow-x:clip}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--ts-terra);outline-offset:3px;border-radius:6px}
+.ts-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ts-wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 16px}
+@media (min-width:600px){.ts-wrap{padding:0 28px}}
+
+/* ---------- demo strip ---------- */
+.ts-strip{background:var(--ts-ink);color:#d9cdbd;font-size:11.5px;line-height:1.5}
+.ts-strip .ts-wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:2px 12px;padding-top:6px;padding-bottom:6px}
+.ts-strip a{color:#f3e7d6;text-decoration:none;white-space:nowrap;border-bottom:1px solid rgba(243,231,214,.35);
+  transition:border-color var(--ts-t-hover) var(--ts-e-soft)}
+.ts-strip a:hover{border-color:#f3e7d6}
+
+/* ---------- header ---------- */
+.ts-head{position:sticky;top:0;z-index:50;background:rgba(246,239,227,.92);
+  backdrop-filter:saturate(1.2) blur(8px);-webkit-backdrop-filter:saturate(1.2) blur(8px);
+  border-bottom:1px solid var(--ts-line)}
+.ts-head .ts-wrap{display:flex;align-items:center;gap:10px;height:62px}
+.ts-logo{display:flex;align-items:center;gap:8px;text-decoration:none;margin-right:auto;min-width:0}
+.ts-logo svg{width:30px;height:30px;flex:none}
+.ts-logo b{font-family:var(--ts-serif);font-size:22px;font-weight:600;letter-spacing:.02em;line-height:1;white-space:nowrap}
+.ts-logo small{display:block;font-size:9.5px;letter-spacing:.2em;color:var(--ts-mute);line-height:1.2;margin-top:3px}
+
+/* inline nav (desktop) — 下線スライド */
+.ts-nav{display:none}
+@media (min-width:900px){
+  .ts-nav{display:flex;gap:22px;margin-right:12px}
+  .ts-nav a{position:relative;text-decoration:none;font-size:13.5px;font-weight:500;padding:4px 0}
+  .ts-nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--ts-terra);
+    transform:scaleX(0);transform-origin:100% 50%;transition:transform var(--ts-t-hover) var(--ts-e-soft)}
+  .ts-nav a:hover::after,.ts-nav a:focus-visible::after{transform:scaleX(1);transform-origin:0 50%}
+}
+
+/* 言語トグル — セグメントのピル移動（#49） */
+.ts-lang{position:relative;display:flex;flex:none;padding:3px;border-radius:999px;background:var(--ts-paper);
+  border:1px solid var(--ts-line)}
+.ts-lang-knob{position:absolute;top:3px;left:3px;width:40px;height:30px;border-radius:999px;background:var(--ts-ink);
+  transition:transform var(--ts-t-open) var(--ts-e-firm)}
+html[lang="en"] .ts-lang-knob{transform:translateX(40px)}
+.ts-lang button{position:relative;width:40px;height:30px;border:0;background:none;border-radius:999px;
+  font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--ts-ink-2);
+  transition:color .2s var(--ts-e-soft) .08s, transform var(--ts-t-tap) var(--ts-e-soft)}
+.ts-lang button[aria-pressed="true"]{color:#fff}
+.ts-lang button:active{transform:scale(.9)}
+
+.ts-btn.ts-head-cta{display:none}
+@media (min-width:600px){.ts-btn.ts-head-cta{display:inline-flex}}
+
+/* ポップオーバーメニュー — 同じ箱の幅・高さ・角丸を変形（#50） */
+.ts-pop{position:relative;width:42px;height:42px;flex:none}
+@media (min-width:900px){.ts-pop{display:none}}
+.ts-pop-box{position:absolute;right:0;top:0;width:42px;height:42px;border-radius:21px;background:var(--ts-ink);
+  overflow:hidden;box-shadow:0 10px 30px rgba(42,33,28,0);
+  transition:width .3s var(--ts-e-exit),height .3s var(--ts-e-exit),border-radius .3s var(--ts-e-exit),box-shadow .3s}
+.ts-pop.is-open .ts-pop-box{width:228px;height:330px;border-radius:18px;box-shadow:0 14px 36px rgba(42,33,28,.28);
+  transition:width var(--ts-t-open) var(--ts-e-firm),height var(--ts-t-open) var(--ts-e-firm),border-radius var(--ts-t-open) var(--ts-e-firm),box-shadow .3s}
+.ts-pop-list{position:absolute;right:0;top:0;list-style:none;margin:0;padding:54px 10px 10px;width:228px;opacity:0;transform:translateY(6px);
+  transition:opacity .12s, transform .12s;visibility:hidden}
+.ts-pop.is-open .ts-pop-list{opacity:1;transform:none;visibility:visible;transition:opacity .22s .12s, transform .26s var(--ts-e-soft) .12s}
+.ts-pop-list a{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border-radius:10px;
+  color:#f3e7d6;text-decoration:none;font-size:14px;transition:background var(--ts-t-hover) var(--ts-e-soft)}
+.ts-pop-list a span{font-family:var(--ts-serif);font-style:italic;font-size:13px;color:#b9a894}
+.ts-pop-list a:hover,.ts-pop-list a:focus-visible{background:rgba(255,255,255,.08)}
+.ts-pop-btn{position:absolute;right:0;top:0;z-index:2;width:42px;height:42px;border:0;border-radius:50%;background:none;
+  display:grid;place-items:center}
+.ts-pop-btn i{position:absolute;width:18px;height:2px;border-radius:2px;background:#fff;
+  transition:transform var(--ts-t-open) var(--ts-e-firm),opacity .2s}
+.ts-pop-btn i:nth-child(1){transform:translateY(-6px)}
+.ts-pop-btn i:nth-child(3){transform:translateY(6px)}
+.ts-pop.is-open .ts-pop-btn i:nth-child(1){transform:rotate(45deg)}
+.ts-pop.is-open .ts-pop-btn i:nth-child(2){opacity:0;transform:scaleX(.3)}
+.ts-pop.is-open .ts-pop-btn i:nth-child(3){transform:rotate(-45deg)}
+
+/* ---------- buttons：押し込み＋塗りワイプ＋伸びる矢印 ---------- */
+.ts-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;
+  padding:0 22px;border:0;border-radius:999px;background:var(--ts-terra);color:#fff;text-decoration:none;
+  font-weight:700;font-size:14.5px;letter-spacing:.04em;overflow:hidden;isolation:isolate;
+  transition:transform var(--ts-t-tap) var(--ts-e-soft),color var(--ts-t-hover) var(--ts-e-soft)}
+.ts-btn::before{content:"";position:absolute;left:0;top:0;bottom:0;width:0;z-index:-1;background:var(--ts-terra-2);
+  transition:width .26s var(--ts-e-soft)}
+.ts-btn:active{transform:translateY(1px) scale(.96)}
+.ts-btn svg{width:22px;height:12px;overflow:visible;flex:none}
+.ts-btn .ts-shaft{stroke:currentColor;stroke-width:2;stroke-linecap:round;transform-box:fill-box;transform-origin:0 50%;
+  transition:transform .26s var(--ts-e-soft)}
+.ts-btn .ts-head{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+  transition:transform .26s var(--ts-e-soft)}
+.ts-btn:focus-visible::before{width:100%}
+.ts-btn:focus-visible .ts-shaft{transform:scaleX(1.5)}
+.ts-btn:focus-visible .ts-head{transform:translateX(7px)}
+@media (hover:hover){
+  .ts-btn:hover::before{width:100%}
+  .ts-btn:hover .ts-shaft{transform:scaleX(1.5)}
+  .ts-btn:hover .ts-head{transform:translateX(7px)}
+}
+.ts-btn--ghost{background:transparent;color:var(--ts-ink);box-shadow:inset 0 0 0 1.5px var(--ts-ink)}
+.ts-btn--ghost::before{background:var(--ts-ink)}
+.ts-btn--ghost:focus-visible{color:var(--ts-paper)}
+@media (hover:hover){.ts-btn--ghost:hover{color:var(--ts-paper)}}
+.ts-btn--light{background:var(--ts-paper);color:var(--ts-ink)}
+.ts-btn--light::before{background:var(--ts-sun)}
+.ts-btn--sm{min-height:38px;padding:0 16px;font-size:13px}
+
+/* ---------- section heads ---------- */
+.ts-sec{padding:72px 0;scroll-margin-top:62px}
+@media (min-width:900px){.ts-sec{padding:104px 0}}
+.ts-sec-head{text-align:center;margin-bottom:36px}
+.ts-eyebrow{display:block;font-family:var(--ts-serif);font-style:italic;font-size:18px;color:var(--ts-terra);line-height:1.2}
+.ts-h2{margin:6px 0 0;font-family:var(--ts-mincho);font-weight:600;font-size:clamp(24px,6.4vw,34px);line-height:1.4;letter-spacing:.06em}
+html[lang="en"] .ts-h2{font-family:var(--ts-serif);letter-spacing:.01em;font-size:clamp(28px,7vw,40px)}
+.ts-lead{margin:12px auto 0;max-width:34em;color:var(--ts-ink-2);font-size:14px}
+
+/* ---------- hero ---------- */
+.ts-hero{position:relative;background:var(--ts-paper);overflow:hidden}
+.ts-awning{position:relative;height:30px;
+  background:repeating-linear-gradient(90deg,var(--ts-terra) 0 24px,var(--ts-paper) 24px 48px)}
+.ts-awning::after{content:"";position:absolute;left:0;right:0;top:100%;height:12px;
+  background:
+    radial-gradient(circle at 12px 0,var(--ts-terra) 11.5px,transparent 12.5px) 0 0/48px 12px repeat-x,
+    radial-gradient(circle at 36px 0,var(--ts-paper) 11.5px,transparent 12.5px) 0 0/48px 12px repeat-x;
+  filter:drop-shadow(0 2px 0 rgba(42,33,28,.06))}
+.ts-hero-in{display:grid;gap:28px;padding-top:44px;padding-bottom:56px;position:relative}
+@media (min-width:900px){.ts-hero-in{grid-template-columns:1.05fr 1fr;align-items:center;padding-top:72px;padding-bottom:88px}}
+.ts-hero-meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--ts-mute);letter-spacing:.06em}
+.ts-hero-meta span{display:inline-flex;align-items:center;gap:6px}
+.ts-hero-meta span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ts-olive)}
+.ts-h1{margin:14px 0 0;font-family:var(--ts-mincho);font-weight:600;font-size:clamp(30px,8.6vw,52px);line-height:1.38;letter-spacing:.04em}
+html[lang="en"] .ts-h1{font-family:var(--ts-serif);font-weight:600;line-height:1.12;letter-spacing:0;font-size:clamp(38px,10.4vw,64px)}
+.ts-h1 em{font-style:normal;color:var(--ts-terra)}
+.ts-hero-lead{margin:18px 0 0;color:var(--ts-ink-2);max-width:30em}
+.ts-hero-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.ts-hero-cta .ts-btn{flex:1 1 180px}
+@media (min-width:600px){.ts-hero-cta .ts-btn{flex:0 0 auto}}
+.ts-badge-en{display:inline-flex;align-items:center;gap:8px;margin-top:18px;padding:6px 12px 6px 8px;border-radius:999px;
+  background:var(--ts-cream);font-size:12px;color:var(--ts-ink-2)}
+.ts-badge-en b{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--ts-olive);color:#fff;font-size:10px;letter-spacing:.02em}
+
+/* hero art：ピッツァをひと切れ持ち上げる（hover / tap） */
+.ts-art{position:relative;justify-self:center;width:min(100%,420px);aspect-ratio:1/1}
+.ts-art-sun{position:absolute;inset:6% 6% auto auto;width:62%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 40% 40%,#f7d27a,var(--ts-sun) 60%,#eaa93a)}
+.ts-art-btn{position:absolute;left:0;bottom:0;width:86%;aspect-ratio:1;border:0;padding:0;background:none;border-radius:50%}
+.ts-art-btn svg{width:100%;height:100%;overflow:visible}
+.ts-slice{transform-box:fill-box;transform-origin:0% 100%;transition:transform .32s var(--ts-e-exit)}
+.ts-pull{stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset .2s var(--ts-e-exit)}
+.ts-art-btn.is-lift .ts-slice{transform:translate(9px,-13px) rotate(-5deg);transition:transform var(--ts-t-pop) var(--ts-e-snap)}
+.ts-art-btn.is-lift .ts-pull{stroke-dashoffset:0;transition:stroke-dashoffset .3s var(--ts-e-soft) .08s}
+.ts-art-btn:focus-visible .ts-slice{transform:translate(9px,-13px) rotate(-5deg);transition:transform var(--ts-t-pop) var(--ts-e-snap)}
+.ts-art-btn:focus-visible .ts-pull{stroke-dashoffset:0}
+@media (hover:hover){
+  .ts-art-btn:hover .ts-slice{transform:translate(9px,-13px) rotate(-5deg);transition:transform var(--ts-t-pop) var(--ts-e-snap)}
+  .ts-art-btn:hover .ts-pull{stroke-dashoffset:0;transition:stroke-dashoffset .3s var(--ts-e-soft) .08s}
+}
+.ts-art-glass{position:absolute;right:2%;bottom:4%;width:24%}
+.ts-art-hint{position:absolute;left:4%;top:4%;font-family:var(--ts-serif);font-style:italic;font-size:15px;color:var(--ts-mute)}
+
+/* 吊り下げ看板 — 支点を上端に置き、減衰する往復（hover / 状態クラスで1回だけ） */
+.ts-sign{position:absolute;top:30px;right:14px;z-index:3;width:112px;border:0;padding:0;background:none}
+@media (min-width:900px){.ts-sign{right:40px;width:140px}}
+.ts-sign-arm{display:block;height:6px;margin-left:auto;width:74%;background:var(--ts-ink);border-radius:0 3px 3px 0;position:relative}
+.ts-sign-arm::before{content:"";position:absolute;right:-3px;top:-10px;width:6px;height:26px;background:var(--ts-ink);border-radius:3px}
+.ts-sign-swing{display:block;transform-origin:50% 0}
+.ts-sign-chain{display:flex;justify-content:space-between;width:62%;margin:0 auto;height:22px}
+.ts-sign-chain i{width:2px;background:repeating-linear-gradient(var(--ts-ink) 0 4px,transparent 4px 6px)}
+.ts-sign-board{display:block;background:var(--ts-olive);color:#f3ecd8;border-radius:10px;padding:10px 8px 9px;text-align:center;
+  box-shadow:inset 0 0 0 3px rgba(255,255,255,.14),0 8px 18px rgba(42,33,28,.18)}
+.ts-sign-board b{display:block;font-family:var(--ts-serif);font-weight:600;font-size:20px;letter-spacing:.14em;line-height:1.1}
+@media (min-width:900px){.ts-sign-board b{font-size:24px}}
+.ts-sign-board small{display:block;font-size:10px;line-height:1.5;margin-top:4px;opacity:.9;letter-spacing:.04em}
+.ts-sign.is-swing .ts-sign-swing{animation:ts-swing 1.9s cubic-bezier(.45,0,.35,1)}
+@media (hover:hover){.ts-sign:hover .ts-sign-swing{animation:ts-swing 1.9s cubic-bezier(.45,0,.35,1)}}
+.ts-sign:focus-visible .ts-sign-swing{animation:ts-swing 1.9s cubic-bezier(.45,0,.35,1)}
+@keyframes ts-swing{
+  0%  {transform:rotate(0)}
+  12% {transform:rotate(11deg)}
+  28% {transform:rotate(-8deg)}
+  44% {transform:rotate(5deg)}
+  60% {transform:rotate(-2.6deg)}
+  76% {transform:rotate(1deg)}
+  100%{transform:rotate(0)}
+}
+
+/* ---------- 本日のおすすめ：扇カード ---------- */
+.ts-picks{background:var(--ts-cream)}
+.ts-fan{--st:14deg;position:relative;height:240px;max-width:520px;margin:0 auto}
+@media (min-width:700px){.ts-fan{--st:17deg;height:320px}}
+.ts-fc{position:absolute;left:50%;bottom:30px;width:100px;height:150px;margin-left:-50px;border:0;padding:0;background:none;
+  transform-origin:50% 170%;      /* ← 支点を要素の外（下）に置く */
+  transform:rotate(calc(var(--deg) * .08));
+  transition:transform .3s var(--ts-e-firm)}
+@media (min-width:700px){.ts-fc{width:140px;height:198px;margin-left:-70px;bottom:60px}}
+.ts-fc:nth-child(1){--deg:calc(var(--st) * -2);--dl:.1s;z-index:1}
+.ts-fc:nth-child(2){--deg:calc(var(--st) * -1);--dl:.05s;z-index:2}
+.ts-fc:nth-child(3){--deg:0deg;--dl:0s;z-index:3}
+.ts-fc:nth-child(4){--deg:var(--st);--dl:.05s;z-index:2}
+.ts-fc:nth-child(5){--deg:calc(var(--st) * 2);--dl:.1s;z-index:1}
+.ts-fan.is-open .ts-fc{transform:rotate(var(--deg));transition:transform .56s var(--ts-e-snap) var(--dl)}
+@media (hover:hover){.ts-fan:hover .ts-fc{transform:rotate(var(--deg));transition:transform .56s var(--ts-e-snap) var(--dl)}}
+.ts-fan:focus-within .ts-fc{transform:rotate(var(--deg));transition:transform .56s var(--ts-e-snap) var(--dl)}
+.ts-fc.is-picked{z-index:6}
+/* 1要素1責務：外側で回転、内側で持ち上げ */
+.ts-fc-in{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  border-radius:14px;background:var(--ts-paper);padding:10px 8px;
+  box-shadow:0 1px 0 var(--ts-line),0 6px 16px rgba(42,33,28,.10);
+  transition:transform var(--ts-t-hover) var(--ts-e-soft),box-shadow var(--ts-t-hover) var(--ts-e-soft),background var(--ts-t-hover)}
+.ts-fc-in svg{width:64%;aspect-ratio:1}
+.ts-fc-in b{font-size:12px;line-height:1.35;text-align:center}
+@media (min-width:700px){.ts-fc-in b{font-size:14px}}
+.ts-fc-in small{font-family:var(--ts-serif);font-size:15px;font-weight:600;color:var(--ts-terra);line-height:1}
+.ts-fc:nth-child(1) .ts-fc-in,.ts-fc:nth-child(5) .ts-fc-in{background:#fbf3e6}
+@media (hover:hover){.ts-fan:hover .ts-fc:hover .ts-fc-in{transform:translateY(-8px)}}
+.ts-fc:focus-visible{outline:none}
+.ts-fc:focus-visible .ts-fc-in{box-shadow:0 0 0 2px var(--ts-terra),0 10px 22px rgba(42,33,28,.16)}
+.ts-fc.is-picked .ts-fc-in{transform:translateY(-16px);box-shadow:0 0 0 2px var(--ts-terra),0 16px 28px rgba(42,33,28,.18)}
+.ts-fc:active .ts-fc-in{transform:translateY(-10px) scale(.97)}
+
+.ts-fan-ctrl{display:flex;justify-content:center;margin-top:10px}
+.ts-fan-toggle{display:inline-flex;align-items:center;gap:8px;border:0;background:none;padding:8px 12px;border-radius:999px;
+  font-size:13px;color:var(--ts-ink-2);transition:background var(--ts-t-hover) var(--ts-e-soft),transform var(--ts-t-tap)}
+.ts-fan-toggle:hover{background:var(--ts-sand)}
+.ts-fan-toggle:active{transform:scale(.94)}
+.ts-fan-toggle i{position:relative;width:14px;height:14px}
+.ts-fan-toggle i::before,.ts-fan-toggle i::after{content:"";position:absolute;left:0;top:6px;width:14px;height:2px;border-radius:2px;background:currentColor}
+.ts-fan-toggle i::after{transition:transform var(--ts-t-open) var(--ts-e-firm);transform:rotate(90deg)}
+.ts-fan.is-open + .ts-fan-ctrl .ts-fan-toggle i::after{transform:scaleY(0) rotate(90deg)}
+.ts-fan-toggle .ts-on{display:none}
+.ts-fan.is-open + .ts-fan-ctrl .ts-on{display:inline}
+.ts-fan.is-open + .ts-fan-ctrl .ts-off{display:none}
+
+.ts-pick-detail{max-width:520px;margin:18px auto 0;min-height:132px;background:var(--ts-paper);border-radius:16px;padding:18px 20px;
+  box-shadow:0 1px 0 var(--ts-line)}
+.ts-pd{display:none}
+.ts-pd.is-active{display:block;animation:ts-rise .34s var(--ts-e-firm) both}
+.ts-pd-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.ts-pd h3{margin:0;font-size:17px;line-height:1.4}
+.ts-pd-price{font-family:var(--ts-serif);font-size:22px;font-weight:600;color:var(--ts-terra);white-space:nowrap}
+.ts-pd p{margin:6px 0 0;font-size:13.5px;color:var(--ts-ink-2)}
+.ts-tag{display:inline-block;margin-top:8px;padding:2px 10px;border-radius:999px;background:var(--ts-sand);font-size:11px;color:var(--ts-ink-2)}
+@keyframes ts-rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- メニュー：セグメントタブ ---------- */
+.ts-menu{background:var(--ts-paper)}
+.ts-seg{position:relative;display:grid;grid-template-columns:repeat(3,1fr);max-width:440px;margin:0 auto;padding:4px;
+  border-radius:999px;background:var(--ts-cream);border:1px solid var(--ts-line)}
+.ts-seg-knob{position:absolute;top:4px;bottom:4px;left:4px;width:calc((100% - 8px) / 3);border-radius:999px;background:var(--ts-terra);
+  box-shadow:0 4px 10px rgba(179,69,42,.28);transition:transform var(--ts-t-open) var(--ts-e-firm)}
+.ts-seg[data-i="1"] .ts-seg-knob{transform:translateX(100%)}
+.ts-seg[data-i="2"] .ts-seg-knob{transform:translateX(200%)}
+.ts-seg button{position:relative;border:0;background:none;padding:10px 4px;border-radius:999px;font-size:14px;font-weight:700;
+  color:var(--ts-ink-2);transition:color .2s var(--ts-e-soft) .08s,transform var(--ts-t-tap) var(--ts-e-soft)}
+.ts-seg button[aria-selected="true"]{color:#fff}
+.ts-seg button:active{transform:scale(.94)}
+.ts-seg button span{display:block;font-family:var(--ts-serif);font-style:italic;font-weight:500;font-size:12px;line-height:1;opacity:.75;margin-top:2px}
+.ts-tax{text-align:center;font-size:12px;color:var(--ts-mute);margin:14px 0 0}
+.ts-panels{max-width:760px;margin:22px auto 0}
+.ts-panel{display:none}
+.ts-panel.is-active{display:block}
+.ts-list{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+@media (min-width:760px){.ts-list--2{grid-template-columns:1fr 1fr;column-gap:28px}}
+.ts-item{display:flex;align-items:flex-start;gap:12px;padding:14px 12px;border-bottom:1px dashed var(--ts-line);border-radius:10px;
+  transition:background var(--ts-t-hover) var(--ts-e-soft)}
+.ts-item:hover{background:var(--ts-cream)}
+.ts-panel.is-active .ts-item{animation:ts-rise .36s var(--ts-e-firm) both}
+.ts-panel.is-active .ts-item:nth-child(2){animation-delay:.04s}
+.ts-panel.is-active .ts-item:nth-child(3){animation-delay:.08s}
+.ts-panel.is-active .ts-item:nth-child(4){animation-delay:.12s}
+.ts-panel.is-active .ts-item:nth-child(5){animation-delay:.16s}
+.ts-panel.is-active .ts-item:nth-child(6){animation-delay:.2s}
+.ts-panel.is-active .ts-item:nth-child(7){animation-delay:.24s}
+.ts-panel.is-active .ts-item:nth-child(8){animation-delay:.28s}
+.ts-panel.is-active .ts-item:nth-child(9){animation-delay:.32s}
+.ts-panel.is-active .ts-item:nth-child(10){animation-delay:.36s}
+.ts-item-main{flex:1;min-width:0}
+.ts-item-name{margin:0;font-weight:700;font-size:15px;line-height:1.5}
+.ts-item-desc{margin:2px 0 0;font-size:12.5px;line-height:1.6;color:var(--ts-mute)}
+.ts-price{flex:none;font-family:var(--ts-serif);font-weight:600;font-size:19px;line-height:1.3;color:var(--ts-ink)}
+.ts-pop-tag{display:inline-block;vertical-align:2px;margin-left:6px;padding:0 7px;border-radius:999px;background:var(--ts-terra);color:#fff;font-size:10px;font-weight:700;letter-spacing:.04em;line-height:1.7}
+
+/* ワインの注ぎ ＋ ボディの進行度 */
+.ts-wine{margin-top:28px;display:grid;gap:18px;align-items:center;background:var(--ts-cream);border-radius:20px;padding:22px 18px}
+@media (min-width:700px){.ts-wine{grid-template-columns:200px 1fr;padding:26px 28px}}
+.ts-wine svg{width:180px;height:180px;margin:0 auto;overflow:visible}
+.ts-wine{--ts-wc:#e8c667;--ts-lv:28px}
+.ts-wine[data-body="2"]{--ts-wc:#a1233a}
+.ts-wine[data-body="3"]{--ts-wc:#5a1024}
+.ts-liq rect,.ts-liq ellipse{transition:fill .4s var(--ts-e-soft)}
+.ts-liq rect{fill:var(--ts-wc)}
+.ts-liq{transform:translateY(var(--ts-lv))}
+.ts-wine.is-pouring .ts-liq{animation:ts-fill 2.1s var(--ts-e-firm) both}
+@keyframes ts-fill{0%{transform:translateY(var(--ts-lv))}12%,28%{transform:translateY(72px)}70%,100%{transform:translateY(var(--ts-lv))}}
+.ts-bottle-move{transform-box:fill-box}
+.ts-bottle-tilt{transform-box:fill-box;transform-origin:50% 0}   /* 瓶の口を支点に */
+.ts-wine.is-pouring .ts-bottle-move{animation:ts-bmove 2.1s var(--ts-e-firm)}
+.ts-wine.is-pouring .ts-bottle-tilt{animation:ts-btilt 2.1s var(--ts-e-firm)}
+@keyframes ts-bmove{0%{transform:none}22%,70%{transform:translate(-60px,-24px)}92%,100%{transform:none}}
+@keyframes ts-btilt{0%,4%{transform:rotate(0)}24%,68%{transform:rotate(-110deg)}90%,100%{transform:rotate(0)}}
+.ts-stream{stroke:var(--ts-wc);stroke-width:3;stroke-linecap:round;stroke-dasharray:50;stroke-dashoffset:50;opacity:0}
+.ts-wine.is-pouring .ts-stream{animation:ts-stream 2.1s linear}
+@keyframes ts-stream{0%,24%{stroke-dashoffset:50;opacity:0}25%{opacity:1}34%,62%{stroke-dashoffset:0;opacity:1}72%,100%{stroke-dashoffset:-50;opacity:0}}
+.ts-wine h3{margin:0;font-size:16px}
+.ts-wine-note{margin:4px 0 0;font-size:12.5px;color:var(--ts-ink-2)}
+.ts-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.ts-chip{border:1.5px solid var(--ts-line);background:var(--ts-paper);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:700;
+  transition:background var(--ts-t-hover) var(--ts-e-soft),color var(--ts-t-hover),border-color var(--ts-t-hover),transform var(--ts-t-tap) var(--ts-e-soft)}
+.ts-chip:hover{border-color:var(--ts-wine)}
+.ts-chip:active{transform:scale(.93)}
+.ts-chip[aria-pressed="true"]{background:var(--ts-wine);border-color:var(--ts-wine);color:#fff}
+.ts-body{margin-top:18px;max-width:320px}
+.ts-body-label{font-size:11px;letter-spacing:.14em;color:var(--ts-mute)}
+.ts-steps{position:relative;margin-top:6px;height:22px}
+.ts-steps-rail,.ts-steps-fill{position:absolute;top:9px;left:9px;height:4px;border-radius:2px}
+.ts-steps-rail{right:9px;background:var(--ts-line)}
+.ts-steps-fill{width:0;background:var(--ts-wine);transition:width .5s var(--ts-e-firm)}
+.ts-wine[data-body="2"] .ts-steps-fill{width:calc(50% - 9px)}
+.ts-wine[data-body="3"] .ts-steps-fill{width:calc(100% - 18px)}
+.ts-steps-row{position:relative;display:flex;justify-content:space-between}
+.ts-steps-row i{width:22px;height:22px;border-radius:50%;background:var(--ts-line);border:4px solid var(--ts-cream);
+  transition:background .3s var(--ts-e-soft),transform .4s var(--ts-e-snap)}
+.ts-wine[data-body] .ts-steps-row i:nth-child(1),
+.ts-wine[data-body="2"] .ts-steps-row i:nth-child(2),
+.ts-wine[data-body="3"] .ts-steps-row i:nth-child(-n+3){background:var(--ts-wine)}
+.ts-wine[data-body="1"] .ts-steps-row i:nth-child(1),
+.ts-wine[data-body="2"] .ts-steps-row i:nth-child(2),
+.ts-wine[data-body="3"] .ts-steps-row i:nth-child(3){transform:scale(1.18)}
+.ts-steps-cap{display:flex;justify-content:space-between;font-size:11px;color:var(--ts-mute);margin-top:4px}
+
+/* ---------- chef ---------- */
+.ts-chef-in{display:grid;gap:28px;align-items:center}
+@media (min-width:800px){.ts-chef-in{grid-template-columns:300px 1fr;gap:56px}}
+.ts-chef-art{position:relative;width:min(260px,76%);margin:0 auto;aspect-ratio:1;border-radius:50%;background:var(--ts-sand);border:0;padding:0}
+.ts-chef-art svg{width:100%;height:100%;overflow:visible}
+.ts-hat{transform-box:fill-box;transform-origin:30% 100%;transition:transform .3s var(--ts-e-exit)}
+.ts-chef-art.is-tip .ts-hat{transform:rotate(-14deg) translateY(-6px);transition:transform var(--ts-t-pop) var(--ts-e-snap)}
+.ts-chef-art:focus-visible .ts-hat{transform:rotate(-14deg) translateY(-6px);transition:transform var(--ts-t-pop) var(--ts-e-snap)}
+@media (hover:hover){.ts-chef-art:hover .ts-hat{transform:rotate(-14deg) translateY(-6px);transition:transform var(--ts-t-pop) var(--ts-e-snap)}}
+.ts-chef-name{margin:0;font-family:var(--ts-mincho);font-weight:600;font-size:24px;letter-spacing:.08em}
+html[lang="en"] .ts-chef-name{font-family:var(--ts-serif);letter-spacing:.02em;font-size:28px}
+.ts-chef-role{margin:0;font-size:12px;letter-spacing:.14em;color:var(--ts-terra)}
+.ts-quote{margin:18px 0 0;padding:0 0 0 16px;border-left:3px solid var(--ts-sun);font-family:var(--ts-mincho);font-size:17px;line-height:1.9}
+html[lang="en"] .ts-quote{font-family:var(--ts-serif);font-style:italic;font-size:21px;line-height:1.5}
+.ts-chef p.ts-chef-body{margin:16px 0 0;color:var(--ts-ink-2);font-size:14px}
+.ts-career{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:6px;font-size:13px}
+.ts-career li{display:flex;gap:12px}
+.ts-career b{font-family:var(--ts-serif);font-size:16px;color:var(--ts-terra);min-width:3em;line-height:1.6}
+
+/* ---------- coupon：フリップ ---------- */
+.ts-coupon-sec{background:var(--ts-paper)}
+.ts-coupon{max-width:460px;margin:0 auto;perspective:900px}
+.ts-coupon-face{display:grid;transform-style:preserve-3d;transition:transform .6s var(--ts-e-firm)}
+.ts-coupon.is-flipped .ts-coupon-face{transform:rotateY(180deg)}
+.ts-cp{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;position:relative;border-radius:18px;padding:24px 26px;
+  background:
+    radial-gradient(circle at 0 50%,var(--ts-paper) 13px,transparent 14px),
+    radial-gradient(circle at 100% 50%,var(--ts-paper) 13px,transparent 14px),
+    var(--ts-terra);
+  color:#fff;box-shadow:0 12px 30px rgba(143,52,32,.25);min-height:196px;display:flex;flex-direction:column;justify-content:center}
+.ts-cp::after{content:"";position:absolute;inset:9px 22px;border:1.5px dashed rgba(255,255,255,.3);border-radius:10px;pointer-events:none}
+.ts-cp-front > *,.ts-cp-back > *{position:relative;z-index:1}
+.ts-cp-back{transform:rotateY(180deg);background:
+    radial-gradient(circle at 0 50%,var(--ts-paper) 13px,transparent 14px),
+    radial-gradient(circle at 100% 50%,var(--ts-paper) 13px,transparent 14px),
+    var(--ts-ink);text-align:center}
+.ts-cp-back::after{border-color:rgba(255,255,255,.16)}
+.ts-cp small{font-size:11px;letter-spacing:.18em;opacity:.85}
+.ts-cp-title{margin:4px 0 0;font-family:var(--ts-mincho);font-size:22px;line-height:1.45;font-weight:600}
+html[lang="en"] .ts-cp-title{font-family:var(--ts-serif);font-size:26px;line-height:1.2}
+.ts-cp-cond{margin:26px 0 0;font-size:11.5px;line-height:1.7;opacity:.9}
+.ts-cp-code{margin:8px auto 0;padding:8px 18px;border:1.5px dashed rgba(255,255,255,.5);border-radius:10px;font-family:var(--ts-serif);
+  font-weight:600;font-size:30px;letter-spacing:.14em;line-height:1.2}
+.ts-cp-back p{margin:10px 0 0;font-size:12px;opacity:.85}
+.ts-coupon-ctrl{text-align:center;margin-top:20px}
+.ts-coupon-ctrl .ts-on{display:none}
+.ts-coupon-ctrl [aria-pressed="true"] .ts-on{display:inline}
+.ts-coupon-ctrl [aria-pressed="true"] .ts-off{display:none}
+
+/* ---------- reserve ---------- */
+.ts-reserve{background:var(--ts-ink);color:#efe4d2;position:relative;overflow:hidden}
+.ts-reserve::before{content:"";position:absolute;right:-90px;top:-90px;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,rgba(242,193,78,.26),rgba(242,193,78,0) 70%)}
+.ts-reserve .ts-eyebrow{color:var(--ts-sun)}
+.ts-reserve .ts-lead{color:#cbbba6}
+.ts-res-grid{display:grid;gap:12px;max-width:640px;margin:0 auto}
+@media (min-width:640px){.ts-res-grid{grid-template-columns:1fr 1fr}}
+.ts-res-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:20px 18px;display:flex;flex-direction:column;gap:12px}
+.ts-res-card h3{margin:0;font-size:15px}
+.ts-res-card p{margin:0;font-size:12.5px;color:#b9a894;line-height:1.7;flex:1}
+.ts-res-card .ts-btn{width:100%}
+.ts-res-tel{font-family:var(--ts-serif);font-size:20px;letter-spacing:.06em}
+
+/* ---------- instagram ---------- */
+.ts-ig{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;max-width:640px;margin:0 auto}
+.ts-ig a{position:relative;display:block;aspect-ratio:1;border-radius:10px;overflow:hidden;background:var(--c,var(--ts-sand))}
+.ts-ig svg{position:absolute;inset:18%;width:64%;height:64%;transition:transform .32s var(--ts-e-soft)}
+.ts-ig-ov{position:absolute;inset:0;display:grid;place-items:center;background:rgba(42,33,28,0);transition:background var(--ts-t-hover) var(--ts-e-soft)}
+.ts-ig-ov span{display:flex;align-items:center;gap:5px;color:#fff;font-size:12px;font-weight:700;opacity:0;transform:scale(.6);
+  transition:opacity .15s, transform .2s var(--ts-e-exit)}
+.ts-ig-ov svg{position:static;width:16px;height:16px;fill:#fff}
+.ts-ig a:focus-visible .ts-ig-ov{background:rgba(42,33,28,.46)}
+.ts-ig a:focus-visible .ts-ig-ov span{opacity:1;transform:none;transition:opacity .2s, transform var(--ts-t-pop) var(--ts-e-snap)}
+@media (hover:hover){
+  .ts-ig a:hover > svg{transform:scale(1.08) rotate(-4deg)}
+  .ts-ig a:hover .ts-ig-ov{background:rgba(42,33,28,.46)}
+  .ts-ig a:hover .ts-ig-ov span{opacity:1;transform:none;transition:opacity .2s, transform var(--ts-t-pop) var(--ts-e-snap)}
+}
+.ts-ig-note{text-align:center;font-size:11.5px;color:var(--ts-mute);margin:12px 0 0}
+.ts-ig-follow{text-align:center;margin-top:18px}
+
+/* ---------- FAQ：アコーディオン ---------- */
+.ts-faq{background:var(--ts-paper)}
+.ts-acc{max-width:720px;margin:0 auto;display:grid;gap:10px}
+.ts-acc-item{background:var(--ts-cream);border-radius:14px}
+.ts-acc-btn{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;border:0;background:none;text-align:left;
+  padding:16px 18px;font-weight:700;font-size:14.5px;border-radius:14px;transition:background var(--ts-t-hover)}
+.ts-acc-btn:hover{background:var(--ts-sand)}
+.ts-acc-btn .ts-q{font-family:var(--ts-serif);font-style:italic;color:var(--ts-terra);font-size:19px;margin-right:4px}
+.ts-pm{position:relative;flex:none;width:14px;height:14px}
+.ts-pm i{position:absolute;background:var(--ts-ink-2);border-radius:2px}
+.ts-pm i:first-child{left:0;top:6px;width:14px;height:2px}
+.ts-pm i:last-child{left:6px;top:0;width:2px;height:14px;transition:transform var(--ts-t-open) var(--ts-e-firm)}
+.ts-acc-item.is-open .ts-pm i:last-child{transform:scaleY(0) rotate(90deg)}
+.ts-acc-body{max-height:0;opacity:0;overflow:hidden;transition:max-height .28s var(--ts-e-exit),opacity .18s}
+.ts-acc-item.is-open .ts-acc-body{max-height:240px;opacity:1;transition:max-height var(--ts-t-open) var(--ts-e-firm),opacity .26s .06s}
+.ts-acc-body p{margin:0;padding:0 18px 18px 18px;font-size:13.5px;color:var(--ts-ink-2)}
+
+/* ---------- info + map ---------- */
+.ts-info-in{display:grid;gap:28px}
+@media (min-width:860px){.ts-info-in{grid-template-columns:1fr 1.1fr;gap:44px;align-items:start}}
+.ts-dl{margin:0;display:grid;gap:0}
+.ts-dl div{display:grid;grid-template-columns:6.5em 1fr;gap:10px;padding:12px 0;border-bottom:1px solid var(--ts-line);font-size:14px}
+html[lang="en"] .ts-dl div{grid-template-columns:7.5em 1fr}
+.ts-dl dt{color:var(--ts-mute);font-size:12.5px;padding-top:2px}
+.ts-dl dd{margin:0}
+.ts-dl a{color:var(--ts-terra);font-weight:700;text-decoration:none}
+.ts-map{position:relative;aspect-ratio:4/3;border-radius:18px;overflow:hidden;background:#ebe2cf;border:1px solid var(--ts-line)}
+.ts-road{position:absolute;background:#fbf7ef}
+.ts-road.h1{left:0;right:0;top:34%;height:14px}
+.ts-road.h2{left:0;right:0;top:74%;height:9px}
+.ts-road.v1{top:0;bottom:0;left:28%;width:11px}
+.ts-road.v2{top:0;bottom:0;left:70%;width:16px}
+.ts-road.d1{left:-10%;width:130%;top:56%;height:8px;transform:rotate(-16deg)}
+.ts-river{position:absolute;left:-10%;width:130%;top:12%;height:18px;background:#bcd3d6;transform:rotate(8deg)}
+.ts-park{position:absolute;left:6%;bottom:6%;width:18%;aspect-ratio:1.4;border-radius:40%;background:#c9d4a9}
+.ts-station{position:absolute;left:73%;top:8%;padding:2px 7px;border-radius:5px;background:var(--ts-ink);color:#fff;font-size:10px;font-weight:700}
+.ts-map-label{position:absolute;left:10px;top:10px;padding:3px 9px;border-radius:999px;background:rgba(255,255,255,.85);font-size:10.5px;color:var(--ts-ink-2)}
+.ts-pin-wrap{position:absolute;left:52%;top:50%;width:34px;height:46px;margin:-46px 0 0 -17px}
+.ts-pin{position:absolute;inset:0;transform-origin:50% 100%}
+.ts-pin svg{width:34px;height:46px;filter:drop-shadow(0 3px 2px rgba(42,33,28,.25))}
+.ts-pin-shadow{position:absolute;left:9px;bottom:-4px;width:16px;height:6px;border-radius:50%;background:rgba(42,33,28,.22)}
+.ts-pin-tip{position:absolute;left:50%;bottom:calc(100% + 8px);padding:5px 10px;border-radius:8px;background:var(--ts-ink);color:#fff;font-size:11.5px;font-weight:700;white-space:nowrap;
+  transform-origin:50% 130%;transform:translateX(-50%) scale(.4);opacity:0;transition:transform .2s var(--ts-e-exit),opacity .15s}
+.ts-pin-tip::after{content:"";position:absolute;top:100%;left:50%;margin-left:-5px;border:5px solid transparent;border-top-color:var(--ts-ink)}
+.ts-map.is-hop .ts-pin{animation:ts-hop .8s var(--ts-e-soft)}
+.ts-map.is-hop .ts-pin-shadow{animation:ts-hop-sh .8s var(--ts-e-soft)}
+.ts-map.is-hop .ts-pin-tip,.ts-map:focus-within .ts-pin-tip{transform:translateX(-50%) scale(1);opacity:1;transition:transform var(--ts-t-pop) var(--ts-e-snap),opacity .2s}
+@media (hover:hover){
+  .ts-map:hover .ts-pin{animation:ts-hop .8s var(--ts-e-soft)}
+  .ts-map:hover .ts-pin-shadow{animation:ts-hop-sh .8s var(--ts-e-soft)}
+  .ts-map:hover .ts-pin-tip{transform:translateX(-50%) scale(1);opacity:1;transition:transform var(--ts-t-pop) var(--ts-e-snap),opacity .2s}
+}
+@keyframes ts-hop{0%{transform:none}30%{transform:translateY(-16px)}55%{transform:translateY(0) scale(1.12,.86)}72%{transform:scale(.95,1.05)}100%{transform:none}}
+@keyframes ts-hop-sh{0%,100%{transform:none;opacity:1}30%{transform:scale(.55);opacity:.5}55%{transform:scale(1.15)}}
+.ts-map-open{position:absolute;right:10px;bottom:10px}
+
+/* ---------- footer ---------- */
+.ts-foot{background:var(--ts-ink);color:#b9a894;font-size:12px;padding:36px 0 28px;text-align:center}
+.ts-foot .ts-logo{justify-content:center;margin:0 0 10px;color:#f3e7d6}
+.ts-foot p{margin:4px 0}
+.ts-foot small{display:block;margin-top:14px;opacity:.7}
+
+/* 言語切替時のさりげない差し替え */
+.ts-swap{animation:ts-swapin .32s var(--ts-e-soft)}
+@keyframes ts-swapin{from{opacity:0}to{opacity:1}}
+
+/* 動きに酔う人向け */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;transition-delay:0s !important}
+}
+</style>
+</head>
+<body>
+
+<!-- SVG symbols -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="ts-sun" viewBox="0 0 40 40">
+      <g stroke="#e0a93f" stroke-width="2.6" stroke-linecap="round">
+        <path d="M20 3v5M20 32v5M3 20h5M32 20h5M8 8l3.5 3.5M28.5 28.5 32 32M8 32l3.5-3.5M28.5 11.5 32 8"/>
+      </g>
+      <circle cx="20" cy="20" r="8.5" fill="#b3452a"/>
+    </symbol>
+    <symbol id="ts-pizza" viewBox="0 0 64 64">
+      <circle cx="32" cy="32" r="30" fill="#e2b561"/>
+      <circle cx="32" cy="32" r="25" fill="#d2502d"/>
+      <g fill="#f8e8bb"><circle cx="23" cy="24" r="6"/><circle cx="41" cy="22" r="5"/><circle cx="39" cy="40" r="7"/><circle cx="22" cy="41" r="5"/></g>
+      <g fill="#3f7a3a"><ellipse cx="31" cy="31" rx="4.5" ry="2.4" transform="rotate(-30 31 31)"/><ellipse cx="46" cy="32" rx="3.6" ry="2" transform="rotate(40 46 32)"/><ellipse cx="29" cy="48" rx="3.6" ry="2" transform="rotate(10 29 48)"/></g>
+    </symbol>
+    <symbol id="ts-pasta" viewBox="0 0 64 64">
+      <circle cx="32" cy="32" r="30" fill="#fff" stroke="#e6dccb" stroke-width="2"/>
+      <circle cx="32" cy="32" r="21" fill="#f3e7cf"/>
+      <g fill="none" stroke="#e5b957" stroke-width="3" stroke-linecap="round">
+        <path d="M17 34c4-11 23-13 29-2"/><path d="M19 27c7-9 21-7 25 4"/><path d="M21 39c6 7 19 6 23-4"/><path d="M26 23c9-2 15 4 12 11"/><path d="M24 44c6 2 14 1 18-5"/>
+      </g>
+      <circle cx="33" cy="32" r="4.5" fill="#f2b632"/>
+      <g fill="#3a2e26"><circle cx="24" cy="30" r=".9"/><circle cx="40" cy="37" r=".9"/><circle cx="30" cy="40" r=".9"/><circle cx="38" cy="26" r=".9"/></g>
+    </symbol>
+    <symbol id="ts-fish" viewBox="0 0 64 64">
+      <circle cx="32" cy="32" r="30" fill="#fff" stroke="#e6dccb" stroke-width="2"/>
+      <ellipse cx="32" cy="34" rx="23" ry="15" fill="#f3d7a8"/>
+      <path d="M12 33c8-10 25-11 33 0-8 10-25 10-33 0z" fill="#c9d3d6"/>
+      <path d="M44 33l9-7v14z" fill="#b4c1c5"/>
+      <circle cx="19" cy="31" r="1.6" fill="#2a211c"/>
+      <g fill="#d2502d"><circle cx="24" cy="46" r="3.2"/><circle cx="41" cy="45" r="3"/><circle cx="33" cy="20" r="2.8"/></g>
+      <g fill="#3f7a3a"><ellipse cx="46" cy="21" rx="3" ry="1.6" transform="rotate(-30 46 21)"/></g>
+    </symbol>
+    <symbol id="ts-tiramisu" viewBox="0 0 64 64">
+      <ellipse cx="32" cy="48" rx="27" ry="8" fill="#fff" stroke="#e6dccb" stroke-width="2"/>
+      <rect x="16" y="20" width="32" height="27" rx="3" fill="#f5e7c9"/>
+      <rect x="16" y="29" width="32" height="4" fill="#8a5a36"/>
+      <rect x="16" y="39" width="32" height="4" fill="#8a5a36"/>
+      <rect x="16" y="18" width="32" height="6" rx="3" fill="#6b4428"/>
+      <ellipse cx="38" cy="16" rx="4" ry="2" fill="#3f7a3a" transform="rotate(-20 38 16)"/>
+    </symbol>
+    <symbol id="ts-glass" viewBox="0 0 64 64">
+      <path d="M21 6h22c1.5 16-2.5 27-11 28-8.5-1-12.5-12-11-28z" fill="#fff" fill-opacity=".55" stroke="#9a8b80" stroke-width="2"/>
+      <path d="M21.6 17h20.8c-.6 9-4.2 15.4-10.4 16-6.2-.6-9.8-7-10.4-16z" fill="#7a1f35"/>
+      <path d="M32 34v20" stroke="#9a8b80" stroke-width="2.4" stroke-linecap="round"/>
+      <ellipse cx="32" cy="56" rx="10" ry="2.6" fill="#9a8b80"/>
+    </symbol>
+    <symbol id="ts-tomato" viewBox="0 0 64 64">
+      <circle cx="32" cy="36" r="20" fill="#d2502d"/>
+      <path d="M32 16l4 6 7-1-5 5 3 6-9-4-9 4 3-6-5-5 7 1z" fill="#3f7a3a"/>
+      <ellipse cx="24" cy="32" rx="4" ry="6" fill="#fff" opacity=".22"/>
+    </symbol>
+    <symbol id="ts-lemon" viewBox="0 0 64 64">
+      <ellipse cx="32" cy="34" rx="22" ry="16" fill="#f2cf4a" transform="rotate(-20 32 34)"/>
+      <path d="M44 18c6-6 12-4 14-2-5 1-9 4-11 8z" fill="#3f7a3a"/>
+    </symbol>
+    <symbol id="ts-bread" viewBox="0 0 64 64">
+      <path d="M8 38c0-12 12-20 24-20s24 8 24 20c0 6-4 8-8 8H16c-4 0-8-2-8-8z" fill="#d49a4c"/>
+      <g stroke="#f3dcae" stroke-width="3" stroke-linecap="round"><path d="M20 28l5 8M30 25l5 8M40 26l5 8"/></g>
+    </symbol>
+    <symbol id="ts-oil" viewBox="0 0 64 64">
+      <rect x="28" y="6" width="8" height="10" rx="2" fill="#5b6835"/>
+      <path d="M26 16h12v6c6 3 8 8 8 14v18a4 4 0 0 1-4 4H22a4 4 0 0 1-4-4V36c0-6 2-11 8-14z" fill="#b9b25a"/>
+      <rect x="22" y="36" width="20" height="12" rx="2" fill="#fffaf2"/>
+    </symbol>
+    <symbol id="ts-basil" viewBox="0 0 64 64">
+      <path d="M32 56V24" stroke="#2f5e2c" stroke-width="3" stroke-linecap="round"/>
+      <path d="M32 30c-14-2-18-14-16-20 10 0 17 8 16 20z" fill="#3f7a3a"/>
+      <path d="M32 38c12-2 18-12 16-18-10 0-16 8-16 18z" fill="#4f8e45"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- demo strip -->
+<div class="ts-strip">
+  <div class="ts-wrap">
+    <span data-en="This is a Table Web demo site (the restaurant is fictional).">これは Table Web の制作デモです（架空の店舗です）</span>
+    <a href="../../trattoria-sole/" data-en="← Back to the case study">← 事例ページへ戻る</a>
+  </div>
+</div>
+
+<!-- header -->
+<header class="ts-head">
+  <div class="ts-wrap">
+    <a class="ts-logo" href="#top" aria-label="Trattoria Sole">
+      <svg aria-hidden="true"><use href="#ts-sun"/></svg>
+      <span><b>Trattoria Sole</b><small data-en="NEAPOLITAN TRATTORIA">トラットリア ソーレ</small></span>
+    </a>
+    <nav class="ts-nav" aria-label="メイン" data-en-label="Main">
+      <a href="#picks" data-en="Today">おすすめ</a>
+      <a href="#menu" data-en="Menu">メニュー</a>
+      <a href="#chef" data-en="Chef">シェフ</a>
+      <a href="#coupon" data-en="Coupon">クーポン</a>
+      <a href="#info" data-en="Access">アクセス</a>
+    </nav>
+    <a class="ts-btn ts-btn--sm ts-head-cta" href="#reserve" data-en="Book">予約</a>
+    <div class="ts-lang" role="group" aria-label="言語 / Language">
+      <span class="ts-lang-knob" aria-hidden="true"></span>
+      <button type="button" data-lang="ja" aria-pressed="true" aria-label="日本語">JA</button>
+      <button type="button" data-lang="en" aria-pressed="false" aria-label="English">EN</button>
+    </div>
+    <div class="ts-pop" id="ts-pop">
+      <div class="ts-pop-box">
+        <ul class="ts-pop-list" id="ts-pop-list">
+          <li><a href="#picks"><b data-en="Today's picks">本日のおすすめ</b><span>Oggi</span></a></li>
+          <li><a href="#menu"><b data-en="Menu">メニュー</b><span>Menù</span></a></li>
+          <li><a href="#chef"><b data-en="Our chef">シェフ紹介</b><span>Chef</span></a></li>
+          <li><a href="#coupon"><b data-en="Coupon">クーポン</b><span>Coupon</span></a></li>
+          <li><a href="#reserve"><b data-en="Reservations">ご予約</b><span>Prenota</span></a></li>
+          <li><a href="#info"><b data-en="Hours &amp; Access">店舗情報</b><span>Info</span></a></li>
+        </ul>
+      </div>
+      <button class="ts-pop-btn" type="button" aria-expanded="false" aria-controls="ts-pop-list" aria-label="メニューを開く" data-en-label="Open menu">
+        <i></i><i></i><i></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- hero -->
+<section class="ts-hero" aria-labelledby="ts-h1">
+  <div class="ts-awning" aria-hidden="true"></div>
+
+  <button class="ts-sign" type="button" id="ts-sign" aria-label="看板を揺らす" data-en-label="Swing the sign">
+    <span class="ts-sign-arm" aria-hidden="true"></span>
+    <span class="ts-sign-swing">
+      <span class="ts-sign-chain" aria-hidden="true"><i></i><i></i></span>
+      <span class="ts-sign-board">
+        <b>APERTO</b>
+        <small data-en="Lunch 11:30–<br>Dinner 17:30–">ランチ 11:30〜<br>ディナー 17:30〜</small>
+      </span>
+    </span>
+  </button>
+
+  <div class="ts-wrap ts-hero-in">
+    <div>
+      <p class="ts-hero-meta">
+        <span data-en="3 min from 〇〇 Sta.">〇〇駅 徒歩3分</span>
+        <span data-en="Wood-fired pizza">薪窯ピッツァ</span>
+      </p>
+      <h1 class="ts-h1" id="ts-h1" data-en="Sunlit plates,<br><em>Naples</em> every day.">太陽の下で、<br><em>ナポリ</em>の日常を。</h1>
+      <p class="ts-hero-lead" data-en="A small trattoria where the wood-fired oven stays lit from lunch to late. Neapolitan home cooking, natural wines and a table that feels like family.">薪窯の火が、昼から夜まで灯る小さなトラットリア。ナポリの家庭料理と自然派ワインで、肩の力を抜いたひとときを。</p>
+      <div class="ts-hero-cta">
+        <a class="ts-btn" href="#reserve">
+          <span data-en="Book a table">席を予約する</span>
+          <svg viewBox="0 0 22 12" aria-hidden="true"><line class="ts-shaft" x1="1" y1="6" x2="15" y2="6"/><polyline class="ts-head" points="10,1 15,6 10,11"/></svg>
+        </a>
+        <a class="ts-btn ts-btn--ghost" href="#menu">
+          <span data-en="See the menu">メニューを見る</span>
+          <svg viewBox="0 0 22 12" aria-hidden="true"><line class="ts-shaft" x1="1" y1="6" x2="15" y2="6"/><polyline class="ts-head" points="10,1 15,6 10,11"/></svg>
+        </a>
+      </div>
+      <p class="ts-badge-en"><b>EN</b><span data-en="English menu &amp; staff available">英語メニュー・英語対応あり</span></p>
+    </div>
+
+    <div class="ts-art">
+      <span class="ts-art-sun" aria-hidden="true"></span>
+      <span class="ts-art-hint" aria-hidden="true">Margherita</span>
+      <button class="ts-art-btn" type="button" id="ts-art" aria-label="ピッツァをひと切れ持ち上げる" data-en-label="Lift a slice of pizza">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <defs>
+            <clipPath id="ts-clip-base"><path d="M100 100 L100 20 A80 80 0 1 0 156.57 43.43 Z"/></clipPath>
+            <clipPath id="ts-clip-slice"><path d="M100 100 L100 20 A80 80 0 0 1 156.57 43.43 Z"/></clipPath>
+          </defs>
+          <ellipse cx="100" cy="186" rx="84" ry="9" fill="#2a211c" opacity=".08"/>
+          <circle cx="100" cy="100" r="94" fill="#fffaf2" stroke="#e2d4bf" stroke-width="2"/>
+          <circle cx="100" cy="100" r="86" fill="none" stroke="#efe4d2" stroke-width="2"/>
+          <!-- base (7/8) -->
+          <g clip-path="url(#ts-clip-base)">
+            <circle cx="100" cy="100" r="80" fill="#e2b561"/>
+            <circle cx="100" cy="100" r="80" fill="none" stroke="#c98d3c" stroke-width="3" stroke-dasharray="2 9" opacity=".6"/>
+            <circle cx="100" cy="100" r="67" fill="#d2502d"/>
+            <g fill="#f8e8bb">
+              <circle cx="70" cy="72" r="14"/><circle cx="62" cy="118" r="12"/><circle cx="104" cy="140" r="15"/>
+              <circle cx="138" cy="112" r="12"/><circle cx="100" cy="96" r="10"/><circle cx="76" cy="148" r="8"/>
+            </g>
+            <g fill="#3f7a3a">
+              <ellipse cx="88" cy="118" rx="10" ry="5" transform="rotate(-30 88 118)"/>
+              <ellipse cx="128" cy="140" rx="9" ry="4.6" transform="rotate(35 128 140)"/>
+              <ellipse cx="60" cy="94" rx="8" ry="4.2" transform="rotate(70 60 94)"/>
+            </g>
+          </g>
+          <path class="ts-pull" d="M104 94 Q116 88 113 76" fill="none" stroke="#f8e8bb" stroke-width="3" stroke-linecap="round"/>
+          <path class="ts-pull" d="M108 99 Q124 96 126 84" fill="none" stroke="#f8e8bb" stroke-width="2.2" stroke-linecap="round"/>
+          <!-- slice -->
+          <g class="ts-slice">
+            <g clip-path="url(#ts-clip-slice)">
+              <circle cx="100" cy="100" r="80" fill="#e2b561"/>
+              <circle cx="100" cy="100" r="80" fill="none" stroke="#c98d3c" stroke-width="3" stroke-dasharray="2 9" opacity=".6"/>
+              <circle cx="100" cy="100" r="67" fill="#d2502d"/>
+              <circle cx="120" cy="58" r="11" fill="#f8e8bb"/>
+              <ellipse cx="110" cy="78" rx="7" ry="3.8" transform="rotate(-50 110 78)" fill="#3f7a3a"/>
+            </g>
+          </g>
+        </svg>
+      </button>
+      <svg class="ts-art-glass" viewBox="0 0 64 64" aria-hidden="true"><use href="#ts-glass"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- picks: fan cards -->
+<section class="ts-sec ts-picks" id="picks" aria-labelledby="ts-picks-h">
+  <div class="ts-wrap">
+    <div class="ts-sec-head">
+      <span class="ts-eyebrow">Oggi consigliamo</span>
+      <h2 class="ts-h2" id="ts-picks-h" data-en="Today's picks">本日のおすすめ</h2>
+      <p class="ts-lead" data-en="Five plates the chef chose this morning. Tap a card to read more.">シェフが今朝選んだ5皿。カードをタップすると詳しく見られます。</p>
+    </div>
+
+    <div class="ts-fan" id="ts-fan">
+      <button class="ts-fc" type="button" data-pick="0" aria-pressed="false">
+        <span class="ts-fc-in"><svg aria-hidden="true"><use href="#ts-fish"/></svg><b data-en="Acqua pazza">アクアパッツァ</b><small>¥2,640</small></span>
+      </button>
+      <button class="ts-fc" type="button" data-pick="1" aria-pressed="false">
+        <span class="ts-fc-in"><svg aria-hidden="true"><use href="#ts-pasta"/></svg><b data-en="Carbonara">カルボナーラ</b><small>¥1,870</small></span>
+      </button>
+      <button class="ts-fc is-picked" type="button" data-pick="2" aria-pressed="true">
+        <span class="ts-fc-in"><svg aria-hidden="true"><use href="#ts-pizza"/></svg><b data-en="Margherita">マルゲリータ</b><small>¥1,760</small></span>
+      </button>
+      <button class="ts-fc" type="button" data-pick="3" aria-pressed="false">
+        <span class="ts-fc-in"><svg aria-hidden="true"><use href="#ts-tiramisu"/></svg><b data-en="Tiramisù">ティラミス</b><small>¥770</small></span>
+      </button>
+      <button class="ts-fc" type="button" data-pick="4" aria-pressed="false">
+        <span class="ts-fc-in"><svg aria-hidden="true"><use href="#ts-glass"/></svg><b data-en="Aglianico (glass)">グラス赤ワイン</b><small>¥1,210</small></span>
+      </button>
+    </div>
+    <div class="ts-fan-ctrl">
+      <button class="ts-fan-toggle" type="button" id="ts-fan-toggle" aria-controls="ts-fan">
+        <i aria-hidden="true"></i>
+        <span class="ts-off" data-en="Fan out the cards">カードを広げる</span>
+        <span class="ts-on" data-en="Stack the cards">カードを重ねる</span>
+      </button>
+    </div>
+
+    <div class="ts-pick-detail" aria-live="polite">
+      <div class="ts-pd" data-pd="0">
+        <div class="ts-pd-top"><h3 data-en="Acqua pazza of today's fish">本日の鮮魚のアクアパッツァ</h3><span class="ts-pd-price">¥2,640</span></div>
+        <p data-en="Whole fish from the morning market, simmered with cherry tomatoes, olives and white wine. Good for two.">朝市で仕入れた鮮魚を丸ごと、ミニトマト・オリーブ・白ワインで煮込みます。2名さまでちょうど良い量です。</p>
+        <span class="ts-tag" data-en="Dinner · limited">ディナー・数量限定</span>
+      </div>
+      <div class="ts-pd" data-pd="1">
+        <div class="ts-pd-top"><h3 data-en="Roman carbonara">ローマ風カルボナーラ</h3><span class="ts-pd-price">¥1,870</span></div>
+        <p data-en="No cream — just egg yolk, pecorino and crispy guanciale, finished with plenty of black pepper.">生クリームは使わず、卵黄とペコリーノ、カリカリのグアンチャーレだけで。黒胡椒をたっぷりと。</p>
+        <span class="ts-tag" data-en="Lunch &amp; dinner">ランチ・ディナー</span>
+      </div>
+      <div class="ts-pd is-active" data-pd="2">
+        <div class="ts-pd-top"><h3 data-en="Margherita from the wood oven">薪窯焼きマルゲリータ</h3><span class="ts-pd-price">¥1,760</span></div>
+        <p data-en="Baked for 60 seconds at 450°C. San Marzano tomato, fior di latte and fresh basil on a puffy, charred crust.">450℃の薪窯で60秒。サンマルツァーノトマト、フィオル・ディ・ラッテ、摘みたてのバジル。ふっくらした縁の焦げ目もごちそうです。</p>
+        <span class="ts-tag" data-en="No.1 in popularity">人気No.1</span>
+      </div>
+      <div class="ts-pd" data-pd="3">
+        <div class="ts-pd-top"><h3 data-en="House tiramisù">自家製ティラミス</h3><span class="ts-pd-price">¥770</span></div>
+        <p data-en="Mascarpone cream layered with espresso-soaked savoiardi. Made fresh every morning.">エスプレッソを染みこませたサヴォイアルディに、マスカルポーネのクリームを重ねて。毎朝仕込みます。</p>
+        <span class="ts-tag" data-en="Dessert">デザート</span>
+      </div>
+      <div class="ts-pd" data-pd="4">
+        <div class="ts-pd-top"><h3 data-en="Aglianico by the glass">アリアニコ（グラス赤）</h3><span class="ts-pd-price">¥1,210</span></div>
+        <p data-en="A full-bodied red from Campania with dark fruit and gentle tannins. Perfect with the pizza.">カンパーニャ州のフルボディ。黒い果実の香りとやわらかな渋みが、ピッツァとよく合います。</p>
+        <span class="ts-tag" data-en="Wine of the month">今月のワイン</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- menu -->
+<section class="ts-sec ts-menu" id="menu" aria-labelledby="ts-menu-h">
+  <div class="ts-wrap">
+    <div class="ts-sec-head">
+      <span class="ts-eyebrow">Il nostro menù</span>
+      <h2 class="ts-h2" id="ts-menu-h" data-en="Menu">メニュー</h2>
+    </div>
+
+    <div class="ts-seg" id="ts-seg" role="tablist" aria-label="メニューの種類" data-en-label="Menu categories" data-i="0">
+      <span class="ts-seg-knob" aria-hidden="true"></span>
+      <button type="button" role="tab" id="ts-tab-0" aria-controls="ts-panel-0" aria-selected="true"><b data-en="Lunch">ランチ</b><span>Pranzo</span></button>
+      <button type="button" role="tab" id="ts-tab-1" aria-controls="ts-panel-1" aria-selected="false" tabindex="-1"><b data-en="Dinner">ディナー</b><span>Cena</span></button>
+      <button type="button" role="tab" id="ts-tab-2" aria-controls="ts-panel-2" aria-selected="false" tabindex="-1"><b data-en="Drinks">ドリンク</b><span>Bevande</span></button>
+    </div>
+    <p class="ts-tax" data-en="All prices include tax.">価格はすべて税込です。</p>
+
+    <div class="ts-panels">
+      <!-- lunch 8 -->
+      <div class="ts-panel is-active" id="ts-panel-0" role="tabpanel" aria-labelledby="ts-tab-0" tabindex="0">
+        <ul class="ts-list ts-list--2">
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name"><span data-en="Pasta of the day set">本日のパスタランチ</span><span class="ts-pop-tag" data-en="Popular">人気</span></p><p class="ts-item-desc" data-en="With salad, focaccia and a small drink">サラダ・フォカッチャ・ミニドリンク付き</p></div><span class="ts-price">¥1,400</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Margherita lunch">マルゲリータランチ</p><p class="ts-item-desc" data-en="Wood-fired pizza with salad">薪窯ピッツァ・サラダ付き</p></div><span class="ts-price">¥1,500</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Bolognese lunch">ボロネーゼランチ</p><p class="ts-item-desc" data-en="Slow-cooked beef &amp; pork ragù, tagliatelle">牛と豚の粗挽きラグー、タリアテッレ</p></div><span class="ts-price">¥1,600</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Genovese lunch">ジェノベーゼランチ</p><p class="ts-item-desc" data-en="Basil pesto, potato and green beans">バジルペースト、じゃがいも、いんげん</p></div><span class="ts-price">¥1,500</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Seasonal vegetable risotto">季節野菜のリゾット</p><p class="ts-item-desc" data-en="Vegetarian option available">ベジタリアン対応可</p></div><span class="ts-price">¥1,600</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Chef's lunch course">シェフのおまかせランチコース</p><p class="ts-item-desc" data-en="Antipasto, pasta, main, dessert, coffee">前菜・パスタ・メイン・デザート・カフェ</p></div><span class="ts-price">¥3,300</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Add dessert">デザートセット</p><p class="ts-item-desc" data-en="Tiramisù or gelato">ティラミス または ジェラート</p></div><span class="ts-price">+¥400</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Add a glass of wine">グラスワインセット</p><p class="ts-item-desc" data-en="Red, white or sparkling">赤・白・スプマンテから</p></div><span class="ts-price">+¥550</span></li>
+        </ul>
+      </div>
+      <!-- dinner 10 -->
+      <div class="ts-panel" id="ts-panel-1" role="tabpanel" aria-labelledby="ts-tab-1" tabindex="0">
+        <ul class="ts-list ts-list--2">
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Antipasto misto">前菜の盛り合わせ</p><p class="ts-item-desc" data-en="Five small plates of the day">本日の小皿5種</p></div><span class="ts-price">¥1,980</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Caprese">カプレーゼ</p><p class="ts-item-desc" data-en="Buffalo mozzarella &amp; tomato">水牛モッツァレラとトマト</p></div><span class="ts-price">¥1,320</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Prosciutto &amp; rocket">生ハムとルッコラ</p><p class="ts-item-desc" data-en="24-month Parma ham">24ヶ月熟成のパルマ産</p></div><span class="ts-price">¥1,540</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name"><span data-en="Margherita">マルゲリータ</span><span class="ts-pop-tag" data-en="Popular">人気</span></p><p class="ts-item-desc" data-en="Tomato, fior di latte, basil">トマト、フィオル・ディ・ラッテ、バジル</p></div><span class="ts-price">¥1,760</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Quattro formaggi">クアトロフォルマッジ</p><p class="ts-item-desc" data-en="Four cheeses with honey">4種のチーズ、はちみつ添え</p></div><span class="ts-price">¥2,090</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Roman carbonara">ローマ風カルボナーラ</p><p class="ts-item-desc" data-en="Egg yolk, pecorino, guanciale">卵黄・ペコリーノ・グアンチャーレ</p></div><span class="ts-price">¥1,870</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Pescatore">ペスカトーレ</p><p class="ts-item-desc" data-en="Seafood in tomato sauce">魚介のトマトソース</p></div><span class="ts-price">¥2,310</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Beef cheek braised in red wine">牛ほほ肉の赤ワイン煮込み</p><p class="ts-item-desc" data-en="With creamy polenta">なめらかなポレンタ添え</p></div><span class="ts-price">¥3,080</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="House tiramisù">自家製ティラミス</p><p class="ts-item-desc" data-en="Made fresh every morning">毎朝仕込みます</p></div><span class="ts-price">¥770</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Dinner course “Sole”">ディナーコース「ソーレ」</p><p class="ts-item-desc" data-en="6 courses · 2 people or more">全6品・2名さまより</p></div><span class="ts-price">¥5,500</span></li>
+        </ul>
+      </div>
+      <!-- drinks 8 -->
+      <div class="ts-panel" id="ts-panel-2" role="tabpanel" aria-labelledby="ts-tab-2" tabindex="0">
+        <ul class="ts-list ts-list--2">
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Glass white · Falanghina">グラス白 ファランギーナ</p><p class="ts-item-desc" data-en="Light, citrusy">軽やか・柑橘の香り</p></div><span class="ts-price">¥880</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Glass red · Piedirosso">グラス赤 ピエディロッソ</p><p class="ts-item-desc" data-en="Medium-bodied, red berries">ミディアム・赤い果実</p></div><span class="ts-price">¥990</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Glass red · Aglianico">グラス赤 アリアニコ</p><p class="ts-item-desc" data-en="Full-bodied, dark fruit">フルボディ・黒い果実</p></div><span class="ts-price">¥1,210</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Bottles from Southern Italy">南イタリアのボトルワイン</p><p class="ts-item-desc" data-en="About 40 labels">常時40種ほど</p></div><span class="ts-price">¥4,400〜</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Spumante">スプマンテ</p><p class="ts-item-desc" data-en="Italian sparkling, by the glass">イタリアの泡をグラスで</p></div><span class="ts-price">¥990</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Draft beer">生ビール</p><p class="ts-item-desc" data-en="Italian lager">イタリアンラガー</p></div><span class="ts-price">¥770</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Aperol spritz">アペロール・スプリッツ</p><p class="ts-item-desc" data-en="The classic aperitivo">食前酒の定番</p></div><span class="ts-price">¥1,100</span></li>
+          <li class="ts-item"><div class="ts-item-main"><p class="ts-item-name" data-en="Alcohol-free sangria">ノンアルコール サングリア</p><p class="ts-item-desc" data-en="Grape juice &amp; fruit">ぶどうジュースと果実</p></div><span class="ts-price">¥660</span></li>
+        </ul>
+
+        <div class="ts-wine" id="ts-wine" data-body="1">
+          <svg viewBox="0 0 180 180" aria-hidden="true">
+            <defs><clipPath id="ts-bowl"><path d="M40 60 H100 C102 100 90 126 70 128 C50 126 38 100 40 60 Z"/></clipPath></defs>
+            <ellipse cx="80" cy="172" rx="70" ry="5" fill="#2a211c" opacity=".07"/>
+            <line class="ts-stream" x1="80" y1="50" x2="80" y2="100"/>
+            <g clip-path="url(#ts-bowl)">
+              <g class="ts-liq">
+                <rect x="30" y="60" width="80" height="90"/>
+                <ellipse cx="70" cy="60" rx="40" ry="2.4" fill="#fff" opacity=".28"/>
+              </g>
+            </g>
+            <path d="M40 60 H100 C102 100 90 126 70 128 C50 126 38 100 40 60 Z" fill="#fff" fill-opacity=".12" stroke="#a89888" stroke-width="2"/>
+            <path d="M47 70 C46 90 51 106 60 114" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+            <line x1="70" y1="128" x2="70" y2="166" stroke="#a89888" stroke-width="3" stroke-linecap="round"/>
+            <ellipse cx="70" cy="168" rx="22" ry="4" fill="#a89888"/>
+            <g class="ts-bottle-move">
+              <g class="ts-bottle-tilt">
+                <rect x="136" y="72" width="8" height="24" rx="2" fill="#2f3a22"/>
+                <rect x="135" y="72" width="10" height="6" rx="1.5" fill="#6e1f33"/>
+                <path d="M136 94 C136 100 126 100 126 110 V164 a6 6 0 0 0 6 6 H148 a6 6 0 0 0 6-6 V110 C154 100 144 100 144 94 Z" fill="#3c4a2b"/>
+                <rect x="130" y="124" width="20" height="26" rx="2" fill="#f6efe3"/>
+                <circle cx="140" cy="134" r="5" fill="#b3452a"/>
+                <path d="M132 142h16" stroke="#86766a" stroke-width="1.6"/>
+              </g>
+            </g>
+          </svg>
+          <div>
+            <h3 data-en="Pour a glass">グラスワインを注いでみる</h3>
+            <p class="ts-wine-note" data-en="Choose a wine — the sommelier pours it and shows how full-bodied it is.">銘柄を選ぶと、ボトルが傾いてグラスに注がれます。下のメーターはボディの重さです。</p>
+            <div class="ts-chips" role="group" aria-label="グラスワインを選ぶ" data-en-label="Choose a wine">
+              <button class="ts-chip" type="button" data-body="1" aria-pressed="true" data-en="White · Light">白・軽め</button>
+              <button class="ts-chip" type="button" data-body="2" aria-pressed="false" data-en="Red · Medium">赤・ミディアム</button>
+              <button class="ts-chip" type="button" data-body="3" aria-pressed="false" data-en="Red · Full">赤・フル</button>
+            </div>
+            <div class="ts-body">
+              <span class="ts-body-label" data-en="BODY">ボディ</span>
+              <div class="ts-steps" aria-hidden="true">
+                <span class="ts-steps-rail"></span><span class="ts-steps-fill"></span>
+                <div class="ts-steps-row"><i></i><i></i><i></i></div>
+              </div>
+              <div class="ts-steps-cap"><span data-en="Light">軽め</span><span data-en="Medium">ミディアム</span><span data-en="Full">フル</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- chef -->
+<section class="ts-sec ts-chef" id="chef" aria-labelledby="ts-chef-h">
+  <div class="ts-wrap">
+    <div class="ts-sec-head">
+      <span class="ts-eyebrow">Lo chef</span>
+      <h2 class="ts-h2" id="ts-chef-h" data-en="Meet the chef">シェフ紹介</h2>
+    </div>
+    <div class="ts-chef-in">
+      <button class="ts-chef-art" type="button" id="ts-chef-art" aria-label="シェフのイラスト（帽子を持ち上げる）" data-en-label="Chef illustration (tip the hat)">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <path d="M40 200 C44 150 70 132 100 132 C130 132 156 150 160 200 Z" fill="#fffaf2"/>
+          <path d="M84 132 L100 158 L116 132" fill="none" stroke="#b3452a" stroke-width="7" stroke-linejoin="round"/>
+          <g fill="#e2d4bf"><circle cx="92" cy="170" r="3"/><circle cx="108" cy="170" r="3"/><circle cx="92" cy="186" r="3"/><circle cx="108" cy="186" r="3"/></g>
+          <rect x="89" y="112" width="22" height="24" rx="8" fill="#e9bc92"/>
+          <circle cx="100" cy="94" r="32" fill="#f0c9a4"/>
+          <circle cx="68" cy="96" r="6" fill="#e9bc92"/><circle cx="132" cy="96" r="6" fill="#e9bc92"/>
+          <circle cx="88" cy="92" r="3" fill="#2a211c"/><circle cx="112" cy="92" r="3" fill="#2a211c"/>
+          <path d="M86 108 C92 102 98 104 100 107 C102 104 108 102 114 108 C108 112 102 110 100 108 C98 110 92 112 86 108 Z" fill="#5a3d2b"/>
+          <path d="M92 116 Q100 121 108 116" fill="none" stroke="#b86a4a" stroke-width="2.4" stroke-linecap="round"/>
+          <circle cx="80" cy="104" r="5" fill="#e79a86" opacity=".4"/><circle cx="120" cy="104" r="5" fill="#e79a86" opacity=".4"/>
+          <g class="ts-hat">
+            <circle cx="80" cy="44" r="16" fill="#fff"/><circle cx="100" cy="36" r="19" fill="#fff"/><circle cx="120" cy="44" r="16" fill="#fff"/>
+            <rect x="72" y="46" width="56" height="22" rx="4" fill="#fff"/>
+            <rect x="72" y="60" width="56" height="8" fill="#efe4d2"/>
+          </g>
+        </svg>
+      </button>
+      <div>
+        <p class="ts-chef-role" data-en="OWNER CHEF">オーナーシェフ</p>
+        <h3 class="ts-chef-name" data-en="Ren Hinata">日向 蓮</h3>
+        <blockquote class="ts-quote" data-en="“The fire in the oven and the taste of a Neapolitan mamma — that’s all I want to bring to your table.”">「薪窯の火と、ナポリのマンマの味。<br>それだけを、まっすぐ届けたい。」</blockquote>
+        <p class="ts-chef-body" data-en="After seven years in the trattorias of Naples’ old quarter, Ren came home to open Sole. He still visits the market every morning and decides the day’s specials there.">ナポリ旧市街のトラットリアで7年間修業。帰国後、「毎日通える本場の味」を掲げてソーレを開きました。今も毎朝市場へ足を運び、その日のおすすめを決めています。</p>
+        <ul class="ts-career">
+          <li><b>2012</b><span data-en="Moves to Naples; trains at a family trattoria">ナポリへ渡り、家族経営のトラットリアで修業</span></li>
+          <li><b>2016</b><span data-en="Certified pizzaiolo (fictional)">ピッツァ職人の認定を取得（架空）</span></li>
+          <li><b>2019</b><span data-en="Opens Trattoria Sole">トラットリア ソーレ開業</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- coupon -->
+<section class="ts-sec ts-coupon-sec" id="coupon" aria-labelledby="ts-coupon-h">
+  <div class="ts-wrap">
+    <div class="ts-sec-head">
+      <span class="ts-eyebrow">Buono</span>
+      <h2 class="ts-h2" id="ts-coupon-h" data-en="Website coupon">Web限定クーポン</h2>
+    </div>
+    <div class="ts-coupon" id="ts-coupon">
+      <div class="ts-coupon-face">
+        <div class="ts-cp ts-cp-front">
+          <small>COUPON</small>
+          <p class="ts-cp-title" data-en="One free glass of house wine">ハウスワイン<br>グラス1杯サービス</p>
+          <p class="ts-cp-cond" data-en="Dinner only · once per group · valid until 31 Dec 2026">ディナー来店時・1グループ1回・2026年12月末まで</p>
+        </div>
+        <div class="ts-cp ts-cp-back" aria-hidden="true">
+          <small data-en="SHOW THIS TO OUR STAFF">スタッフにこの画面をお見せください</small>
+          <div class="ts-cp-code">SOLE-WEB</div>
+          <p data-en="Grazie! See you soon.">Grazie! ご来店お待ちしております。</p>
+        </div>
+      </div>
+    </div>
+    <div class="ts-coupon-ctrl">
+      <button class="ts-btn" type="button" id="ts-coupon-btn" aria-pressed="false" aria-controls="ts-coupon">
+        <span class="ts-off" data-en="Show the coupon code">クーポンを表示する</span>
+        <span class="ts-on" data-en="Flip back">表面に戻す</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- reserve -->
+<section class="ts-sec ts-reserve" id="reserve" aria-labelledby="ts-res-h">
+  <div class="ts-wrap">
+    <div class="ts-sec-head">
+      <span class="ts-eyebrow">Prenota</span>
+      <h2 class="ts-h2" id="ts-res-h" data-en="Reservations">ご予約</h2>
+      <p class="ts-lead" data-en="Dinner bookings are recommended. Online reservations are open 24 hours a day.">ディナーはご予約がおすすめです。ネット予約は24時間受け付けています。</p>
+    </div>
+    <div class="ts-res-grid">
+      <div class="ts-res-card">
+        <h3 data-en="Book online">ネット予約</h3>
+        <p data-en="You will be taken to an external reservation service. English available.">外部の予約サービスに移動します。英語でもご予約いただけます。</p>
+        <a class="ts-btn ts-btn--light" href="#" rel="noopener">
+          <span data-en="Book on the reservation site">予約サイトで空席を見る</span>
+          <svg viewBox="0 0 22 12" aria-hidden="true"><line class="ts-shaft" x1="1" y1="6" x2="15" y2="6"/><polyline class="ts-head" points="10,1 15,6 10,11"/></svg>
+        </a>
+      </div>
+      <div class="ts-res-card">
+        <h3 data-en="Book by phone">お電話で予約</h3>
+        <p data-en="11:00–22:00 (closed Mondays). Same-day bookings welcome.">11:00〜22:00（月曜定休）。当日のご予約もどうぞ。</p>
+        <a class="ts-btn ts-btn--ghost" href="tel:0300000000" style="color:#f3e7d6;box-shadow:inset 0 0 0 1.5px rgba(243,231,214,.6)">
+          <span class="ts-res-tel">03-0000-0000</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- instagram -->
+<section class="ts-sec" id="instagram" aria-labelledby="ts-ig-h">
+  <div class="ts-wrap">
+    <div class="ts-sec-head">
+      <span class="ts-eyebrow">@trattoria_sole</span>
+      <h2 class="ts-h2" id="ts-ig-h">Instagram</h2>
+      <p class="ts-lead" data-en="Today’s specials and kitchen moments, posted daily.">本日のおすすめや、厨房の様子を毎日更新しています。</p>
+    </div>
+    <div class="ts-ig">
+      <a href="#" style="--c:#f2d9b0" aria-label="Instagram 投稿 1" data-en-label="Instagram post 1"><svg aria-hidden="true"><use href="#ts-pizza"/></svg><span class="ts-ig-ov"><span><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/></svg>128</span></span></a>
+      <a href="#" style="--c:#c9d4a9" aria-label="Instagram 投稿 2" data-en-label="Instagram post 2"><svg aria-hidden="true"><use href="#ts-basil"/></svg><span class="ts-ig-ov"><span><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/></svg>86</span></span></a>
+      <a href="#" style="--c:#e8c3b5" aria-label="Instagram 投稿 3" data-en-label="Instagram post 3"><svg aria-hidden="true"><use href="#ts-glass"/></svg><span class="ts-ig-ov"><span><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/></svg>154</span></span></a>
+      <a href="#" style="--c:#f6e7a8" aria-label="Instagram 投稿 4" data-en-label="Instagram post 4"><svg aria-hidden="true"><use href="#ts-lemon"/></svg><span class="ts-ig-ov"><span><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/></svg>72</span></span></a>
+      <a href="#" style="--c:#efe4d2" aria-label="Instagram 投稿 5" data-en-label="Instagram post 5"><svg aria-hidden="true"><use href="#ts-pasta"/></svg><span class="ts-ig-ov"><span><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/></svg>203</span></span></a>
+      <a href="#" style="--c:#f3c9b8" aria-label="Instagram 投稿 6" data-en-label="Instagram post 6"><svg aria-hidden="true"><use href="#ts-tomato"/></svg><span class="ts-ig-ov"><span><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/></svg>97</span></span></a>
+      <a href="#" style="--c:#e6d3b3" aria-label="Instagram 投稿 7" data-en-label="Instagram post 7"><svg aria-hidden="true"><use href="#ts-bread"/></svg><span class="ts-ig-ov"><span><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/></svg>64</span></span></a>
+      <a href="#" style="--c:#dfe0bf" aria-label="Instagram 投稿 8" data-en-label="Instagram post 8"><svg aria-hidden="true"><use href="#ts-oil"/></svg><span class="ts-ig-ov"><span><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/></svg>58</span></span></a>
+      <a href="#" style="--c:#ead7c0" aria-label="Instagram 投稿 9" data-en-label="Instagram post 9"><svg aria-hidden="true"><use href="#ts-tiramisu"/></svg><span class="ts-ig-ov"><span><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/></svg>119</span></span></a>
+    </div>
+    <p class="ts-ig-note" data-en="* Placeholder area — the latest 9 posts will be embedded here.">※ 埋め込み枠のプレースホルダです。公開時は最新9件の投稿が表示されます。</p>
+    <div class="ts-ig-follow">
+      <a class="ts-btn ts-btn--ghost ts-btn--sm" href="#">
+        <span data-en="Follow on Instagram">Instagram をフォロー</span>
+        <svg viewBox="0 0 22 12" aria-hidden="true"><line class="ts-shaft" x1="1" y1="6" x2="15" y2="6"/><polyline class="ts-head" points="10,1 15,6 10,11"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="ts-sec ts-faq" id="faq" aria-labelledby="ts-faq-h">
+  <div class="ts-wrap">
+    <div class="ts-sec-head">
+      <span class="ts-eyebrow">Domande</span>
+      <h2 class="ts-h2" id="ts-faq-h" data-en="FAQ">よくあるご質問</h2>
+    </div>
+    <div class="ts-acc" id="ts-acc">
+      <div class="ts-acc-item">
+        <button class="ts-acc-btn" type="button" aria-expanded="false" aria-controls="ts-a1" id="ts-q1"><span><span class="ts-q">Q.</span><span data-en="Do you have an English menu?">英語のメニューはありますか？</span></span><span class="ts-pm" aria-hidden="true"><i></i><i></i></span></button>
+        <div class="ts-acc-body" id="ts-a1" role="region" aria-labelledby="ts-q1"><p data-en="Yes. We have a full English menu, and our staff can help you in simple English. Allergy notes are also available in English.">はい、英語のメニューをご用意しています。スタッフも簡単な英語でご案内できます。アレルギー表記も英語で確認いただけます。</p></div>
+      </div>
+      <div class="ts-acc-item">
+        <button class="ts-acc-btn" type="button" aria-expanded="false" aria-controls="ts-a2" id="ts-q2"><span><span class="ts-q">Q.</span><span data-en="Do I need a reservation?">予約は必要ですか？</span></span><span class="ts-pm" aria-hidden="true"><i></i><i></i></span></button>
+        <div class="ts-acc-body" id="ts-a2" role="region" aria-labelledby="ts-q2"><p data-en="Walk-ins are welcome at lunch. For dinner, especially on weekends, we recommend booking online or by phone.">ランチは予約なしでもどうぞ。ディナー、特に週末はネット予約またはお電話でのご予約をおすすめします。</p></div>
+      </div>
+      <div class="ts-acc-item">
+        <button class="ts-acc-btn" type="button" aria-expanded="false" aria-controls="ts-a3" id="ts-q3"><span><span class="ts-q">Q.</span><span data-en="Can I bring children?">子ども連れでも大丈夫ですか？</span></span><span class="ts-pm" aria-hidden="true"><i></i><i></i></span></button>
+        <div class="ts-acc-body" id="ts-a3" role="region" aria-labelledby="ts-q3"><p data-en="Of course. We have high chairs and can make a half-size pasta for little ones.">もちろんです。お子さま用の椅子をご用意しており、パスタのハーフサイズもお作りできます。</p></div>
+      </div>
+      <div class="ts-acc-item">
+        <button class="ts-acc-btn" type="button" aria-expanded="false" aria-controls="ts-a4" id="ts-q4"><span><span class="ts-q">Q.</span><span data-en="Do you accept credit cards?">クレジットカードは使えますか？</span></span><span class="ts-pm" aria-hidden="true"><i></i><i></i></span></button>
+        <div class="ts-acc-body" id="ts-a4" role="region" aria-labelledby="ts-q4"><p data-en="Yes — major credit cards, IC transit cards and QR payments are accepted.">主要なクレジットカード、交通系IC、QRコード決済がご利用いただけます。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- info -->
+<section class="ts-sec" id="info" aria-labelledby="ts-info-h">
+  <div class="ts-wrap">
+    <div class="ts-sec-head">
+      <span class="ts-eyebrow">Informazioni</span>
+      <h2 class="ts-h2" id="ts-info-h" data-en="Hours &amp; Access">店舗情報・アクセス</h2>
+    </div>
+    <div class="ts-info-in">
+      <dl class="ts-dl">
+        <div><dt data-en="Name">店名</dt><dd data-en="Trattoria Sole">トラットリア ソーレ</dd></div>
+        <div><dt data-en="Address">住所</dt><dd data-en="Sole Bldg. 1F, 1-2-3 〇〇, 〇〇-ku, Tokyo">東京都〇〇区〇〇 1-2-3 ソーレビル1F</dd></div>
+        <div><dt data-en="Station">最寄り駅</dt><dd data-en="3 min walk from 〇〇 Station">〇〇駅 徒歩3分</dd></div>
+        <div><dt data-en="Hours">営業時間</dt><dd data-en="Lunch 11:30–15:00 (L.O. 14:00)<br>Dinner 17:30–22:30 (L.O. 21:30)">ランチ 11:30〜15:00（L.O.14:00）<br>ディナー 17:30〜22:30（L.O.21:30）</dd></div>
+        <div><dt data-en="Closed">定休日</dt><dd data-en="Mondays (open if a holiday, closed the next day)">月曜日（祝日の場合は営業、翌日休）</dd></div>
+        <div><dt data-en="Seats">席数</dt><dd data-en="32 seats (terrace 6)">32席（テラス6席）</dd></div>
+        <div><dt data-en="Phone">電話</dt><dd><a href="tel:0300000000">03-0000-0000</a></dd></div>
+        <div><dt data-en="Payment">お支払い</dt><dd data-en="Cash, cards, IC, QR">現金・各種カード・交通系IC・QR決済</dd></div>
+      </dl>
+
+      <div class="ts-map" id="ts-map" role="img" aria-label="地図（Googleマップ埋め込みエリア）" data-en-label="Map (Google Maps embed area)">
+        <span class="ts-river"></span>
+        <span class="ts-road h1"></span><span class="ts-road h2"></span>
+        <span class="ts-road v1"></span><span class="ts-road v2"></span><span class="ts-road d1"></span>
+        <span class="ts-park"></span>
+        <span class="ts-station" data-en="〇〇 Sta.">〇〇駅</span>
+        <span class="ts-map-label" data-en="Google Maps embed area">Googleマップ埋め込みエリア</span>
+        <div class="ts-pin-wrap">
+          <span class="ts-pin-shadow"></span>
+          <span class="ts-pin"><svg viewBox="0 0 34 46"><path d="M17 45 C10 34 2 26 2 17 A15 15 0 0 1 32 17 C32 26 24 34 17 45 Z" fill="#b3452a"/><circle cx="17" cy="17" r="6" fill="#fffaf2"/></svg></span>
+          <span class="ts-pin-tip" data-en="Trattoria Sole">トラットリア ソーレ</span>
+        </div>
+        <a class="ts-btn ts-btn--light ts-btn--sm ts-map-open" href="#">
+          <span data-en="Open in Google Maps">Googleマップで開く</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="ts-foot">
+  <div class="ts-wrap">
+    <a class="ts-logo" href="#top"><svg aria-hidden="true"><use href="#ts-sun"/></svg><b>Trattoria Sole</b></a>
+    <p data-en="Sole Bldg. 1F, 1-2-3 〇〇, 〇〇-ku, Tokyo · 03-0000-0000">東京都〇〇区〇〇 1-2-3 ソーレビル1F ／ 03-0000-0000</p>
+    <p data-en="This is a fictional restaurant created as a Table Web demo.">※ 本サイトは Table Web の制作デモです。店舗・人物・クーポンはすべて架空のものです。</p>
+    <small>Site by Table Web ／ キントウンマーケティング株式会社</small>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const root = document.documentElement;
+
+  /* 1回だけ再生する状態クラス（animationend で外す＋保険のタイマー） */
+  function playOnce(el, cls, ms, target) {
+    el.classList.remove(cls);
+    void el.offsetWidth;
+    el.classList.add(cls);
+    clearTimeout(el._t);
+    const done = () => el.classList.remove(cls);
+    (target || el).addEventListener('animationend', done, { once: true });
+    el._t = setTimeout(done, ms);
+  }
+
+  /* ---------- 言語切替 ---------- */
+  const textNodes = $$('[data-en]');
+  textNodes.forEach(n => { n.dataset.ja = n.innerHTML; });
+  const labelNodes = $$('[data-en-label]');
+  labelNodes.forEach(n => { n.dataset.jaLabel = n.getAttribute('aria-label') || ''; });
+  const titles = {
+    ja: document.title,
+    en: 'Trattoria Sole | Neapolitan trattoria in Tokyo (Table Web demo)'
+  };
+  const sign = $('#ts-sign');
+
+  function setLang(lang, animate) {
+    if (lang !== 'en') lang = 'ja';
+    root.lang = lang;
+    document.title = titles[lang];
+    textNodes.forEach(n => {
+      n.innerHTML = lang === 'en' ? n.dataset.en : n.dataset.ja;
+      if (animate) { n.classList.remove('ts-swap'); }
+    });
+    labelNodes.forEach(n => n.setAttribute('aria-label', lang === 'en' ? n.dataset.enLabel : n.dataset.jaLabel));
+    $$('.ts-lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+    if (animate) {
+      void document.body.offsetWidth;
+      textNodes.forEach(n => n.classList.add('ts-swap'));
+      setTimeout(() => textNodes.forEach(n => n.classList.remove('ts-swap')), 400);
+      playOnce(sign, 'is-swing', 2100, $('.ts-sign-swing', sign));
+    }
+    try { localStorage.setItem('ts-lang', lang); } catch (e) {}
+  }
+  $$('.ts-lang button').forEach(b => b.addEventListener('click', () => {
+    if (b.getAttribute('aria-pressed') !== 'true') setLang(b.dataset.lang, true);
+  }));
+  let initial = 'ja';
+  try {
+    const q = new URLSearchParams(location.search).get('lang');
+    initial = q || localStorage.getItem('ts-lang') || 'ja';
+  } catch (e) {}
+  if (initial === 'en') setLang('en', false);
+
+  /* ---------- ポップオーバーメニュー ---------- */
+  const pop = $('#ts-pop'), popBtn = $('.ts-pop-btn', pop);
+  function setPop(open) {
+    pop.classList.toggle('is-open', open);
+    popBtn.setAttribute('aria-expanded', String(open));
+    const lang = root.lang;
+    popBtn.setAttribute('aria-label', open ? (lang === 'en' ? 'Close menu' : 'メニューを閉じる') : (lang === 'en' ? 'Open menu' : 'メニューを開く'));
+  }
+  popBtn.addEventListener('click', e => { e.stopPropagation(); setPop(!pop.classList.contains('is-open')); });
+  $$('.ts-pop-list a').forEach(a => a.addEventListener('click', () => setPop(false)));
+  document.addEventListener('click', e => { if (!pop.contains(e.target)) setPop(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && pop.classList.contains('is-open')) { setPop(false); popBtn.focus(); } });
+
+  /* ---------- 看板・ピッツァ・シェフ・地図（タップでも動く） ---------- */
+  sign.addEventListener('click', () => playOnce(sign, 'is-swing', 2100, $('.ts-sign-swing', sign)));
+  const art = $('#ts-art');
+  art.addEventListener('click', () => art.classList.toggle('is-lift'));
+  const chef = $('#ts-chef-art');
+  chef.addEventListener('click', () => chef.classList.toggle('is-tip'));
+  const map = $('#ts-map');
+  map.addEventListener('click', e => { if (!e.target.closest('a')) playOnce(map, 'is-hop', 1000, $('.ts-pin', map)); });
+
+  /* ---------- 扇カード ---------- */
+  const fan = $('#ts-fan'), fanToggle = $('#ts-fan-toggle');
+  const setFan = open => { fan.classList.toggle('is-open', open); fanToggle.setAttribute('aria-expanded', String(open)); };
+  setFan(false);
+  fanToggle.addEventListener('click', () => setFan(!fan.classList.contains('is-open')));
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => {
+      es.forEach(en => { if (en.isIntersecting) { setFan(true); io.disconnect(); } });
+    }, { threshold: .6 });
+    io.observe(fan);
+  }
+  $$('.ts-fc', fan).forEach(card => card.addEventListener('click', () => {
+    if (!fan.classList.contains('is-open')) setFan(true);
+    $$('.ts-fc', fan).forEach(c => { c.classList.toggle('is-picked', c === card); c.setAttribute('aria-pressed', String(c === card)); });
+    $$('.ts-pd').forEach(p => p.classList.toggle('is-active', p.dataset.pd === card.dataset.pick));
+  }));
+
+  /* ---------- メニュー：セグメントタブ ---------- */
+  const seg = $('#ts-seg'), tabs = $$('[role="tab"]', seg);
+  function selectTab(i, focus) {
+    seg.dataset.i = i;
+    tabs.forEach((t, k) => {
+      const on = k === i;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      $('#' + t.getAttribute('aria-controls')).classList.toggle('is-active', on);
+    });
+    if (focus) tabs[i].focus();
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => selectTab(i));
+    t.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); selectTab((i + 1) % tabs.length, true); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); selectTab((i + tabs.length - 1) % tabs.length, true); }
+    });
+  });
+
+  /* ---------- ワインを注ぐ ---------- */
+  const wine = $('#ts-wine');
+  $$('.ts-chip', wine).forEach(chip => chip.addEventListener('click', () => {
+    $$('.ts-chip', wine).forEach(c => c.setAttribute('aria-pressed', String(c === chip)));
+    wine.dataset.body = chip.dataset.body;
+    playOnce(wine, 'is-pouring', 2300, $('.ts-bottle-move', wine));
+  }));
+
+  /* ---------- クーポン：フリップ ---------- */
+  const coupon = $('#ts-coupon'), cBtn = $('#ts-coupon-btn');
+  cBtn.addEventListener('click', () => {
+    const on = coupon.classList.toggle('is-flipped');
+    cBtn.setAttribute('aria-pressed', String(on));
+    $('.ts-cp-front', coupon).setAttribute('aria-hidden', String(on));
+    $('.ts-cp-back', coupon).setAttribute('aria-hidden', String(!on));
+  });
+
+  /* ---------- FAQ：アコーディオン ---------- */
+  $$('.ts-acc-item').forEach(item => {
+    const btn = $('.ts-acc-btn', item);
+    btn.addEventListener('click', () => {
+      const open = item.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(open));
+    });
+  });
+})();
+</script>
+</body>
+</html>

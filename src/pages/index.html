@@ -1,0 +1,279 @@
+<!--{"bare":true,"bodyClass":"top","css":["/assets/css/top.css"],"js":["/assets/js/chrome.js","/assets/js/top.js"],"desc":"月額0円の飲食店HP。HPがないお店には新規制作の Table Web、古いHPがあるお店には買い切りで作り替える Table Shift。デリバリー新規申込で割引キャンペーン実施中。","jsonld":"{\"@context\":\"https://schema.org\",\"@type\":\"Organization\",\"name\":\"キントウンマーケティング株式会社\",\"brand\":[{\"@type\":\"Brand\",\"name\":\"Table Web\"},{\"@type\":\"Brand\",\"name\":\"Table Shift\"}]}"}-->
+<!-- 構成は illustrated-stage-site スキル（hellocycling.jp 実測）の骨格そのまま：
+     固定KV（イラストの島）＋下から覆う本文、左上の円形トリガー＋オレンジの円ワイプメニュー、
+     1文字 rotateY の見出し、横回転（rotateY）の READ MORE、初回だけのスプラッシュ。 -->
+
+<!-- ================= SPLASH（セッション初回のみ） ================= -->
+<div class="splash" id="splash" aria-hidden="true">
+  <div class="splash-num en" id="splashNum">0%</div>
+  <div class="splash-cover" id="splashCover"></div>
+  <div class="splash-hello en" id="splashHello">WELCOME</div>
+</div>
+
+<div class="progress" aria-hidden="true"></div>
+
+<!-- ================= HEADER ================= -->
+<header class="hd" id="hd">
+  <button class="trigger" id="trigger" aria-label="メニューを開く" aria-expanded="false" aria-controls="navi">
+    <span class="circle"></span><span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span>
+  </button>
+  <a class="hd-logo" href="/" aria-label="Table トップ">
+    <svg viewBox="0 0 44 26" aria-hidden="true"><path d="M3 9h38M9 9v14M35 9v14M14 4h16" fill="none" stroke-width="3.5" stroke-linecap="round"/></svg>
+    <span class="en">TABLE</span><small>飲食店のHP制作</small>
+  </a>
+  <div class="tod" role="group" aria-label="イラストの時間帯">
+    <button type="button" data-tod="auto" aria-pressed="true" title="自動（朝昼夕が移り変わる）"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2a6 6 0 1 0 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M11 1.5 14 2l-.5 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>自動</span></button>
+    <button type="button" data-tod="morning" aria-pressed="false" title="朝"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 11a5 5 0 0 1 10 0M1 13h14M8 2v2M3 5l1.3 1.3M13 5l-1.3 1.3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>朝</span></button>
+    <button type="button" data-tod="day" aria-pressed="false" title="昼"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3 3l1.1 1.1M11.9 11.9 13 13M3 13l1.1-1.1M11.9 4.1 13 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>昼</span></button>
+    <button type="button" data-tod="night" aria-pressed="false" title="夜"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 10.5A6 6 0 0 1 5.5 3a6 6 0 1 0 7.5 7.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><span>夜</span></button>
+  </div>
+</header>
+
+<!-- ================= MENU ================= -->
+{{navi}}
+
+<!-- ================= KV：イラストの島 ================= -->
+<div class="kv" id="top">
+  <div class="kv-bg"></div>
+  <div class="kv-dusk" aria-hidden="true"></div>
+  <div class="kv-sky kv-sky--morning" aria-hidden="true"></div>
+  <div class="kv-sky kv-sky--night" aria-hidden="true"></div>
+  <div class="kv-copy">
+    <p class="kv-copy__zero"><span>月額</span><b class="en">¥0</b><span>のHP制作</span></p>
+    <p class="kv-copy__q">お店のHP、<br class="sp">どっちですか？</p>
+    <p class="kv-copy__s">島をクリックしてください</p>
+  </div>
+  <!-- ステージ見出し（ホバー時。左下のコピーと入れ替わりで出る） -->
+  <div class="stage-label" id="lb-web" aria-hidden="true"><div class="name" data-split>TABLE WEB</div><div class="jp">HPがないお店へ。新規制作・月額0円</div><div class="sub en">READ MORE<svg class="knife" viewBox="0 0 44 13" aria-hidden="true"><path d="M3 3.5h11a3 3 0 0 1 0 6H3a3 3 0 0 1 0-6z"/><path d="M16 4.4h1.6V3.2H33c6 0 10.5 1.3 10.5 3 0 1.9-3.8 3.4-10 3.4H17.6V8.6H16z"/></svg></div></div>
+  <div class="stage-label" id="lb-shift" aria-hidden="true"><div class="name" data-split>TABLE SHIFT</div><div class="jp">古いHPを作り替えて、月額0円へ。</div><div class="sub en">READ MORE<svg class="knife" viewBox="0 0 44 13" aria-hidden="true"><path d="M3 3.5h11a3 3 0 0 1 0 6H3a3 3 0 0 1 0-6z"/><path d="M16 4.4h1.6V3.2H33c6 0 10.5 1.3 10.5 3 0 1.9-3.8 3.4-10 3.4H17.6V8.6H16z"/></svg></div></div>
+  <div class="stage-label" id="lb-price" aria-hidden="true"><div class="name" data-split>¥0 / MONTH</div><div class="jp">3プランとも、月額費用0円</div><div class="sub en">READ MORE<svg class="knife" viewBox="0 0 44 13" aria-hidden="true"><path d="M3 3.5h11a3 3 0 0 1 0 6H3a3 3 0 0 1 0-6z"/><path d="M16 4.4h1.6V3.2H33c6 0 10.5 1.3 10.5 3 0 1.9-3.8 3.4-10 3.4H17.6V8.6H16z"/></svg></div></div>
+  <div class="stage-label" id="lb-camp" aria-hidden="true"><div class="name" data-split>CAMPAIGN</div><div class="jp">デリバリー新規申込で初期費用を割引</div><div class="sub en">READ MORE<svg class="knife" viewBox="0 0 44 13" aria-hidden="true"><path d="M3 3.5h11a3 3 0 0 1 0 6H3a3 3 0 0 1 0-6z"/><path d="M16 4.4h1.6V3.2H33c6 0 10.5 1.3 10.5 3 0 1.9-3.8 3.4-10 3.4H17.6V8.6H16z"/></svg></div></div>
+  <div class="kv-stageset" id="stageset">
+
+    <!-- 空（ホバー時に一緒に減光） -->
+    <div class="sky" id="sky" aria-hidden="true">
+      <svg viewBox="0 0 1600 825" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <symbol id="cloud" viewBox="0 0 120 50"><path d="M14 44c-10 0-12-14-2-16-2-12 14-18 22-9 4-12 24-14 30-2 8-8 24-2 22 10 12 0 14 17 2 17z" fill="#fff" stroke="var(--line)" stroke-width="2" stroke-linejoin="round"/></symbol>
+        </defs>
+        <g class="drift" style="animation-duration:58s;animation-delay:-12s"><use href="#cloud" x="0" y="110" width="150" height="62"/></g>
+        <g class="drift" style="animation-duration:74s;animation-delay:-40s"><use href="#cloud" x="0" y="40" width="110" height="46"/></g>
+        <g class="drift" style="animation-duration:66s;animation-delay:-5s"><use href="#cloud" x="0" y="600" width="170" height="70"/></g>
+        <!-- 旗をひく小型飛行機 -->
+        <g>
+          <path d="M-8 -5h22l6-8h6l-4 8h10c4 0 4 6 0 6h-10l4 8h-6l-6-8h-22z" fill="#fff" stroke="var(--line)" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M-10 -1h-20" stroke="var(--line)" stroke-width="1.5"/>
+          <path d="M-30 -10h-96v18h96z" fill="var(--accent)" stroke="var(--line)" stroke-width="2" stroke-linejoin="round"/>
+          <text x="-78" y="4" text-anchor="middle" font-family="Lato" font-weight="900" font-size="11" letter-spacing="1.5" fill="#fff">月額0円</text>
+          <animateMotion dur="18s" repeatCount="indefinite" path="M-160 330 C 400 200, 900 120, 1760 60"/>
+        </g>
+        <!-- 太陽と月（時間帯で入れ替わる） -->
+        <g class="kv-sun" transform="translate(1230 96)"><g class="kv-sun__in"><circle r="30" fill="var(--accent-2)" stroke="var(--line)" stroke-width="2"/><g stroke="var(--line)" stroke-width="2.4" stroke-linecap="round"><path d="M0 -42v-10M0 42v10M-42 0h-10M42 0h10M-30 -30l-7 -7M30 30l7 7M-30 30l-7 7M30 -30l7 -7"/></g></g></g>
+        <g class="kv-moon" transform="translate(1230 96)"><path d="M16 -26a30 30 0 1 0 10 36a24 24 0 1 1 -10 -36z" fill="#FFF3D6" stroke="var(--line)" stroke-width="2"/><circle cx="-8" cy="4" r="4" fill="#F4E2B8"/><circle cx="2" cy="16" r="2.6" fill="#F4E2B8"/></g>
+        <!-- 夕暮れに出る星 -->
+        <g class="kv-stars"><circle class="kv-star" style="animation-delay:0.0s" cx="210" cy="70" r="3" fill="var(--accent-2)"/><circle class="kv-star" style="animation-delay:-0.7s" cx="520" cy="40" r="2" fill="var(--accent-2)"/><circle class="kv-star" style="animation-delay:-1.4s" cx="760" cy="90" r="2" fill="var(--accent-2)"/><circle class="kv-star" style="animation-delay:-2.1s" cx="980" cy="30" r="3" fill="var(--accent-2)"/><circle class="kv-star" style="animation-delay:-2.8s" cx="1180" cy="70" r="2" fill="var(--accent-2)"/><circle class="kv-star" style="animation-delay:-3.5s" cx="1380" cy="40" r="2" fill="var(--accent-2)"/><circle class="kv-star" style="animation-delay:-4.2s" cx="90" cy="150" r="3" fill="var(--accent-2)"/><circle class="kv-star" style="animation-delay:-4.9s" cx="640" cy="150" r="2" fill="var(--accent-2)"/></g>
+        <!-- 鳥の群れ（羽ばたきながら横切る） -->
+        <g><g transform="translate(0 0) scale(1)"><g class="kv-bird" style="animation-delay:0s"><path d="M-10 0q5 -7 10 0q5 -7 10 0" fill="none" stroke="var(--line)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g></g><g transform="translate(-26 14) scale(0.8)"><g class="kv-bird" style="animation-delay:-0.25s"><path d="M-10 0q5 -7 10 0q5 -7 10 0" fill="none" stroke="var(--line)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g></g><g transform="translate(-44 -8) scale(0.7)"><g class="kv-bird" style="animation-delay:-0.5s"><path d="M-10 0q5 -7 10 0q5 -7 10 0" fill="none" stroke="var(--line)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g></g><g transform="translate(-62 20) scale(0.6)"><g class="kv-bird" style="animation-delay:-0.15s"><path d="M-10 0q5 -7 10 0q5 -7 10 0" fill="none" stroke="var(--line)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g></g>
+          <animateMotion dur="26s" repeatCount="indefinite" path="M-120 250 C 300 170, 700 230, 1000 150 S 1500 120, 1760 170"/></g>
+        <g><g transform="translate(0 0) scale(0.7)"><g class="kv-bird" style="animation-delay:-0.3s"><path d="M-10 0q5 -7 10 0q5 -7 10 0" fill="none" stroke="var(--line)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g></g><g transform="translate(-20 10) scale(0.6)"><g class="kv-bird" style="animation-delay:-0.6s"><path d="M-10 0q5 -7 10 0q5 -7 10 0" fill="none" stroke="var(--line)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g></g>
+          <animateMotion dur="34s" begin="-14s" repeatCount="indefinite" path="M1740 90 C 1300 150, 900 60, 500 120 S 100 60, -140 110"/></g>
+        <!-- 気球 -->
+        <g transform="translate(1470 120)"><g class="bob d2">
+          <path d="M0 0c-18 0-26 14-26 26 0 16 16 26 26 34 10-8 26-18 26-34 0-12-8-26-26-26z" fill="var(--accent-2)" stroke="var(--line)" stroke-width="2"/>
+          <path d="M-14 12h28" stroke="var(--line)" stroke-width="1.5"/>
+          <path d="M-6 62h12v10h-12z" fill="#fff" stroke="var(--line)" stroke-width="2"/>
+        </g></g>
+      </svg>
+    </div>
+
+    <!-- ===== STAGE: TABLE WEB（左）HPがないお店 ===== -->
+    <div class="stage" id="st-web" data-id="web" data-dir="xy-minus">
+      <a class="stage__inner" href="/service/table-web/" aria-label="TABLE WEB：HPがないお店の新規制作">
+        {{kvWeb}}
+      </a>
+    </div>
+
+    <!-- ===== STAGE: TABLE SHIFT（右上）HPが古いお店 ===== -->
+    <div class="stage" id="st-shift" data-id="shift" data-dir="x-plus-y-minus">
+      <a class="stage__inner" href="/service/table-shift/" aria-label="TABLE SHIFT：HPが古いお店のリプレイス">
+        {{kvShift}}
+      </a>
+    </div>
+
+    <!-- ===== STAGE: PRICE（中央の大皿） ===== -->
+    <div class="stage" id="st-price" data-id="price" data-dir="y">
+      <a class="stage__inner" href="#plan" aria-label="PLAN：月額0円のプラン">
+        {{kvPrice}}
+      </a>
+    </div>
+
+    <!-- ===== STAGE: CAMPAIGN（右下のデリバリーマップ） ===== -->
+    <div class="stage" id="st-camp" data-id="camp" data-dir="xy-plus">
+      <a class="stage__inner" href="/price/#campaign" aria-label="CAMPAIGN：デリバリー新規申込割引">
+        {{kvCamp}}
+      </a>
+    </div>
+
+    <!-- 雲の影（島の上をゆっくり流れる） -->
+    <div class="kv-cshadow" aria-hidden="true"><span></span><span></span></div>
+    <!-- 常時表示の行き先タグ（2導線をひと目で） -->
+    <a class="tag tag--web" href="/service/table-web/" data-tag="web"><span class="tag__in"><b>HPがないお店</b><span class="en">TABLE WEB</span></span></a>
+    <a class="tag tag--shift" href="/service/table-shift/" data-tag="shift"><span class="tag__in"><b>HPはあるが古いお店</b><span class="en">TABLE SHIFT</span></span></a>
+
+  </div>
+</div>
+
+<!-- ================= CONTENTS（KVを下から覆う） ================= -->
+<main class="contents" id="main">
+
+  <!-- SERVICE -->
+  <section class="blk" id="service">
+    <h2 class="ttl"><span class="en">SERVICE</span><small>お店の今に合わせて、入口は2つ</small></h2>
+    <div class="svc">
+      <article class="svc__c">
+        <p class="svc__q">HPが<span class="hl">ない</span>お店</p>
+        <h3 class="svc__n en">TABLE WEB</h3>
+        <p class="svc__d">はじめてのHPを、<span class="hl">買い切り</span>で。営業時間・メニュー・地図・デリバリーの注文ボタンまで、飲食店に必要なものを最初からそろえます。原稿は質問票への回答をもとに当社が書きます。</p>
+        <p class="svc__p">月額 <b class="en">¥0</b> ／ サーバー代込み</p>
+        <div class="c-btn js-show"><a href="/service/table-web/"><span class="c-btn-content"><span class="c-btn-text">READ MORE</span><span class="c-btn-arrow"><svg class="knife" viewBox="0 0 44 13" aria-hidden="true"><path d="M3 3.5h11a3 3 0 0 1 0 6H3a3 3 0 0 1 0-6z"/><path d="M16 4.4h1.6V3.2H33c6 0 10.5 1.3 10.5 3 0 1.9-3.8 3.4-10 3.4H17.6V8.6H16z"/></svg></span></span><span class="c-btn-line"><span></span></span></a></div>
+      </article>
+      <article class="svc__c">
+        <p class="svc__q">HPはあるが<span class="hl">古い</span>お店</p>
+        <h3 class="svc__n en">TABLE SHIFT</h3>
+        <p class="svc__d">毎月払い続けている古いHPを、<span class="hl">買い切り</span>で作り替えます。今の契約の確認、ドメインの引き継ぎ、解約のタイミングまでご案内。月額との差額は削減シミュレーターですぐ分かります。</p>
+        <p class="svc__p">乗り換え後の月額 <b class="en">¥0</b></p>
+        <div class="c-btn js-show"><a href="/service/table-shift/"><span class="c-btn-content"><span class="c-btn-text">READ MORE</span><span class="c-btn-arrow"><svg class="knife" viewBox="0 0 44 13" aria-hidden="true"><path d="M3 3.5h11a3 3 0 0 1 0 6H3a3 3 0 0 1 0-6z"/><path d="M16 4.4h1.6V3.2H33c6 0 10.5 1.3 10.5 3 0 1.9-3.8 3.4-10 3.4H17.6V8.6H16z"/></svg></span></span><span class="c-btn-line"><span></span></span></a></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ZERO：月額0円の訴求 -->
+  <section class="zero" id="zero">
+    <div class="zero__in">
+      <p class="zero__k en">MONTHLY FEE</p>
+      <p class="zero__num en" aria-label="月額0円"><span class="zero__y">¥</span><span class="zero__val" data-zero-val aria-hidden="true">0</span></p>
+      <p class="zero__was" aria-hidden="true">いまの月額（例）から、乗り換え後は</p>
+      <div class="zero__txt">
+        <h2 class="zero__t">HPに、<span class="hl">毎月のお金は</span><br>かかりません。</h2>
+        <p>Table のHPは買い切りです。サーバー代も料金に含まれているので、公開したあとに月額費用は発生しません。更新したいときだけ、必要な分だけご依頼ください。</p>
+        <ul class="zero__list"><li>サーバー費用・SSL 込み</li><li>契約期間のしばりなし</li><li>完成したHPの権利はお店に</li></ul>
+        <p class="zero__note">※ 独自ドメインをお使いの場合のみ、2年目以降にドメインの更新費用がかかります。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOD：写真の帯（ドラッグ／スワイプで横に流せる） -->
+  <section class="food" id="food" aria-labelledby="food-ttl">
+    <div class="blk blk--head">
+      <h2 class="ttl" id="food-ttl"><span class="en">FOOD FIRST</span><small>料理写真が主役になるHPを</small></h2>
+      <p class="food__lead">スマホの小さな画面でも、ひと皿がいちばんおいしく見えるように。写真の選び方・並べ方・トリミングまで設計します。</p>
+    </div>
+    <div class="hang" data-hang aria-label="料理写真の例">
+      <button type="button" class="hang__nav hang__nav--prev" data-hang-nav="-1" aria-label="前の写真へ"><svg class="knife" viewBox="0 0 44 13" aria-hidden="true"><path d="M3 3.5h11a3 3 0 0 1 0 6H3a3 3 0 0 1 0-6z"/><path d="M16 4.4h1.6V3.2H33c6 0 10.5 1.3 10.5 3 0 1.9-3.8 3.4-10 3.4H17.6V8.6H16z"/></svg></button>
+      <button type="button" class="hang__nav hang__nav--next" data-hang-nav="1" aria-label="次の写真へ"><svg class="knife" viewBox="0 0 44 13" aria-hidden="true"><path d="M3 3.5h11a3 3 0 0 1 0 6H3a3 3 0 0 1 0-6z"/><path d="M16 4.4h1.6V3.2H33c6 0 10.5 1.3 10.5 3 0 1.9-3.8 3.4-10 3.4H17.6V8.6H16z"/></svg></button>
+      <span class="hang__rail" aria-hidden="true"></span>
+      <ul class="hang__row">
+        <li class="hang__i"><figure class="hang__card" style="--d:-0.2s"><span class="hang__cord" aria-hidden="true"></span><span class="hang__flip"><span class="hang__face hang__face--front"><img src="/assets/img/photos/gyutan.webp" alt="焼肉・牛たん" loading="lazy" width="1448" height="1086"><figcaption class="en">YAKINIKU</figcaption></span><span class="hang__face hang__face--back" aria-hidden="true"><span class="mini-hp"><span class="mini-hp__bar"><i></i><i></i><i></i></span><span class="mini-hp__hero" style="background-image:url(/assets/img/photos/gyutan.webp)"><b>焼肉のお店</b></span><span class="mini-hp__l"></span><span class="mini-hp__l mini-hp__l--s"></span><span class="mini-hp__btns"><span>Uber Eats で注文</span><span>ご予約</span></span></span><span class="hang__hint en">ON YOUR HP</span></span></span></figure></li>
+        <li class="hang__i"><figure class="hang__card" style="--d:-1.4s"><span class="hang__cord" aria-hidden="true"></span><span class="hang__flip"><span class="hang__face hang__face--front"><img src="/assets/img/photos/margherita.webp" alt="マルゲリータ" loading="lazy" width="1448" height="1086"><figcaption class="en">PIZZA</figcaption></span><span class="hang__face hang__face--back" aria-hidden="true"><span class="mini-hp"><span class="mini-hp__bar"><i></i><i></i><i></i></span><span class="mini-hp__hero" style="background-image:url(/assets/img/photos/margherita.webp)"><b>ピッツェリアのお店</b></span><span class="mini-hp__l"></span><span class="mini-hp__l mini-hp__l--s"></span><span class="mini-hp__btns"><span>Uber Eats で注文</span><span>ご予約</span></span></span><span class="hang__hint en">ON YOUR HP</span></span></span></figure></li>
+        <li class="hang__i"><figure class="hang__card" style="--d:-2.6s"><span class="hang__cord" aria-hidden="true"></span><span class="hang__flip"><span class="hang__face hang__face--front"><img src="/assets/img/photos/tempura.webp" alt="天ぷら定食" loading="lazy" width="1448" height="1086"><figcaption class="en">TEMPURA</figcaption></span><span class="hang__face hang__face--back" aria-hidden="true"><span class="mini-hp"><span class="mini-hp__bar"><i></i><i></i><i></i></span><span class="mini-hp__hero" style="background-image:url(/assets/img/photos/tempura.webp)"><b>天ぷらのお店</b></span><span class="mini-hp__l"></span><span class="mini-hp__l mini-hp__l--s"></span><span class="mini-hp__btns"><span>Uber Eats で注文</span><span>ご予約</span></span></span><span class="hang__hint en">ON YOUR HP</span></span></span></figure></li>
+        <li class="hang__i"><figure class="hang__card" style="--d:-0.8s"><span class="hang__cord" aria-hidden="true"></span><span class="hang__flip"><span class="hang__face hang__face--front"><img src="/assets/img/photos/fondant.webp" alt="フォンダンショコラ" loading="lazy" width="1448" height="1086"><figcaption class="en">DESSERT</figcaption></span><span class="hang__face hang__face--back" aria-hidden="true"><span class="mini-hp"><span class="mini-hp__bar"><i></i><i></i><i></i></span><span class="mini-hp__hero" style="background-image:url(/assets/img/photos/fondant.webp)"><b>デザートのお店</b></span><span class="mini-hp__l"></span><span class="mini-hp__l mini-hp__l--s"></span><span class="mini-hp__btns"><span>Uber Eats で注文</span><span>ご予約</span></span></span><span class="hang__hint en">ON YOUR HP</span></span></span></figure></li>
+        <li class="hang__i"><figure class="hang__card" style="--d:-3.1s"><span class="hang__cord" aria-hidden="true"></span><span class="hang__flip"><span class="hang__face hang__face--front"><img src="/assets/img/photos/mapo-tofu.webp" alt="麻婆豆腐" loading="lazy" width="1448" height="1086"><figcaption class="en">CHINESE</figcaption></span><span class="hang__face hang__face--back" aria-hidden="true"><span class="mini-hp"><span class="mini-hp__bar"><i></i><i></i><i></i></span><span class="mini-hp__hero" style="background-image:url(/assets/img/photos/mapo-tofu.webp)"><b>中華のお店</b></span><span class="mini-hp__l"></span><span class="mini-hp__l mini-hp__l--s"></span><span class="mini-hp__btns"><span>Uber Eats で注文</span><span>ご予約</span></span></span><span class="hang__hint en">ON YOUR HP</span></span></span></figure></li>
+        <li class="hang__i"><figure class="hang__card" style="--d:-1.9s"><span class="hang__cord" aria-hidden="true"></span><span class="hang__flip"><span class="hang__face hang__face--front"><img src="/assets/img/photos/cafe-brunch.webp" alt="カフェのブランチ" loading="lazy" width="1448" height="1086"><figcaption class="en">CAFE</figcaption></span><span class="hang__face hang__face--back" aria-hidden="true"><span class="mini-hp"><span class="mini-hp__bar"><i></i><i></i><i></i></span><span class="mini-hp__hero" style="background-image:url(/assets/img/photos/cafe-brunch.webp)"><b>カフェのお店</b></span><span class="mini-hp__l"></span><span class="mini-hp__l mini-hp__l--s"></span><span class="mini-hp__btns"><span>Uber Eats で注文</span><span>ご予約</span></span></span><span class="hang__hint en">ON YOUR HP</span></span></span></figure></li>
+        <li class="hang__i"><figure class="hang__card" style="--d:-0.5s"><span class="hang__cord" aria-hidden="true"></span><span class="hang__flip"><span class="hang__face hang__face--front"><img src="/assets/img/photos/unaju.webp" alt="うな重" loading="lazy" width="1448" height="1086"><figcaption class="en">UNAGI</figcaption></span><span class="hang__face hang__face--back" aria-hidden="true"><span class="mini-hp"><span class="mini-hp__bar"><i></i><i></i><i></i></span><span class="mini-hp__hero" style="background-image:url(/assets/img/photos/unaju.webp)"><b>うなぎのお店</b></span><span class="mini-hp__l"></span><span class="mini-hp__l mini-hp__l--s"></span><span class="mini-hp__btns"><span>Uber Eats で注文</span><span>ご予約</span></span></span><span class="hang__hint en">ON YOUR HP</span></span></span></figure></li>
+        <li class="hang__i"><figure class="hang__card" style="--d:-2.2s"><span class="hang__cord" aria-hidden="true"></span><span class="hang__flip"><span class="hang__face hang__face--front"><img src="/assets/img/photos/carbonara.webp" alt="カルボナーラ" loading="lazy" width="1448" height="1086"><figcaption class="en">PASTA</figcaption></span><span class="hang__face hang__face--back" aria-hidden="true"><span class="mini-hp"><span class="mini-hp__bar"><i></i><i></i><i></i></span><span class="mini-hp__hero" style="background-image:url(/assets/img/photos/carbonara.webp)"><b>パスタのお店</b></span><span class="mini-hp__l"></span><span class="mini-hp__l mini-hp__l--s"></span><span class="mini-hp__btns"><span>Uber Eats で注文</span><span>ご予約</span></span></span><span class="hang__hint en">ON YOUR HP</span></span></span></figure></li>
+        <li class="hang__i"><figure class="hang__card" style="--d:-3.4s"><span class="hang__cord" aria-hidden="true"></span><span class="hang__flip"><span class="hang__face hang__face--front"><img src="/assets/img/photos/gyoza.webp" alt="焼き餃子" loading="lazy" width="1448" height="1086"><figcaption class="en">GYOZA</figcaption></span><span class="hang__face hang__face--back" aria-hidden="true"><span class="mini-hp"><span class="mini-hp__bar"><i></i><i></i><i></i></span><span class="mini-hp__hero" style="background-image:url(/assets/img/photos/gyoza.webp)"><b>餃子のお店</b></span><span class="mini-hp__l"></span><span class="mini-hp__l mini-hp__l--s"></span><span class="mini-hp__btns"><span>Uber Eats で注文</span><span>ご予約</span></span></span><span class="hang__hint en">ON YOUR HP</span></span></span></figure></li>
+        <li class="hang__i"><figure class="hang__card" style="--d:-1.1s"><span class="hang__cord" aria-hidden="true"></span><span class="hang__flip"><span class="hang__face hang__face--front"><img src="/assets/img/photos/mont-blanc.webp" alt="モンブラン" loading="lazy" width="1448" height="1086"><figcaption class="en">SWEETS</figcaption></span><span class="hang__face hang__face--back" aria-hidden="true"><span class="mini-hp"><span class="mini-hp__bar"><i></i><i></i><i></i></span><span class="mini-hp__hero" style="background-image:url(/assets/img/photos/mont-blanc.webp)"><b>洋菓子のお店</b></span><span class="mini-hp__l"></span><span class="mini-hp__l mini-hp__l--s"></span><span class="mini-hp__btns"><span>Uber Eats で注文</span><span>ご予約</span></span></span><span class="hang__hint en">ON YOUR HP</span></span></span></figure></li>
+        <li class="hang__i"><figure class="hang__card" style="--d:-2.8s"><span class="hang__cord" aria-hidden="true"></span><span class="hang__flip"><span class="hang__face hang__face--front"><img src="/assets/img/photos/teishoku.webp" alt="焼き魚定食" loading="lazy" width="1448" height="1086"><figcaption class="en">WASHOKU</figcaption></span><span class="hang__face hang__face--back" aria-hidden="true"><span class="mini-hp"><span class="mini-hp__bar"><i></i><i></i><i></i></span><span class="mini-hp__hero" style="background-image:url(/assets/img/photos/teishoku.webp)"><b>和食のお店</b></span><span class="mini-hp__l"></span><span class="mini-hp__l mini-hp__l--s"></span><span class="mini-hp__btns"><span>Uber Eats で注文</span><span>ご予約</span></span></span><span class="hang__hint en">ON YOUR HP</span></span></span></figure></li>
+        <li class="hang__i"><figure class="hang__card" style="--d:-0.3s"><span class="hang__cord" aria-hidden="true"></span><span class="hang__flip"><span class="hang__face hang__face--front"><img src="/assets/img/photos/cafe-counter.webp" alt="カフェのカウンター" loading="lazy" width="1448" height="1086"><figcaption class="en">INTERIOR</figcaption></span><span class="hang__face hang__face--back" aria-hidden="true"><span class="mini-hp"><span class="mini-hp__bar"><i></i><i></i><i></i></span><span class="mini-hp__hero" style="background-image:url(/assets/img/photos/cafe-counter.webp)"><b>カフェのお店</b></span><span class="mini-hp__l"></span><span class="mini-hp__l mini-hp__l--s"></span><span class="mini-hp__btns"><span>Uber Eats で注文</span><span>ご予約</span></span></span><span class="hang__hint en">ON YOUR HP</span></span></span></figure></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PLAN：比較表（販売金額は出さない） -->
+  <section class="blk" id="plan">
+    <h2 class="ttl"><span class="en">PLAN</span><small>3プラン、すべて月額0円</small></h2>
+    <p class="lead">ページ数・メニュー掲載数と、SNSや集客機能の量で選べます。Table Web・Table Shift 共通のプランです。</p>
+    <div class="ptable-wrap">{{planTable noprice}}</div>
+    <div class="c-btn js-show"><a href="/contact/"><span class="c-btn-content"><span class="c-btn-text">料金を問い合わせる</span><span class="c-btn-arrow"><svg class="knife" viewBox="0 0 44 13" aria-hidden="true"><path d="M3 3.5h11a3 3 0 0 1 0 6H3a3 3 0 0 1 0-6z"/><path d="M16 4.4h1.6V3.2H33c6 0 10.5 1.3 10.5 3 0 1.9-3.8 3.4-10 3.4H17.6V8.6H16z"/></svg></span></span><span class="c-btn-line"><span></span></span></a></div>
+  </section>
+
+  <!-- OPTIONS：クリックで選べる -->
+  <section class="blk" id="options">
+    <h2 class="ttl"><span class="en">OPTIONS</span><small>何が選べるか、触って確かめる</small></h2>
+    <p class="lead">プランを選ぶと、そのプランに含まれるものに印がつきます。足したいオプションを選んで、そのまま相談できます。</p>
+    {{optionPicker}}
+  </section>
+
+  <!-- CAMPAIGN：写真の Ken Burns（css-motion-effects） -->
+  <section class="camp" id="campaign">
+    <div class="camp__bg" aria-hidden="true"><img src="/assets/img/photos/berry-cheesecake.webp" alt="" loading="lazy" width="1448" height="1086"></div>
+    <div class="camp__in">
+      <p class="camp__tag en">CAMPAIGN</p>
+      <h2 class="camp__t">デリバリー新規申込割引</h2>
+      <p class="camp__d">HPと一緒に Uber Eats または Rocket Now を新規でお申込みいただくと、初期費用から割引します。</p>
+      <div class="camp__nums">
+        <div><span>1社申込</span><b class="en">5<small>万円引</small></b></div>
+        <div><span>2社申込</span><b class="en">10<small>万円引</small></b></div>
+      </div>
+      <p class="camp__ex">対象：Uber Eats／Rocket Now の新規お申込み（開店で割引が確定）</p>
+      <div class="c-btn c-btn--inv js-show"><a href="/price/#campaign"><span class="c-btn-content"><span class="c-btn-text">CONDITIONS</span><span class="c-btn-arrow"><svg class="knife" viewBox="0 0 44 13" aria-hidden="true"><path d="M3 3.5h11a3 3 0 0 1 0 6H3a3 3 0 0 1 0-6z"/><path d="M16 4.4h1.6V3.2H33c6 0 10.5 1.3 10.5 3 0 1.9-3.8 3.4-10 3.4H17.6V8.6H16z"/></svg></span></span><span class="c-btn-line"><span></span></span></a></div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="blk" id="features">
+    <h2 class="ttl"><span class="en">STANDARD</span><small>全プランに入っているもの</small></h2>
+    <ul class="feats">
+      <li><span class="feats__n en">01</span><strong>デリバリー注文ボタン</strong><p>Uber Eats・出前館の店舗ページへワンタップ。</p></li>
+      <li><span class="feats__n en">02</span><strong>Googleマップと営業情報</strong><p>地図・営業時間・定休日・アクセスを正確に。</p></li>
+      <li><span class="feats__n en">03</span><strong>スマホ最適化</strong><p>来店前のお客さまの多くはスマホから。</p></li>
+      <li><span class="feats__n en">04</span><strong>原稿ライティング</strong><p>質問票に答えるだけ。<span class="hl">文章は当社が書きます。</span></p></li>
+      <li><span class="feats__n en">05</span><strong>SEO基本設定・SSL</strong><p>検索に出るための設定と、安全な通信。</p></li>
+      <li><span class="feats__n en">06</span><strong>サーバー費用込み</strong><p>買い切りなので、<span class="hl">月額はかかりません。</span></p></li>
+    </ul>
+    <p class="note">多言語（英語のみ／英・中・韓）、Instagram・Xの投稿埋め込み、写真レタッチ、取材ライティングはオプションで追加できます。</p>
+    <div class="c-btn js-show"><a href="/service/options/"><span class="c-btn-content"><span class="c-btn-text">OPTIONS</span><span class="c-btn-arrow"><svg class="knife" viewBox="0 0 44 13" aria-hidden="true"><path d="M3 3.5h11a3 3 0 0 1 0 6H3a3 3 0 0 1 0-6z"/><path d="M16 4.4h1.6V3.2H33c6 0 10.5 1.3 10.5 3 0 1.9-3.8 3.4-10 3.4H17.6V8.6H16z"/></svg></span></span><span class="c-btn-line"><span></span></span></a></div>
+  </section>
+
+  <!-- FLOW -->
+  <section class="blk" id="flow">
+    <h2 class="ttl"><span class="en">FLOW</span><small>お申込みから公開まで</small></h2>
+    <ol class="flow" data-flow>
+      <li><span class="en">01</span><strong>お申込み</strong><em>当日〜</em></li>
+      <li><span class="en">02</span><strong>質問票・写真</strong><em>1〜7日</em></li>
+      <li><span class="en">03</span><strong>制作</strong><em>2〜6週間</em></li>
+      <li><span class="en">04</span><strong>確認・修正</strong><em>〜14日</em></li>
+      <li><span class="en">05</span><strong>公開</strong><em>公開後も無償修正</em></li>
+    </ol>
+    <div class="c-btn js-show"><a href="/flow/"><span class="c-btn-content"><span class="c-btn-text">READ MORE</span><span class="c-btn-arrow"><svg class="knife" viewBox="0 0 44 13" aria-hidden="true"><path d="M3 3.5h11a3 3 0 0 1 0 6H3a3 3 0 0 1 0-6z"/><path d="M16 4.4h1.6V3.2H33c6 0 10.5 1.3 10.5 3 0 1.9-3.8 3.4-10 3.4H17.6V8.6H16z"/></svg></span></span><span class="c-btn-line"><span></span></span></a></div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="blk" id="faq">
+    <h2 class="ttl"><span class="en">FAQ</span><small>よくある質問</small></h2>
+    <div class="faq">
+      <details class="faq__i"><summary><span class="faq__q">Q</span><span class="faq__t">月額費用は本当にかかりませんか？</span><span class="faq__pm" aria-hidden="true"></span></summary><div class="faq__a"><div><p>かかりません。すべて買い切りで、サーバー費用も含まれています。独自ドメインをお使いの場合のみ、2年目以降にドメインの更新費用がかかります。</p></div></div></details>
+      <details class="faq__i"><summary><span class="faq__q">Q</span><span class="faq__t">申込みから公開まで、どのくらいかかりますか？</span><span class="faq__pm" aria-hidden="true"></span></summary><div class="faq__a"><div><p>写真と質問票がそろってから、スタンダード2〜3週間、アップグレード3〜4週間、プレミアム4〜6週間が目安です。</p></div></div></details>
+      <details class="faq__i"><summary><span class="faq__q">Q</span><span class="faq__t">写真がほとんどありません。</span><span class="faq__pm" aria-hidden="true"></span></summary><div class="faq__a"><div><p>スマホで撮った写真でも大丈夫です。写真レタッチ・高画質化のオプションで明るさや色味を整えられます。撮影スタッフの派遣は行っていません。</p></div></div></details>
+      <details class="faq__i"><summary><span class="faq__q">Q</span><span class="faq__t">今のHPのドメインをそのまま使えますか？</span><span class="faq__pm" aria-hidden="true"></span></summary><div class="faq__a"><div><p>多くの場合は引き継げます。ドメインの名義や管理会社を無料診断で確認し、移管の段取りをご案内します。</p></div></div></details>
+    </div>
+    <div class="c-btn js-show"><a href="/faq/"><span class="c-btn-content"><span class="c-btn-text">ALL QUESTIONS</span><span class="c-btn-arrow"><svg class="knife" viewBox="0 0 44 13" aria-hidden="true"><path d="M3 3.5h11a3 3 0 0 1 0 6H3a3 3 0 0 1 0-6z"/><path d="M16 4.4h1.6V3.2H33c6 0 10.5 1.3 10.5 3 0 1.9-3.8 3.4-10 3.4H17.6V8.6H16z"/></svg></span></span><span class="c-btn-line"><span></span></span></a></div>
+  </section>
+
+  <!-- COLUMN -->
+  <section class="blk" id="column">
+    <h2 class="ttl"><span class="en">COLUMN</span><small>お役立ち記事</small></h2>
+    {{columns}}
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <a class="contact__a" href="/contact/">
+      <span class="contact__en en">CONTACT</span>
+      <span class="contact__jp">まずは無料相談から。HPがなくても、古いHPがあっても。</span>
+      <span class="contact__go" aria-hidden="true"><svg class="knife" viewBox="0 0 44 13" aria-hidden="true"><path d="M3 3.5h11a3 3 0 0 1 0 6H3a3 3 0 0 1 0-6z"/><path d="M16 4.4h1.6V3.2H33c6 0 10.5 1.3 10.5 3 0 1.9-3.8 3.4-10 3.4H17.6V8.6H16z"/></svg></span>
+    </a>
+  </section>
+
+  {{foot}}
+</main>
