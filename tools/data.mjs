@@ -192,6 +192,10 @@ export const FAQ = [
 ];
 
 export const COLUMNS = [
+  { slug: "delivery-price", title: "デリバリーで赤字にならない値段は？価格計算機つき｜手数料・原価・容器代から逆算", img: "chinjao", short: "デリバリーで赤字にならない値段は？【計算機】", tag: "デリバリー", date: "2026-09-23",
+    lead: "店内価格・原価・容器代・手数料率を入れるだけで、利益が残るデリバリーの値段をその場で計算。手数料特典0%と15%の違いも数字で比べられます。", works: [] },
+  { slug: "30sec-challenge", title: "お客さんになって、営業時間を探してみて｜30秒チャレンジ", img: "tomato-pasta", short: "営業時間を探してみて【30秒チャレンジ】", tag: "HPの基本", date: "2026-09-23",
+    lead: "古いHPと新しいHP、営業時間が見つかるまで何秒かかる？お客さんの気持ちで体験すると、来店前の数十秒で何が起きているかが分かります。", works: [] },
   { slug: "opening-checklist", title: "飲食店の開業前にやることチェックリスト（集客編）｜3か月前から開業後1か月まで", img: "cafe-terrace", short: "開業前にやることチェックリスト（集客編）", tag: "開業準備", date: "2026-09-23",
     lead: "Googleビジネスプロフィール、HP、デリバリー。集客の準備には、効き目が出るまで時間がかかるものがあります。時期ごとにチェックしながら進められるリストです。", works: [] },
   { slug: "instagram-or-hp", title: "Instagramだけで大丈夫？飲食店のSNSとHPの使い分け", img: "creme-brulee", short: "Instagramだけで大丈夫？SNSとHPの使い分け", tag: "集客の考え方", date: "2026-09-23",

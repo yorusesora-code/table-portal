@@ -1,0 +1,119 @@
+<!--{"title":"デリバリーで赤字にならない値段は？価格計算機つき｜手数料・原価・容器代から逆算","desc":"デリバリーの手数料を引いても利益が残る値段を、その場で計算できます。店内価格・原価・容器代・手数料率（通常30%／特典15%・0%）を入れるだけ。値段の付け方の考え方と、手数料特典の使い方も解説します。","ogType":"article","css":["/assets/css/tools.css"],"js":["/assets/js/tools.js"],"crumbs":[["お役立ち記事","/column/"],["デリバリーで赤字にならない値段は？"]]}-->
+<article>
+<header class="art-head">
+  <span class="art-tag">デリバリー</span>
+  <h1>デリバリーで赤字にならない値段は？<span>手数料・原価・容器代から逆算する価格計算機つき</span></h1>
+  <div class="art-meta"><time datetime="2026-09-23">2026.09.23</time><span>Table 編集部</span></div>
+</header>
+<figure class="art-eye"><img src="/assets/img/photos/m/chinjao.webp" srcset="/assets/img/photos/m/chinjao.webp 800w, /assets/img/photos/chinjao.webp 1448w" sizes="100vw" alt="" width="1448" height="1086"><figcaption>写真はイメージです</figcaption></figure>
+<div class="art-body">
+<div class="prose">
+  <p>「デリバリーを始めたいけれど、手数料を払ったら利益が残らないのでは？」——出店を迷うお店から、いちばん多く聞く不安です。答えはお店ごとの原価と値段しだいなので、この記事では<b>自分のお店の数字を入れて、その場で確かめられる計算機</b>を用意しました。</p>
+  <p>まずは看板メニューを1品、思い浮かべて入れてみてください。</p>
+</div>
+
+</div>
+<div class="dcalc" data-deli-calc>
+  <div class="dcalc__in">
+    <p class="dcalc__k en">INPUT</p>
+    <div class="dcalc__f">
+      <label for="dc-price">店内での値段</label>
+      <div class="dcalc__num"><span>¥</span><input id="dc-price" type="number" inputmode="numeric" min="0" step="10" value="1000" data-in="price"></div>
+      <input type="range" min="300" max="5000" step="10" value="1000" data-range="price" aria-label="店内での値段">
+    </div>
+    <div class="dcalc__f">
+      <label for="dc-cost">原価（食材）</label>
+      <div class="dcalc__num"><span>¥</span><input id="dc-cost" type="number" inputmode="numeric" min="0" step="10" value="300" data-in="cost"></div>
+      <input type="range" min="0" max="2500" step="10" value="300" data-range="cost" aria-label="原価">
+    </div>
+    <div class="dcalc__f">
+      <label for="dc-box">容器・袋・割りばし</label>
+      <div class="dcalc__num"><span>¥</span><input id="dc-box" type="number" inputmode="numeric" min="0" step="5" value="50" data-in="box"></div>
+      <input type="range" min="0" max="300" step="5" value="50" data-range="box" aria-label="容器・袋代">
+    </div>
+    <fieldset class="dcalc__f dcalc__fee">
+      <legend>手数料率</legend>
+      <div class="dcalc__seg" role="group" aria-label="手数料率">
+        <button type="button" data-fee="0.30" class="on" aria-pressed="true"><b class="en">30%</b><small>通常</small></button>
+        <button type="button" data-fee="0.15" aria-pressed="false"><b class="en">15%</b><small>特典・6か月</small></button>
+        <button type="button" data-fee="0" aria-pressed="false"><b class="en">0%</b><small>特典・3か月</small></button>
+      </div>
+    </fieldset>
+    <div class="dcalc__f">
+      <label for="dc-target">1品で残したい利益</label>
+      <div class="dcalc__num"><span>¥</span><input id="dc-target" type="number" inputmode="numeric" min="0" step="10" value="400" data-in="target"></div>
+      <input type="range" min="0" max="700" step="10" value="400" data-range="target" aria-label="1品で残したい利益">
+    </div>
+    <div class="dcalc__f">
+      <label for="dc-orders">1日の注文数（見込み）</label>
+      <div class="dcalc__num"><input id="dc-orders" type="number" inputmode="numeric" min="0" step="1" value="10" data-in="orders"><span>件</span></div>
+      <input type="range" min="0" max="60" step="1" value="10" data-range="orders" aria-label="1日の注文数">
+    </div>
+  </div>
+
+  <div class="dcalc__out" aria-live="polite">
+    <p class="dcalc__k en">RESULT</p>
+    <div class="dcalc__r">
+      <p class="dcalc__lab">店内と<b>同じ値段</b>で出すと、1品の利益は</p>
+      <p class="dcalc__big en" data-out="profit">¥0</p>
+      <p class="dcalc__sub" data-out="rate"></p>
+    </div>
+    <div class="dcalc__r dcalc__r--hl">
+      <p class="dcalc__lab">1品で <b data-out="target">¥0</b> 残すなら、デリバリーの値段は</p>
+      <p class="dcalc__big en" data-out="need">¥0</p>
+      <p class="dcalc__sub"><span data-out="needDiff"></span>。店内と同じ利益を残すなら <b data-out="same">¥0</b></p>
+    </div>
+    <div class="dcalc__r">
+      <p class="dcalc__lab">手数料ごとの1品の利益（店内と同じ値段の場合）</p>
+      <ul class="dcalc__bars">
+        <li><span>通常 30%</span><i class="dcalc__track"><i data-bar></i></i><b data-barv="0">¥0</b></li>
+        <li><span>特典 15%</span><i class="dcalc__track"><i data-bar></i></i><b data-barv="1">¥0</b></li>
+        <li><span>特典 0%</span><i class="dcalc__track"><i data-bar></i></i><b data-barv="2">¥0</b></li>
+      </ul>
+    </div>
+    <div class="dcalc__r dcalc__keep">
+      <p class="dcalc__lab">特典期間に、通常の手数料より多く手元に残る額</p>
+      <div class="dcalc__two">
+        <div><small>0% × 3か月</small><b class="en" data-out="keep0">¥0</b></div>
+        <div><small>15% × 6か月</small><b class="en" data-out="keep15">¥0</b></div>
+      </div>
+      <p class="dcalc__sub">店内と同じ値段で、1日の注文数 × 30日で計算しています。</p>
+    </div>
+  </div>
+</div>
+
+<div class="art-body">
+<div class="prose">
+  <p class="note">※ 計算は目安です。消費税、配達エリアによる違い、アプリ内の広告費などは含めていません。実際の手数料は契約内容によって異なります。</p>
+
+  <h2>計算のしくみ：手数料は「売上」にかかる</h2>
+  <p>デリバリーの手数料は、利益ではなく<b>売上（お客さまが払う値段）</b>に対してかかります。1,000円の料理なら、手数料30%で300円。ここに原価と容器代を引いた残りが、お店の利益です。</p>
+  <div class="box"><strong>逆算の式</strong>デリバリーの値段 ＝（残したい利益 ＋ 原価 ＋ 容器代）÷（1 − 手数料率）<br>計算機では、10円単位に切り上げて表示しています。</div>
+  <p>店内と同じ利益をそのまま残そうとすると、値段はかなり上がります。多くのお店は、<b>デリバリー用の値段を少し上げつつ、1品あたりの利益の目標を店内より少し下げる</b>ところで折り合いをつけています。お客さまから見ても、配達してもらう分の上乗せは受け入れられやすいものです。</p>
+
+  <h2>赤字にしないための3つの工夫</h2>
+  <h3>1. デリバリー専用のセットをつくる</h3>
+  <p>単品よりセットのほうが、1回の注文の金額が上がり、容器代の割合が下がります。ご飯もの＋おかず＋汁物のように、「家で食べる1食」として完結する組み合わせが選ばれやすくなります。</p>
+  <h3>2. 容器代を忘れない</h3>
+  <p>容器・袋・割りばし・ソース入れ。1つ数十円でも、数が出ると大きくなります。計算機で容器代を動かしてみると、利益への影響がよく分かります。</p>
+  <h3>3. 原価の高い料理は、デリバリーに出さない選択も</h3>
+  <p>全メニューを出す必要はありません。原価率が高いもの、冷めるとおいしさが落ちるものは外し、利益が残って運びやすいものに絞るのも立派な戦略です。</p>
+
+  <h2>特典の0%と15%、どちらを選ぶ？</h2>
+  <p>当社経由で Uber Eats に新規出店すると、販売手数料が<b>3か月間0%</b>または<b>6か月間15%</b>になる特典が使えます。計算機の「特典期間に多く残る額」を見ると気づくかもしれませんが、注文数が同じなら、<b>残る金額の合計はどちらもほぼ同じ</b>です（30%との差 × 期間が、0%×3か月と15%×6か月で等しくなるため）。</p>
+  <ul>
+    <li><b>0% × 3か月が向くお店</b>：開店直後に一気に注文を集めたい。短い期間で値段やメニューを試したい。</li>
+    <li><b>15% × 6か月が向くお店</b>：注文がじわじわ増えていく見込み。長い期間、利益に余裕を持たせたい。</li>
+  </ul>
+  <p>特典はほかに、タブレットのレンタル無料、Uber のカメラマンによる商品撮影、リスティング広告2週間分、Uberクーポン1万円分があります。詳しくは<a href="/column/ubereats-start/">Uber Eatsをはじめるなら、代理店経由がお得です</a>をご覧ください。</p>
+
+  <div class="box"><strong>自分のお店の数字で、一緒に計算します</strong>メニュー表をお持ちいただければ、デリバリーに出す品目と値段の目安を一緒に考えます。Uber Eats の出店（当社経由の特典つき）もそのままご相談いただけます。</div>
+  <div class="art-cta">{{btn href="/contact/?topic=ubereats&amp;delivery=1" t="Uber Eats の出店を相談する" wide}}</div>
+</div>
+</div>
+</article>
+<section class="blk art-more">
+  <h2 class="ttl"><span class="en">MORE</span><small>ほかのお役立ち記事</small></h2>
+  {{columns not=delivery-price limit=3}}
+</section>
+{{cta t="手数料が気になるなら、特典つきの出店から。無料で相談できます。" href="/contact/?topic=ubereats&amp;delivery=1"}}
