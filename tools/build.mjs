@@ -120,7 +120,7 @@ const C = {
   // キャンペーン（写真背景の帯。割引額だけを出し、販売金額は出さない）
   campaign: (a = {}) => `
 <section class="camp" id="campaign">
-  <div class="camp__bg" aria-hidden="true"><img src="/assets/img/photos/berry-cheesecake.webp" alt="" loading="lazy" width="1448" height="1086"></div>
+  <div class="camp__bg" aria-hidden="true"><img src="/assets/img/photos/m/berry-cheesecake.webp" srcset="/assets/img/photos/m/berry-cheesecake.webp 800w, /assets/img/photos/berry-cheesecake.webp 1448w" sizes="100vw" alt="" loading="lazy" decoding="async" width="1448" height="1086"></div>
   <div class="camp__in">
     <p class="camp__tag en">CAMPAIGN</p>
     <h2 class="camp__t">デリバリー新規申込割引</h2>
@@ -302,7 +302,7 @@ ${cats.map((c) => `<section class="faq-sec" id="faq-${c}"><h2 class="h3">${c}</h
   columns: (a = {}) => {
     let list = D.COLUMNS;
     if (a.limit) list = list.slice(0, +a.limit);
-    return `<ul class="cgrid">${list.map((c) => `<li class="ccard"><a href="/column/${c.slug}/"><span class="ccard__img"><img src="/assets/img/photos/${c.img}.webp" alt="" loading="lazy" width="1448" height="1086"></span><span class="ccard__tag">${c.tag}</span><strong>${c.short}</strong><span class="ccard__lead">${c.lead}</span><time datetime="${c.date}">${c.date.replace(/-/g, ".")}</time></a></li>`).join("")}</ul>`;
+    return `<ul class="cgrid">${list.map((c) => `<li class="ccard"><a href="/column/${c.slug}/"><span class="ccard__img"><img src="/assets/img/photos/m/${c.img}.webp" alt="" loading="lazy" decoding="async" width="800" height="600"></span><span class="ccard__tag">${c.tag}</span><strong>${c.short}</strong><span class="ccard__lead">${c.lead}</span><time datetime="${c.date}">${c.date.replace(/-/g, ".")}</time></a></li>`).join("")}</ul>`;
   },
 
   relatedWorks: (a = {}) => !SITE.showWorks ? "" : `<aside class="related"><h2 class="related__t">この記事に関連する制作事例</h2>${C.works({ slugs: a.slugs, small: 1 })}</aside>`,

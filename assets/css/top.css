@@ -693,3 +693,16 @@ html[data-tod=night] .tod button[aria-pressed="true"]{background:#fff;color:var(
 .hang__nav:active{transform:scale(.94)}
 .hang__nav:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 @media (max-width:750px){.hang__nav{width:44px;height:44px;top:calc(46px + 80px)}}
+
+/* ---- タッチ端末：写真カードは立体で回さず、ふわっと切り替える ----
+   （iPhone の Safari は立体表示のカード1枚ごとに描画用のメモリを確保するため、
+     24枚を立体にすると画像用のメモリが足りなくなり、あとに出てくる画像が描かれなくなる） */
+@media (hover:none){
+  .hang__card{perspective:none}
+  .hang__flip{transform-style:flat;transition:none}
+  .hang__face{backface-visibility:visible;-webkit-backface-visibility:visible;transition:opacity .45s var(--e-p2out)}
+  .hang__face--back{transform:none;opacity:0}
+  .hang__card.is-flip .hang__flip{transform:none}
+  .hang__card.is-flip .hang__face--front{opacity:0}
+  .hang__card.is-flip .hang__face--back{opacity:1}
+}
