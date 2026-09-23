@@ -88,7 +88,7 @@
 .checks{border-top:2px solid var(--ink)}
 .checks li{position:relative;padding:20px 0 20px 40px;border-bottom:1px solid var(--rule);font-size:16px;font-weight:700;line-height:1.7}
 .checks li::before{content:"";position:absolute;left:4px;top:1.55em;width:15px;height:7px;border-left:3px solid var(--accent);border-bottom:3px solid var(--accent);rotate:-45deg}
-.checks small{display:block;font-size:13px;font-weight:500;color:var(--sub);margin-top:2px}
+.checks small{display:block;font-size:13px;font-weight:400;color:var(--sub);margin-top:2px}
 
 /* 番号つきの並び（全プラン共通の中身・納品物・準備物） */
 .feats--2{grid-template-columns:repeat(2,1fr)}
@@ -184,7 +184,7 @@
 .simx .note{margin:0}
 
 /* ---------- オプション表（価格なし） ---------- */
-.otable tbody th small{display:block;font-size:11px;color:var(--sub);font-weight:500;margin-top:2px}
+.otable tbody th small{display:block;font-size:11px;color:var(--sub);font-weight:400;margin-top:2px}
 .otable__g th{background:#FBF7F0;font-family:var(--font-en);font-weight:900 !important;font-size:11px;letter-spacing:.14em;color:var(--line);padding:10px 12px !important}
 .otable__add{display:inline-grid;place-items:center;width:22px;height:22px;border:1.5px solid #cfc8b8;border-radius:50%;font-size:14px;line-height:1;color:#a39e92}
 .otable__s{display:block;font-size:10px;font-weight:700;color:var(--sub);letter-spacing:.06em;margin-top:2px}

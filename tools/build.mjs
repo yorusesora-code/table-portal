@@ -7,6 +7,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import crypto from "node:crypto";
 import * as D from "./data.mjs";
 import * as KV from "./kv-art.mjs";
 import * as SA from "./sub-art.mjs";
@@ -408,7 +409,7 @@ ${SITE.noindex ? "" : `<link rel="canonical" href="${url}">`}
 ${meta.noindex || SITE.noindex ? `<meta name="robots" content="noindex, nofollow">` : ""}
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
 ${meta.legacy ? `<link rel="stylesheet" href="/assets/css/site.css">` : meta.bare ? "" : `<link rel="stylesheet" href="/assets/css/top.css"><link rel="stylesheet" href="/assets/css/sub.css">`}
 ${(meta.css || []).map((h) => '<link rel="stylesheet" href="' + h + '">').join("")}
 ${meta.jsonld ? `<script type="application/ld+json">${meta.jsonld}</script>` : ""}
@@ -453,7 +454,14 @@ function outPathFor(rel) {
   if (rel === "index.html" || rel === "404.html" || rel.endsWith("/index.html")) return rel;
   return rel.replace(/\.html$/, "/index.html");
 }
+// 版番号：CSS・JS の中身が変わったときだけ URL が変わる（?v=中身のハッシュ）
+const VER = {};
+const versioned = (html) => html.replace(/(["'(])(\/assets\/(?:css|js)\/[\w.-]+\.(?:css|js))(?=["')])/g, (m, q, p) => {
+  if (!(p in VER)) { const f = path.join(ROOT, p); VER[p] = fs.existsSync(f) ? crypto.createHash("sha1").update(fs.readFileSync(f)).digest("hex").slice(0, 8) : ""; }
+  return q + p + (VER[p] ? "?v=" + VER[p] : "");
+});
 function write(rel, html) {
+  html = versioned(html);
   const out = path.join(ROOT, rel);
   fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, html);
@@ -488,7 +496,8 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://w
 fs.writeFileSync(path.join(ROOT, "sitemap.xml"), sitemap);
 // 検索に出さない間は、全ページに noindex のヘッダーを付け、robots.txt でもクロールを断る
 const robots = SITE.noindex ? "User-agent: *\nDisallow: /\n" : `User-agent: *\nAllow: /\nSitemap: ${SITE.url}/sitemap.xml\n`;
-const headers = `/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n${SITE.noindex ? "  X-Robots-Tag: noindex, nofollow\n" : ""}\n/assets/*\n  Cache-Control: public, max-age=604800\n`;
+const headers = `/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n${SITE.noindex ? "  X-Robots-Tag: noindex, nofollow\n" : ""}\n/assets/css/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/js/*\n  Cache-Control: public, max-age=31536000, immutable\n/assets/img/*\n  Cache-Control: public, max-age=604800\n`;
+// ↑ CSS・JS は URL に版番号（?v=中身のハッシュ）が付くので長く保存してよい。HTML は Cloudflare の既定（毎回確認）
 
 /* ---------- 公開用フォルダ dist/（Cloudflare Pages はここを公開する） ---------- */
 // src・tools・docs・README など公開しないものは含めない

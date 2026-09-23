@@ -404,7 +404,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .ptable thead th{border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);font-size:16px;font-weight:900;padding-top:20px;vertical-align:bottom}
 .ptable thead th.is-rec{background:var(--accent-3)}
 .ptable__en{display:block;font-family:var(--font-en);font-weight:900;letter-spacing:.09em;font-size:11px;color:var(--line)}
-.ptable tbody th{text-align:left;font-weight:500}
+.ptable tbody th{text-align:left;font-weight:400}
 .ptable .pq__badge{display:inline-block;margin-left:8px;background:var(--ink);color:#fff;font-size:10px;padding:2px 8px;vertical-align:3px;letter-spacing:.1em}
 .ptable__zero td,.ptable__zero th{background:var(--accent-3)}.ptable__zero td{font-family:var(--font-en);font-weight:900;font-size:24px}
 .ptable tbody .ptable__zero th{font-weight:900}
@@ -438,7 +438,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .pick__o input:checked ~ .pick__box .i-chk{transform:scale(1) rotateY(0)}
 .pick__o input:focus-visible ~ .pick__box{outline:3px solid var(--line);outline-offset:3px}
 .pick__n{font-size:15px;font-weight:700;line-height:1.5}
-.pick__n small{display:block;font-size:11px;font-weight:500;color:var(--sub)}
+.pick__n small{display:block;font-size:11px;font-weight:400;color:var(--sub)}
 .pick__s{font-size:11px;font-weight:700;letter-spacing:.08em;white-space:nowrap;color:var(--sub)}
 .pick__o.is-inc{cursor:default;background:var(--accent-3)}
 .pick__o.is-inc .pick__box{background:var(--ink);border-color:var(--ink)}
@@ -706,3 +706,6 @@ html[data-tod=night] .tod button[aria-pressed="true"]{background:#fff;color:var(
   .hang__card.is-flip .hang__face--front{opacity:0}
   .hang__card.is-flip .hang__face--back{opacity:1}
 }
+
+/* ---- 画面の外にある部分の動きは止める（chrome.js / top.js が .is-offscreen を付け外し） ---- */
+.is-offscreen,.is-offscreen *,.is-offscreen *::before,.is-offscreen *::after{animation-play-state:paused !important}

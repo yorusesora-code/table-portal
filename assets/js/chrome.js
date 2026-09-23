@@ -172,11 +172,18 @@ $$('[data-picker]').forEach(picker => {
     `<div class="sh__sky" aria-hidden="true"><span class="sh__cloud drift" style="animation-duration:70s;animation-delay:-20s">${cloud}</span><span class="sh__cloud drift" style="animation-duration:88s;animation-delay:-60s">${cloud}</span><span class="sh__cloud drift" style="animation-duration:104s;animation-delay:-8s">${cloud}</span></div>`));
 }
 
-/* ---- 下層ページ見出しのイラスト：画面外ではループを止める ---- */
-$$('.sh__ill svg, .sh__ill2 svg').forEach(svg => {
-  if (RM){ svg.pauseAnimations?.(); return; }
-  new IntersectionObserver(([e]) => e.isIntersecting ? svg.unpauseAnimations?.() : svg.pauseAnimations?.()).observe(svg);
-});
+/* ---- 画面の外にある部分は、CSS のループと SVG の動き（SMIL）を止める ---- */
+// 見えている間だけ動かす。少し手前（上下200px）で動き出すので、戻ってきたときに止まって見えない
+{
+  const ZONES = '.hang, .sh, .camp, .duo__ill, .orow__vis';
+  const setZone = (el, on) => {
+    el.classList.toggle('is-offscreen', !on);
+    $$('svg', el).forEach(svg => { if (RM) return; on ? svg.unpauseAnimations?.() : svg.pauseAnimations?.(); });
+  };
+  const zio = new IntersectionObserver(es => es.forEach(e => setZone(e.target, e.isIntersecting)), {rootMargin:'200px 0px'});
+  $$(ZONES).forEach(el => zio.observe(el));
+  if (RM) $$('.sh__ill svg, .sh__ill2 svg, .duo__ill svg').forEach(svg => svg.pauseAnimations?.());
+}
 
 // 戻るボタン（bfcache）で戻ったときにメニューが開いたままにならないように
 addEventListener('pageshow', e => { if (e.persisted && navi?.classList.contains('is-open')) trigger.click(); });

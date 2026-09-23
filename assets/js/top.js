@@ -187,6 +187,7 @@ sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:100vh;
 document.body.prepend(sentinel);
 new IntersectionObserver(([e]) => {
   kv.style.visibility = e.isIntersecting ? '' : 'hidden';
+  kv.classList.toggle('is-offscreen', !e.isIntersecting);   // 覆われている間は CSS のループも止める
   svgs.forEach(s => e.isIntersecting ? s.unpauseAnimations?.() : s.pauseAnimations?.());
 }).observe(sentinel);
 if (RM) svgs.forEach(s => s.pauseAnimations?.());
