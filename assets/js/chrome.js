@@ -185,6 +185,20 @@ $$('[data-picker]').forEach(picker => {
   if (RM) $$('.sh__ill svg, .sh__ill2 svg, .duo__ill svg').forEach(svg => svg.pauseAnimations?.());
 }
 
+/* ---- 記事のチェックリスト：チェックはこのブラウザにだけ保存する ---- */
+$$('[data-checklist]').forEach(list => {
+  const key = 'table_check_' + list.dataset.checklist, boxes = $$('input[type=checkbox]', list);
+  const meter = $('[data-checklist-meter]');
+  let saved = []; try { saved = JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) {}
+  boxes.forEach((b, i) => { b.checked = saved.includes(i); });
+  const update = () => {
+    const done = boxes.filter(b => b.checked).length;
+    if (meter){ $('[data-done]', meter).textContent = done; $('[data-total]', meter).textContent = boxes.length; $('[data-bar]', meter).style.width = (done / boxes.length * 100) + '%'; meter.classList.toggle('is-done', done === boxes.length); }
+    try { localStorage.setItem(key, JSON.stringify(boxes.map((b, i) => b.checked ? i : -1).filter(i => i >= 0))); } catch (e) {}
+  };
+  list.addEventListener('change', update); update();
+});
+
 // 戻るボタン（bfcache）で戻ったときにメニューが開いたままにならないように
 addEventListener('pageshow', e => { if (e.persisted && navi?.classList.contains('is-open')) trigger.click(); });
 })();

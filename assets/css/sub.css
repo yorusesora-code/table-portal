@@ -499,3 +499,25 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9em;background
   .perks{grid-template-columns:1fr}
   .perks__i--wide ~ .perks__i:nth-child(n){padding-left:0;border-left:0}
 }
+
+/* ---------- 記事：チェックリスト ---------- */
+.clist{list-style:none !important;padding:0 !important;margin:0 0 1.6em !important;border-top:1px solid var(--rule)}
+.clist li{margin:0 !important;border-bottom:1px solid var(--rule)}
+.clist label{display:grid;grid-template-columns:30px 1fr;gap:14px;padding:16px 4px;cursor:pointer;transition:background-color .3s}
+.clist input{appearance:none;width:26px;height:26px;margin:2px 0 0;border:2px solid var(--ink);display:grid;place-items:center;cursor:pointer;transition:background-color .3s,transform .12s}
+.clist input::after{content:"";width:11px;height:5px;border-left:3px solid var(--ink);border-bottom:3px solid var(--ink);rotate:-45deg;translate:0 -2px;transform:scale(0);transition:transform .5s var(--e-expo)}
+.clist input:checked{background:var(--accent)}
+.clist input:checked::after{transform:scale(1)}
+.clist input:focus-visible{outline:3px solid var(--line);outline-offset:3px}
+.clist label:active input{transform:scale(.9)}
+.clist span{font-size:14px;line-height:1.9;color:#3b3b3b}
+.clist span b{display:block;font-size:16px;color:var(--ink);margin-bottom:2px;transition:color .3s}
+.clist input:checked + span b{color:var(--sub);text-decoration:line-through;text-decoration-color:var(--accent);text-decoration-thickness:2px}
+@media (hover:hover){.clist label:hover{background:#FFF8F1}}
+.clist-meter{position:sticky;top:calc(var(--header-h) + 8px);z-index:5;display:flex;align-items:center;gap:16px;background:#fff;border:2px solid var(--ink);padding:12px 18px;margin:1.6em 0}
+.clist-meter__t{font-size:13px;font-weight:700;white-space:nowrap}
+.clist-meter__t b{font-family:var(--font-en);font-weight:900;font-size:18px;color:var(--accent)}
+.clist-meter__bar{flex:1;height:8px;background:#f4eee3;position:relative;overflow:hidden}
+.clist-meter__bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--accent);transition:width .6s var(--e-expo)}
+.clist-meter.is-done{background:var(--accent-3)}
+@media (max-width:750px){.clist-meter{top:calc(var(--header-h) + 6px)}}

@@ -237,6 +237,8 @@
     if (p2.get("options")) notes.push("【見積りで選んだオプション】" + p2.get("options").split("|").join("、"));
     if (p2.get("ref")) notes.push("【見ていた事例】" + p2.get("ref"));
     if (p2.get("topic") === "diagnosis") notes.push("【Table Shift 無料診断を希望】");
+    if (p2.get("topic") === "opening") notes.push("【開業準備の集客（HP・デリバリー）の相談】");
+    if (p2.get("topic") === "instagram") notes.push("【Instagramと合わせたHPの相談】");
     if (p2.get("topic") === "ubereats") notes.push("【Uber Eats 新規出店の相談（当社経由の出店特典を希望）】");
     if (notes.length) form.message.value = notes.join("\n") + "\n";
     // 代理店コード：?agent=XXXX で自動入力（代理店が自分のリンクを配布できる）

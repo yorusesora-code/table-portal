@@ -192,6 +192,10 @@ export const FAQ = [
 ];
 
 export const COLUMNS = [
+  { slug: "opening-checklist", title: "飲食店の開業前にやることチェックリスト（集客編）｜3か月前から開業後1か月まで", img: "cafe-terrace", short: "開業前にやることチェックリスト（集客編）", tag: "開業準備", date: "2026-09-23",
+    lead: "Googleビジネスプロフィール、HP、デリバリー。集客の準備には、効き目が出るまで時間がかかるものがあります。時期ごとにチェックしながら進められるリストです。", works: [] },
+  { slug: "instagram-or-hp", title: "Instagramだけで大丈夫？飲食店のSNSとHPの使い分け", img: "creme-brulee", short: "Instagramだけで大丈夫？SNSとHPの使い分け", tag: "集客の考え方", date: "2026-09-23",
+    lead: "Instagramは“見つけてもらう場所”、HPは“確かめてもらう場所”。得意なことと苦手なこと、役割の分け方、無理なく続けるコツをまとめました。", works: [] },
   { slug: "ubereats-start", title: "Uber Eatsをはじめるなら、代理店経由がお得｜手数料・撮影・広告・クーポンの5つの出店特典", img: "subuta", short: "Uber Eatsをはじめるなら、代理店経由がお得", tag: "デリバリー", date: "2026-09-23",
     lead: "販売手数料3か月0%、タブレット無料、商品撮影、広告2週間、クーポン1万円分。当社経由で新規出店すると使える5つの特典と、活かし方をまとめました。", works: [] },
   { slug: "8-items", title: "飲食店のHPに載せるべき8項目｜来店前のお客さまが本当に見ているもの", img: "teishoku", short: "飲食店HPに載せるべき8項目", tag: "HPの基本", date: "2026-09-10",
