@@ -738,3 +738,34 @@ html.is-lite:not([data-tod=night]) .kv-night,html.is-lite:not([data-tod=night]) 
 .is-lite .progress{display:none}
 .is-lite .kv-stageset,.is-lite .kv-copy,.is-lite .ttl .en,.is-lite .camp__t,.is-lite .zero__t,.is-lite .contact__en,.is-lite .ptable tbody tr,.is-lite .pick__o,.is-lite .feats li,.is-lite .flow li,.is-lite .flow::before,.is-lite .flow li::before,.is-lite .flow li > span,.is-lite .steps::before,.is-lite .gantt__track i,.is-lite .kv-dusk{animation:none !important}
 .is-lite .kv-dusk{opacity:0}
+
+/* ---- スマホ：比較表は横スクロールさせず、項目名を行の上に出して3列（2列）を画面幅に収める ----
+   プラン名の見出しは、表を読んでいる間ヘッダーの下に貼りつく（PCは従来どおりの表） */
+@media (max-width:750px){
+  .tbl-wrap{overflow:visible}
+  .ptable,.ptable thead,.ptable tbody{display:block;min-width:0 !important}
+  .ptable tr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ptable--2 tr{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ptable thead{position:sticky;top:var(--header-h);z-index:5;background:var(--paper)}
+  .ptable thead tr{border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+  .ptable thead th{border:0;padding:10px 4px 8px;font-size:13px;line-height:1.35}
+  .ptable thead th:first-child{display:none}
+  .ptable thead .pq__badge{display:table;margin:3px auto 0;font-size:9px;padding:1px 6px}
+  .ptable tbody tr{border-bottom:1px solid var(--rule)}
+  .ptable th,.ptable td{border:0}
+  .ptable tbody th{grid-column:1/-1;padding:12px 4px 0;font-size:13px;font-weight:700;color:var(--sub)}
+  .ptable tbody td{padding:6px 4px 12px;font-size:13px}
+  .ptable td[colspan]{grid-column:1/-1;text-align:left;padding-left:4px}
+  .ptable--2 tbody td{text-align:left;padding-right:10px;line-height:1.7}
+  .ptable__zero th{background:transparent}
+  .ptable tbody .ptable__zero{background:var(--accent-3)}
+  .ptable__zero td{font-size:20px;padding-bottom:10px}
+  .otable__g{background:#FBF7F0}
+  .otable__g th{padding:9px 4px !important}
+  .otable tbody th small{display:inline;margin-left:6px}
+  /* CONTACT：丸いボタンは文字に重ねず、文字の下の右端に */
+  .contact__go{position:static;width:64px;height:64px;margin:26px 0 0 auto}
+  .contact__go svg{width:34px;height:11px}
+}
+@media (max-width:750px){.tint .ptable thead{background:#FFF8F1}}
+@media (max-width:750px){.ptable tbody th{padding:10px 4px 0}.ptable tbody td{padding:2px 4px 9px;line-height:1.5}.ptable tbody td .dot{font-size:14px}.ptable--2 tbody td{padding-top:4px;line-height:1.7}}
