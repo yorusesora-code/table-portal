@@ -30,15 +30,15 @@ export const PLANS = [
 
 // ●=含む / −=含まない（申込書 2. 各プランに含まれるオプション）
 export const INCLUDES = [
-  { label: "デリバリー連携（Uber Eats・出前館）", v: [1, 1, 1] },
+  { label: "デリバリー連携<br class=\"sp\">（Uber Eats・出前館）", v: [1, 1, 1] },
   { label: "Instagram投稿埋め込み", v: [0, 1, 1] },
   { label: "クーポン機能", v: [0, 1, 1] },
-  { label: "予約サービス連携（外部予約サイトへの導線）", v: [0, 1, 1] },
+  { label: "予約サービス連携", v: [0, 1, 1] },
   { label: "多言語対応", v: [0, "英語", "英・中・韓"] },
-  { label: "X（旧Twitter）投稿埋め込み", v: [0, 0, 1] },
+  { label: "X（旧Twitter）<br class=\"sp\">投稿埋め込み", v: [0, 0, 1] },
   { label: "公式LINE連携", v: [0, 0, 1] },
-  { label: "写真レタッチ・高画質化", v: [0, 0, 1] },
-  { label: "取材ライティング（書面・2本）", v: [0, 0, 1] },
+  { label: "写真レタッチ・<br class=\"sp\">高画質化", v: [0, 0, 1] },
+  { label: "取材ライティング<br class=\"sp\">（書面・2本）", v: [0, 0, 1] },
   { label: "採用ページ作成", v: [0, 0, 1] },
 ];
 export const ALL_PLANS_INCLUDE = ["ヒアリング", "原稿ライティング", "スマートフォン最適化", "Googleマップ埋込", "SEO基本設定", "SSL", "サーバー費用"];
