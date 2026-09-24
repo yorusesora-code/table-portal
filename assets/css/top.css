@@ -708,5 +708,33 @@ html[data-tod=night] .tod button[aria-pressed="true"]{background:#fff;color:var(
 }
 
 /* ---- 画面の外にある部分の動きは止める（chrome.js / top.js が .is-offscreen を付け外し） ---- */
-.is-offscreen,.is-offscreen *,.is-offscreen *::before,.is-offscreen *::after{animation-play-state:paused !important}
+.is-offscreen,.is-offscreen *,.is-offscreen *::before,.is-offscreen *::after,.is-still *,.is-still *::before,.is-still *::after{animation-play-state:paused !important}
 .cgrid + .c-btn{margin-top:48px}
+
+/* ---- 軽量表示（chrome.js が「動きが追いつかない端末」だと判定したときだけ html.is-lite） ----
+   島の絵の中の細かい動き（CSS・SMIL）は止める。絵の一部が動くと、Android の Chrome は島全体を毎コマ描き直すため。
+   代わりに、島ごと浮かぶ・雲が流れるなど「描き直しの要らない動き」（transform だけ）で賑やかさを残す */
+.is-lite .kv svg *,.is-lite .sh__ill svg *,.is-lite .sh__ill2 svg *,.is-lite .duo__ill svg *{animation:none !important}
+.is-lite .kv-draw{stroke-dashoffset:0}
+.is-lite .kv-b1,.is-lite .kv-b2,.is-lite .kv-b3,.is-lite .kv-b4,.is-lite .kv-b5,.is-lite .kv-puff,.is-lite .kv-pop{opacity:1}
+.is-lite .kv-reveal,.is-lite .kv-steam,.is-lite .kv-coin,.is-lite .kv-ripple{opacity:0}
+html.is-lite:not([data-tod=night]) .kv-night,html.is-lite:not([data-tod=night]) .kv-stars{opacity:0}
+.is-lite .kv-stageset > .stage > .stage__inner{animation:lite-float 6s ease-in-out infinite;will-change:transform}
+.is-lite #st-shift > .stage__inner{animation-delay:-2s}
+.is-lite #st-price > .stage__inner{animation-delay:-4s}
+.is-lite #st-camp > .stage__inner{animation-delay:-3s}
+@keyframes lite-float{50%{transform:translateY(-8px)}}
+.lite-sky{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+.lite-sky span{position:absolute;left:0;width:110px;opacity:.9;will-change:transform}
+.lite-sky span svg{width:100%;height:auto}
+.lite-sky span:nth-child(1){top:14%;width:130px}
+.lite-sky span:nth-child(2){top:30%;width:90px}
+.lite-sky span:nth-child(3){top:70%;width:120px}
+.is-offscreen .lite-sky span,.is-still .lite-sky span,.is-still .stage__inner{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){.lite-sky{display:none}}
+.is-lite .sh__ill::after{animation:none}
+.is-lite .kv-cshadow{display:none}
+/* 軽量表示ではスクロール連動の演出も止め、最初から最後の形で見せる（止まっていても毎コマ計算されるため） */
+.is-lite .progress{display:none}
+.is-lite .kv-stageset,.is-lite .kv-copy,.is-lite .ttl .en,.is-lite .camp__t,.is-lite .zero__t,.is-lite .contact__en,.is-lite .ptable tbody tr,.is-lite .pick__o,.is-lite .feats li,.is-lite .flow li,.is-lite .flow::before,.is-lite .flow li::before,.is-lite .flow li > span,.is-lite .steps::before,.is-lite .gantt__track i,.is-lite .kv-dusk{animation:none !important}
+.is-lite .kv-dusk{opacity:0}

@@ -172,17 +172,84 @@ $$('[data-picker]').forEach(picker => {
     `<div class="sh__sky" aria-hidden="true"><span class="sh__cloud drift" style="animation-duration:70s;animation-delay:-20s">${cloud}</span><span class="sh__cloud drift" style="animation-duration:88s;animation-delay:-60s">${cloud}</span><span class="sh__cloud drift" style="animation-duration:104s;animation-delay:-8s">${cloud}</span></div>`));
 }
 
+/* ---- 軽量表示：島の絵の中の動きに端末が追いつかないときだけ切り替える ----
+   開いた直後に約0.8秒、実際のコマの間隔を測る。なめらかな端末（今の iPhone・パソコン）はそのまま全部動かし、
+   追いつかない端末だけ html.is-lite にして、島の中の細かい動きを止める（top.css の「軽量表示」）。
+   結果はタブを閉じるまで覚えておき、次のページでは測らずに同じ表示にする */
+const HEAVY_SVGS = () => $$('.kv svg, .sh__ill svg, .sh__ill2 svg, .duo__ill svg');
+let LITE = false;
+const resume = (svg) => { if (!LITE && !RM) svg.unpauseAnimations?.(); };
+const enableLite = () => {
+  if (LITE) return;
+  LITE = true;
+  document.documentElement.classList.add('is-lite');
+  HEAVY_SVGS().forEach(s => s.pauseAnimations?.());
+  // トップの空：SVG の中の雲は止まるので、描き直しの要らない雲を重ねて流す
+  const stageset = $('.kv .kv-stageset');
+  if (stageset && !$('.lite-sky')){
+    const cloud = '<svg viewBox="0 0 120 50"><path d="M14 44c-10 0-12-14-2-16-2-12 14-18 22-9 4-12 24-14 30-2 8-8 24-2 22 10 12 0 14 17 2 17z" fill="#fff" stroke="var(--line)" stroke-width="2" stroke-linejoin="round"/></svg>';
+    stageset.insertAdjacentHTML('beforebegin', `<div class="lite-sky" aria-hidden="true"><span class="drift" style="animation-duration:60s;animation-delay:-14s">${cloud}</span><span class="drift" style="animation-duration:78s;animation-delay:-44s">${cloud}</span><span class="drift" style="animation-duration:68s;animation-delay:-4s">${cloud}</span></div>`);
+  }
+};
+{
+  let saved = null; try { saved = sessionStorage.getItem('table_lite'); } catch (e) {}
+  if (/[?&]lite/.test(location.search)) saved = '1';   // 確認用：?lite で軽量表示を強制
+  if (saved === '1') enableLite();
+  else if (saved !== '0' && !RM && HEAVY_SVGS().length){
+    // 3回まで測る（最初はスプラッシュ中のこともあるため）。1回でも遅ければ軽量表示に。3回とも速ければ「速い端末」と覚える
+    let round = 0;
+    const probe = () => {
+      if (LITE) return;
+      if (document.visibilityState !== 'visible' || scrollY > innerHeight) return setTimeout(probe, 800);
+      const ds = []; let last = 0;
+      const frame = (t) => {
+        if (last) ds.push(t - last);
+        last = t;
+        if (ds.length < 48) return requestAnimationFrame(frame);
+        const sorted = [...ds].sort((a, b) => a - b), median = sorted[sorted.length >> 1];
+        const slow = ds.filter(d => d > 28).length / ds.length;
+        if (median > 22 || slow > .25){   // 1秒に45コマを下回る、または4回に1回以上つっかえる
+          enableLite();
+          try { sessionStorage.setItem('table_lite', '1'); } catch (e) {}
+        } else if (++round < 3) setTimeout(probe, 2500);
+        else try { sessionStorage.setItem('table_lite', '0'); } catch (e) {}
+      };
+      requestAnimationFrame(frame);
+    };
+    addEventListener('load', () => setTimeout(probe, 700), {once:true});
+  }
+}
+
 /* ---- 画面の外にある部分は、CSS のループと SVG の動き（SMIL）を止める ---- */
 // 見えている間だけ動かす。少し手前（上下200px）で動き出すので、戻ってきたときに止まって見えない
 {
   const ZONES = '.hang, .sh, .camp, .duo__ill, .orow__vis';
   const setZone = (el, on) => {
     el.classList.toggle('is-offscreen', !on);
-    $$('svg', el).forEach(svg => { if (RM) return; on ? svg.unpauseAnimations?.() : svg.pauseAnimations?.(); });
+    $$('svg', el).forEach(svg => { if (RM) return; on && !el.classList.contains('is-still') ? resume(svg) : svg.pauseAnimations?.(); });
   };
   const zio = new IntersectionObserver(es => es.forEach(e => setZone(e.target, e.isIntersecting)), {rootMargin:'200px 0px'});
   $$(ZONES).forEach(el => zio.observe(el));
-  if (RM) $$('.sh__ill svg, .sh__ill2 svg, .duo__ill svg').forEach(svg => svg.pauseAnimations?.());
+  if (RM) $$('.sh__ill svg, .sh__ill2 svg, .duo__ill svg, .kv svg').forEach(svg => svg.pauseAnimations?.());
+}
+
+/* ---- 最初の画面のイラスト（トップの島・下層ページの見出しの島）は、スクロールし始めたら止める ----
+   島の一部が動くと、Android の Chrome は島の絵全体を毎コマ描き直す。スクロール中にこれが重なると
+   カクつくため、読み進めている間は止め、いちばん上に戻ったらまた動かす（島は奥へ引いて薄くなるので止まっても目立たない） */
+{
+  const HERO = $$('.kv, .sh');
+  let still = null, ticking = false;
+  const apply = () => {
+    ticking = false;
+    const s = scrollY > 40;
+    if (s === still) return;
+    still = s;
+    HERO.forEach(el => {
+      el.classList.toggle('is-still', s);
+      if (!RM) $$('svg', el).forEach(svg => s ? svg.pauseAnimations?.() : (!el.classList.contains('is-offscreen') && resume(svg)));
+    });
+  };
+  if (HERO.length){ addEventListener('scroll', () => { if (!ticking){ ticking = true; requestAnimationFrame(apply); } }, {passive:true}); apply(); }
 }
 
 /* ---- 記事のチェックリスト：チェックはこのブラウザにだけ保存する ---- */

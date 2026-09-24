@@ -180,16 +180,12 @@ if (zero && zval){
 const hangRowEl = $('[data-hang] .hang__row');
 if (hangRowEl && !CAN_HOVER) hangRowEl.addEventListener('click', e => { const c = e.target.closest('.hang__card'); if (c) c.classList.toggle('is-flip'); });
 
-/* ---- KV が覆われたらループを止める ---- */
+/* ---- KV が本文に覆われたら描画しない（動きの停止・再開は chrome.js の「スクロールしたら止める」が受け持つ） ---- */
 const kv = $('#top'), svgs = $$('svg', kv);
 const sentinel = document.createElement('div');
 sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:100vh;pointer-events:none';
 document.body.prepend(sentinel);
-new IntersectionObserver(([e]) => {
-  kv.style.visibility = e.isIntersecting ? '' : 'hidden';
-  kv.classList.toggle('is-offscreen', !e.isIntersecting);   // 覆われている間は CSS のループも止める
-  svgs.forEach(s => e.isIntersecting ? s.unpauseAnimations?.() : s.pauseAnimations?.());
-}).observe(sentinel);
+new IntersectionObserver(([e]) => { kv.style.visibility = e.isIntersecting ? '' : 'hidden'; }).observe(sentinel);
 if (RM) svgs.forEach(s => s.pauseAnimations?.());
 
 /* ---- FOOD：吊り下げカードを2周分並べて継ぎ目なく流す ---- */
