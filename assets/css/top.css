@@ -816,6 +816,40 @@ html.is-lite:not([data-tod=night]) .kv-night,html.is-lite:not([data-tod=night]) 
 /* サイト本体（中身がゆっくりスクロール） */
 .ios__view{position:relative;flex:1;min-height:0;overflow:hidden;background:var(--bg);color:var(--fg);font-family:var(--ff,var(--font-jp));font-size:10px;line-height:1.6}
 .ps__in{padding-bottom:40px;animation:ps-scroll 14s ease-in-out infinite;animation-delay:var(--d,0s)}
+/* メニューのタブを切り替える見本（3台）。16秒で「タブまでスクロール→DINNER→DRINK→LUNCH→上へ戻る」
+   --ty（タブの位置までの移動量）は chrome.js が実際の高さから計る */
+.has-tabs .ps__in{animation:ps-scroll-tab 16s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes ps-scroll-tab{0%,12%{transform:translateY(0)}20%,76%{transform:translateY(var(--ty,-160px))}86%,100%{transform:translateY(0)}}
+.pt{margin:4px 12px 10px}
+.pt__tabs{position:relative;display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid color-mix(in srgb,var(--fg) 18%,transparent);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif}
+.pt__t{padding:6px 0 5px;text-align:center;font-size:8.5px;font-weight:800;letter-spacing:.1em;opacity:.4}
+.pt__t--0{animation:pt-lab0 16s infinite;animation-delay:var(--d,0s)}
+.pt__t--1{animation:pt-lab1 16s infinite;animation-delay:var(--d,0s)}
+.pt__t--2{animation:pt-lab2 16s infinite;animation-delay:var(--d,0s)}
+@keyframes pt-lab0{0%,25%{opacity:1;color:var(--ac)}27%,65%{opacity:.4;color:var(--fg)}67%,100%{opacity:1;color:var(--ac)}}
+@keyframes pt-lab1{0%,25%{opacity:.4}27%,45%{opacity:1;color:var(--ac)}47%,100%{opacity:.4}}
+@keyframes pt-lab2{0%,45%{opacity:.4}47%,65%{opacity:1;color:var(--ac)}67%,100%{opacity:.4}}
+/* 選んでいるタブの下線がすべる */
+.pt__bar{position:absolute;left:0;bottom:-1px;width:33.333%;height:2px;background:var(--ac);animation:pt-bar 16s infinite;animation-delay:var(--d,0s)}
+@keyframes pt-bar{0%,25%{transform:translateX(0);animation-timing-function:cubic-bezier(.22,1,.36,1)}29%,45%{transform:translateX(100%);animation-timing-function:cubic-bezier(.22,1,.36,1)}49%,65%{transform:translateX(200%);animation-timing-function:cubic-bezier(.22,1,.36,1)}69%,100%{transform:translateX(0)}}
+/* 指でタップした印（DINNER → DRINK → LUNCH の順） */
+.pt__tap{position:absolute;top:50%;left:50%;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:rgba(128,128,128,.45);box-shadow:0 0 0 1.5px rgba(255,255,255,.7);opacity:0;animation:pt-tap 16s infinite;animation-delay:var(--d,0s)}
+@keyframes pt-tap{0%,21%{opacity:0;left:50%;transform:scale(.4)}23%{opacity:1;left:50%;transform:scale(.8)}25%{opacity:1;left:50%;transform:scale(.7)}27%{opacity:0;left:50%;transform:scale(1.3)}
+  28%,41%{opacity:0;left:83.3%;transform:scale(.4)}43%{opacity:1;left:83.3%;transform:scale(.8)}45%{opacity:1;left:83.3%;transform:scale(.7)}47%{opacity:0;left:83.3%;transform:scale(1.3)}
+  48%,61%{opacity:0;left:16.7%;transform:scale(.4)}63%{opacity:1;left:16.7%;transform:scale(.8)}65%{opacity:1;left:16.7%;transform:scale(.7)}67%,100%{opacity:0;left:16.7%;transform:scale(1.3)}}
+/* 中身は3枚を重ね、選んだものだけを見せる */
+.pt__panes{display:grid;overflow:hidden}
+.pt__pane{grid-area:1/1;padding-top:8px;opacity:0}
+.pt__pane .ps__menu{padding:0}
+.pt__img{display:block;height:64px;margin-bottom:4px;border-radius:calc(var(--r,6px) / 2);background:center/cover}
+.pt__img--none{display:grid;place-items:center;background:color-mix(in srgb,var(--ac) 12%,transparent);color:var(--ac)}
+.pt__img--none svg{width:26px;height:26px;stroke-width:1.6}
+.pt__pane--0{animation:pt-p0 16s infinite;animation-delay:var(--d,0s)}
+.pt__pane--1{animation:pt-p1 16s infinite;animation-delay:var(--d,0s)}
+.pt__pane--2{animation:pt-p2 16s infinite;animation-delay:var(--d,0s)}
+@keyframes pt-p0{0%,25%{opacity:1;transform:none}27%,65%{opacity:0;transform:translateX(-14px)}66%{opacity:0;transform:translateX(14px)}69%,100%{opacity:1;transform:none}}
+@keyframes pt-p1{0%,25%{opacity:0;transform:translateX(14px)}29%,45%{opacity:1;transform:none}47%,100%{opacity:0;transform:translateX(-14px)}}
+@keyframes pt-p2{0%,45%{opacity:0;transform:translateX(14px)}49%,65%{opacity:1;transform:none}67%,100%{opacity:0;transform:translateX(-14px)}}
 /* ハンバーガーを開く見本（3台）。16秒で「押す→開く→項目が右から入る→閉じる→スクロール」 */
 .has-nav{--hx:calc(100% - 19px);--hy:17.5px}
 .has-nav.ly-c{--hy:12.5px}
@@ -892,4 +926,4 @@ html.is-lite:not([data-tod=night]) .kv-night,html.is-lite:not([data-tod=night]) 
 @media (max-width:750px){.phone{width:180px}.phone__screen{height:370px}.phones__row{gap:18px}.ios__status{padding:4px 11px 0 18px}.ios__island{width:44px;margin-left:-22px}}
 .phones__cta{margin-top:clamp(28px,4vw,44px)}
 .phones__cta .c-btn{margin:0 auto}
-@media (prefers-reduced-motion:reduce){.phones__track{overflow-x:auto}.phones__row,.ps__in,.has-nav .ps__in{animation:none}.pn,.pn__tap{display:none}}
+@media (prefers-reduced-motion:reduce){.phones__track{overflow-x:auto}.phones__row,.ps__in,.has-nav .ps__in,.has-tabs .ps__in{animation:none}.pn,.pn__tap,.pt__tap{display:none}.pt__pane--0,.pt__t--0{animation:none;opacity:1}.pt__pane--1,.pt__pane--2,.pt__t--1,.pt__t--2,.pt__bar{animation:none}}

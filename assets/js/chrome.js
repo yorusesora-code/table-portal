@@ -220,6 +220,18 @@ const enableLite = () => {
   }
 }
 
+/* ---- スマホ見本：タブの台は、タブがアドレスバーの少し下に来るところまでスクロールさせる ---- */
+{
+  const fitTabs = () => $$('.has-tabs').forEach(v => {
+    const pt = $('.pt', v), inner = $('.ps__in', v);
+    const y = Math.min(pt.offsetTop - 14, inner.offsetHeight - v.clientHeight);
+    v.style.setProperty('--ty', -Math.max(0, Math.round(y)) + 'px');
+  });
+  fitTabs();
+  addEventListener('load', fitTabs, {once:true});
+  addEventListener('resize', fitTabs);
+}
+
 /* ---- 画面の外にある部分は、CSS のループと SVG の動き（SMIL）を止める ---- */
 // 見えている間だけ動かす。少し手前（上下200px）で動き出すので、戻ってきたときに止まって見えない
 {
