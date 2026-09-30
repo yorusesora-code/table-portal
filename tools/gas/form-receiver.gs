@@ -13,8 +13,29 @@ const CONFIG = {
   NOTIFY_TO: 'info@kintoun-m.com',                 // 通知メールの宛先（カンマ区切りで複数可）
   FROM_NAME: 'Table（キントウンマーケティング株式会社）',
   REPLY_TO: 'info@kintoun-m.com',                  // 自動返信にお客さまが返信したときの宛先
-  AUTO_REPLY: false,                               // true にするとお客さまへ「受け付けました」メールを送る
-  SITE_URL: 'https://table-portal.pages.dev',
+  AUTO_REPLY: true,                                // お客さまへ「受け付けました」メールを送る（止めるときは false）
+  SITE_URL: 'https://table-portal.pages.dev',      // 本公開でURLが変わったら差し替え
+  ADDRESS: '〒150-0011 東京都渋谷区東1-27-7 渋谷東KMビル 7F',
+  TEL: '03-6427-2133',
+};
+
+// 自動返信の文面（フォームごと）
+const REPLY = {
+  contact: {
+    subject: '【Table】ご相談を受け付けました｜飲食店のHP制作',
+    thanks: 'このたびは Table（飲食店のHP制作）にご相談いただき、誠にありがとうございます。',
+    next: '内容を確認のうえ、1〜2営業日以内に担当よりメールまたはお電話でご連絡いたします。',
+  },
+  download: {
+    subject: '【Table】代理店向け資料のご請求を受け付けました',
+    thanks: 'このたびは Table 販売代理店の資料をご請求いただき、誠にありがとうございます。',
+    next: '担当より、ご入力のメールアドレスあてに資料をお送りいたします。',
+  },
+  apply: {
+    subject: '【Table】代理店のお申込みを受け付けました',
+    thanks: 'このたびは Table 販売代理店にお申込みいただき、誠にありがとうございます。',
+    next: '内容を確認のうえ、担当より面談（オンライン可）の日程についてご連絡いたします。',
+  },
 };
 
 // フォームごとの保存先シートと、列（キー → 見出し）
@@ -96,11 +117,32 @@ function doPost(e) {
 
   // 3. お客さまへの自動返信（CONFIG.AUTO_REPLY が true のときだけ）
   if (CONFIG.AUTO_REPLY) {
+    const r = REPLY[kind];
+    // お客さまに見せる控え（送信ページなど社内向けの項目は除く。未入力は「（未入力）」）
+    const copy = def.cols.filter((c) => !['page', 'via_agent'].includes(c[0]) && !(c[0] === 'agent_code' && !val('agent_code')))
+      .map((c) => c[0] === 'message' ? '■ ' + c[1] + '\n' + (val(c[0]) || '（未入力）') : '■ ' + c[1] + '：' + (val(c[0]) || '（未入力）'))
+      .join('\n');
+    const line = '――――――――――――――――――――';
     MailApp.sendEmail({
       to: email,
-      subject: '【Table】お問い合わせを受け付けました',
-      body: (val('name') || 'お客さま') + ' 様\n\nこのたびはお問い合わせいただき、ありがとうございます。\n以下の内容で受け付けました。1〜2営業日以内に担当よりご連絡いたします。\n\n' + body +
-        '\n\n—\nTable（キントウンマーケティング株式会社）\n' + CONFIG.REPLY_TO + '\n' + CONFIG.SITE_URL + '\n※このメールは送信専用のアドレスから自動でお送りしています。ご返信は ' + CONFIG.REPLY_TO + ' へお願いします。',
+      subject: r.subject,
+      body: [
+        (val('name') || 'お客さま') + ' 様', '',
+        r.thanks, '以下の内容で受け付けました。', '',
+        line, copy, line, '',
+        r.next,
+        'ご不明な点や、内容の追加・訂正がございましたら、このメールにそのままご返信ください。', '',
+        '今後ともどうぞよろしくお願いいたします。', '',
+        '──────────',
+        'Table（テーブル）｜飲食店のHP制作',
+        'キントウンマーケティング株式会社',
+        CONFIG.ADDRESS,
+        'TEL ' + CONFIG.TEL + '　MAIL ' + CONFIG.REPLY_TO,
+        CONFIG.SITE_URL,
+        '──────────',
+        '※このメールはフォームの送信内容をもとに自動でお送りしています。',
+        '　お心当たりのない場合は、お手数ですが本メールを破棄してください。',
+      ].join('\n'),
       replyTo: CONFIG.REPLY_TO,
       name: CONFIG.FROM_NAME,
     });
