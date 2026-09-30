@@ -58,7 +58,7 @@ const FORMS = {
 // 選択肢の値を、読める言葉に
 const LABELS = {
   hp: { none: 'HPはない（Table Web）', old: 'HPはあるが古い（Table Shift）', unknown: 'わからない', 'delivery-only': 'HPの相談はなし（デリバリーの出店だけ）' },
-  plan: { standard: 'スタンダード', upgrade: 'アップグレード', premium: 'プレミアム', undecided: '相談して決めたい' },
+  plan: { entry: 'エントリー', standard: 'スタンダード', premium: 'プレミアム', undecided: '相談して決めたい' },
   delivery: { both: '2社とも新規で申し込みたい', one: '1社を新規で申し込みたい', already: 'すでに登録済み', no: '予定なし', ask: '話を聞きたい' },
   via_agent: { yes: 'はい' },
 };

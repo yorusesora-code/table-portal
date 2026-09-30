@@ -267,7 +267,7 @@ const C = {
     </div>
     <div class="simx-plan">
       <div class="simx-plan-k en">RECOMMENDED</div>
-      <div class="simx-plan-v" data-s="planName">アップグレード</div>
+      <div class="simx-plan-v" data-s="planName">スタンダード</div>
       <div class="simx-plan-p"><b class="en" data-s="planPrice">¥198,000</b>〜（税別）・月額0円</div>
       <div class="simx-plan-sub" data-s="planReason"></div>
     </div>
