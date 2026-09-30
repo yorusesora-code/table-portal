@@ -8,7 +8,7 @@ export const SITE = {
   url: "https://kintoun-m.com",          // 公開URLが決まったら差し替え
   email: "info@kintoun-m.com",
   tel: "",                                // 【要記入】掲載する電話番号（空なら非表示）
-  formEndpoint: "",                       // 例: GAS の doPost URL。空ならフォームは送信せず完了表示のみ
+  formEndpoint: "https://script.google.com/macros/s/AKfycbzWuEeLIu6OjEbt1wmkTIvKRh-xt8ws3db95kHLWw7Qwjy7vr20WJGgZ63oul8cDGNI/exec",                       // 例: GAS の doPost URL。空ならフォームは送信せず完了表示のみ
   showPartnerReward: false,               // 代理店報酬「一律50%」を /partner/ に掲載するか（掲載可否の判断後に true）
   partnerReward: "成約金額（税別）の一律50%",
   year: 2026,
