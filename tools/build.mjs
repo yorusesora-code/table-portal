@@ -119,7 +119,7 @@ const C = {
       return `<li class="phone"${dup ? ' aria-hidden="true"' : ""}><div class="phone__frame"><div class="phone__screen">${top}<div class="ios__view ly-${s.ly}${s.nav ? " has-nav" : ""}${s.tabs ? " has-tabs" : ""}" style="${s.v};--d:-${(i * 2.3) % 14}s"><div class="ps__in">${body}</div>${fix}${nav}</div>${tool}</div></div><p class="phone__cap"><b class="en">${s.en}</b>${s.genre}</p></li>`;
     };
     return `<div class="phones" aria-label="スマホで見たときのHPの見本（架空の店舗）">
-  <p class="phones__k"><span class="en">ON YOUR PHONE</span>スマホで見ると、こうなります</p>
+  <p class="phones__k"><span class="en">ON YOUR PHONE</span>スマホで見ると、こうなります<span class="phones__hint" aria-hidden="true"></span></p>
   <div class="phones__track"><ul class="phones__row">${S.map((s, i) => card(s, i)).join("")}${S.map((s, i) => card(s, i, true)).join("")}</ul></div>
   <p class="phones__note">※ 架空の店舗でつくった制作イメージです。業態やお店の雰囲気に合わせて、色・書体・並びを設計します。</p>
 </div>`;
