@@ -225,6 +225,15 @@
     }
   }
 
+  /* ---- フォーム送信（共通）：data.mjs の formEndpoint（Google Apps Script の受け口）へ送る ----
+     text/plain で送るので事前確認（CORS）が起きない。応答は読まない（no-cors）ため、届かなかったときだけ通信エラーになる */
+  var sendForm = function (data) {
+    if (!CFG.formEndpoint) return new Promise(function (r) { setTimeout(r, 500); });   // 受け口未設定のときは送らず完了表示だけ
+    return fetch(CFG.formEndpoint, { method: "POST", mode: "no-cors", body: JSON.stringify(data), headers: { "Content-Type": "text/plain;charset=utf-8" } });
+  };
+  // 送信ボタンの文字だけを差し替える（ナイフのアイコンは残す）
+  var btnLabel = function (btn, t) { var s = btn.querySelector("span"); (s || btn).textContent = t; };
+
   /* ---- お問い合わせフォーム ---- */
   var form = $("[data-contact-form]");
   if (form) {
@@ -270,16 +279,14 @@
       e.preventDefault();
       if (!validate()) return;
       var data = {}; new FormData(form).forEach(function (v, k) { data[k] = data[k] ? data[k] + "," + v : v; });
-      data.page = location.href;
-      var btn = $("button[type=submit]", form); btn.disabled = true; btn.textContent = "送信中…";
+      data.page = location.href; data.form = "contact";
+      var btn = $("button[type=submit]", form); btn.disabled = true; btnLabel(btn, "送信中…");
       var done = function () {
         track("contact_submit", { plan: data.plan || "", hp: data.hp || "", agent: data.agent_code ? "yes" : "no" });
         form.hidden = true; $("[data-form-done]").hidden = false;
         window.scrollTo({ top: $("[data-form-done]").getBoundingClientRect().top + window.scrollY - 120, behavior: reduce ? "auto" : "smooth" });
       };
-      if (!CFG.formEndpoint) { setTimeout(done, 500); return; }
-      fetch(CFG.formEndpoint, { method: "POST", body: JSON.stringify(data), headers: { "Content-Type": "text/plain;charset=utf-8" } })
-        .then(done).catch(function () { btn.disabled = false; btn.textContent = "送信する"; alert("送信に失敗しました。時間をおいて再度お試しいただくか、メールでご連絡ください。"); });
+      sendForm(data).then(done).catch(function () { btn.disabled = false; btnLabel(btn, "送信する"); alert("送信に失敗しました。時間をおいて再度お試しいただくか、" + (CFG.email || "メール") + " までご連絡ください。"); });
     });
   }
   // どのページから来ても ?agent= を覚えておく（同一タブ内）
@@ -292,10 +299,11 @@
       var bad = $$("[required]", f).filter(function (i) { return i.type === "checkbox" ? !i.checked : !i.value.trim(); });
       $$("[required]", f).forEach(function (i) { i.classList.toggle("is-invalid", bad.indexOf(i) > -1); });
       if (bad.length) { bad[0].focus(); return; }
-      var data = {}; new FormData(f).forEach(function (v, k) { data[k] = v; }); data.form = f.dataset.simpleForm;
+      var data = {}; new FormData(f).forEach(function (v, k) { data[k] = v; }); data.form = f.dataset.simpleForm; data.page = location.href;
+      var btn = $("button[type=submit]", f), label = btn.querySelector("span") ? btn.querySelector("span").textContent : btn.textContent;
+      btn.disabled = true; btnLabel(btn, "送信中…");
       var fin = function () { f.hidden = true; var d = f.nextElementSibling; if (d) d.hidden = false; track("partner_" + f.dataset.simpleForm); };
-      if (!CFG.formEndpoint) return fin();
-      fetch(CFG.formEndpoint, { method: "POST", body: JSON.stringify(data), headers: { "Content-Type": "text/plain;charset=utf-8" } }).then(fin).catch(fin);
+      sendForm(data).then(fin).catch(function () { btn.disabled = false; btnLabel(btn, label); alert("送信に失敗しました。時間をおいて再度お試しいただくか、" + (CFG.email || "メール") + " までご連絡ください。"); });
     });
   });
 })();

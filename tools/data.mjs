@@ -6,7 +6,7 @@ export const SITE = {
   tagline: "飲食店のためのHP制作",
   company: "キントウンマーケティング株式会社",
   url: "https://kintoun-m.com",          // 公開URLが決まったら差し替え
-  email: "kawasaki@kintoun.co.jp",
+  email: "info@kintoun-m.com",
   tel: "",                                // 【要記入】掲載する電話番号（空なら非表示）
   formEndpoint: "",                       // 例: GAS の doPost URL。空ならフォームは送信せず完了表示のみ
   showPartnerReward: false,               // 代理店報酬「一律50%」を /partner/ に掲載するか（掲載可否の判断後に true）

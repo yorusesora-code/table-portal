@@ -423,7 +423,7 @@ ${body}
 ${/class="contact"/.test(body) || meta.nocta ? "" : C.cta()}
 ${C.foot()}
 </main>`}
-<script>window.TABLE_CONFIG=${JSON.stringify({ formEndpoint: SITE.formEndpoint })};</script>
+<script>window.TABLE_CONFIG=${JSON.stringify({ formEndpoint: SITE.formEndpoint, email: SITE.email })};</script>
 <script src="/assets/js/site.js" defer></script>
 ${meta.bare ? "" : `<script src="/assets/js/chrome.js" defer></script>`}
 ${(meta.js || []).map((h) => '<script src="' + h + '" defer></script>').join("")}
