@@ -175,9 +175,9 @@
     var elFee = $("#sim-fee", sim), elYears = $("#sim-years", sim);
     var horizon = 5;
     var planFor = function (m) {
-      if (m <= 20000) return { name: "スタンダード", reason: "月1〜2万円帯の、同等のリニューアルに" };
-      if (m <= 40000) return { name: "アップグレード", reason: "月3〜4万円帯の、デザイン刷新＋集客強化に" };
-      return { name: "プレミアム", reason: "月5万円以上・観光地や多店舗の本格集客に" };
+      if (m <= 20000) return { name: "スタンダード", price: 98000, reason: "月1〜2万円帯の、同等のリニューアルに" };
+      if (m <= 40000) return { name: "アップグレード", price: 198000, reason: "月3〜4万円帯の、デザイン刷新＋集客強化に" };
+      return { name: "プレミアム", price: 498000, reason: "月5万円以上・観光地や多店舗の本格集客に" };
     };
     var setFill = function (el) { el.style.setProperty("--pct", ((el.value - el.min) / (el.max - el.min) * 100) + "%"); };
     var animateNum = function (el, to) {
@@ -198,6 +198,8 @@
       s("sunkYears").textContent = yrs >= 20 ? "20年以上" : yrs + "年";
       s("planName").textContent = p.name;
       s("planReason").textContent = p.reason;
+      s("planPrice").textContent = yen(p.price);
+      s("payback").textContent = "約" + Math.max(1, Math.ceil(p.price / m)) + "ヶ月";
       s("barKeep").style.width = "100%";
       ["keep", "barKeepVal", "sunk", "perMonth"].forEach(function (k, i) {
         var v = [keep, keep, sunk, m][i];

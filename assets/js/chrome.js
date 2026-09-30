@@ -223,7 +223,7 @@ const enableLite = () => {
 /* ---- 画面の外にある部分は、CSS のループと SVG の動き（SMIL）を止める ---- */
 // 見えている間だけ動かす。少し手前（上下200px）で動き出すので、戻ってきたときに止まって見えない
 {
-  const ZONES = '.hang, .sh, .camp, .duo__ill, .orow__vis';
+  const ZONES = '.hang, .phones, .sh, .camp, .duo__ill, .orow__vis';
   const setZone = (el, on) => {
     el.classList.toggle('is-offscreen', !on);
     $$('svg', el).forEach(svg => { if (RM) return; on && !el.classList.contains('is-still') ? resume(svg) : svg.pauseAnimations?.(); });

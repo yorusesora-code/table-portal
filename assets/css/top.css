@@ -7,7 +7,7 @@
    4. カード・角丸・影で囲まない。区切りは余白と細い罫線
    5. 動かすのはイラストの一部と「文字・線」だけ。出は減速、退きは加速で半分の時間
    6. ボタンは READ MORE 型（文字＋4pxの下線が rotateY で横に一回転）
-   7. 販売金額は出さない。押し出すのは「月額0円」
+   7. 押し出すのは「月額0円」。初期費用（98,000円〜）はプラン表などで示す
    ========================================================= */
 :root{
   --ink:#171b1d; --accent:#FF7F11; --accent-2:#FFBE7A; --accent-3:#FFEEDD;
@@ -772,3 +772,65 @@ html.is-lite:not([data-tod=night]) .kv-night,html.is-lite:not([data-tod=night]) 
 
 /* hidden 属性は、display を指定した部品でも必ず隠す（フォーム送信後の切り替えなど） */
 [hidden]{display:none !important}
+
+/* プラン表：初期費用の行 */
+.ptable__price td{font-size:13px;font-weight:700}
+.ptable__price td b{font-size:24px;letter-spacing:.01em;margin-right:2px}
+.ptable__price th small{font-size:11px;font-weight:500;color:var(--sub);margin-left:2px}
+@media (max-width:750px){.ptable__price td b{font-size:18px}}
+
+/* ---------- FOOD FIRST：スマホ画面の見本（横に流れる帯） ---------- */
+.phones{margin-top:clamp(40px,6vw,72px)}
+.phones__k{max-width:1160px;margin:0 auto 22px;padding:0 clamp(24px,6vw,60px);display:flex;align-items:baseline;gap:14px;font-size:13px;font-weight:700}
+.phones__k .en{font-size:12px;color:var(--line)}
+.phones__track{overflow:hidden;padding:6px 0 18px}
+.phones__row{display:flex;gap:28px;width:max-content;padding:0 14px;animation:phones-flow 90s linear infinite}
+@keyframes phones-flow{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.phones__track:hover .phones__row{animation-play-state:paused}
+.phones__note{max-width:1160px;margin:6px auto 0;padding:0 clamp(24px,6vw,60px);font-size:11px;color:var(--sub)}
+.phone{flex:none;width:196px}
+.phone__frame{position:relative;border:7px solid var(--ink);border-radius:30px;background:var(--ink);box-shadow:0 20px 34px -22px rgba(23,27,29,.6);transition:transform .6s var(--e-expo)}
+@media (hover:hover){.phone:hover .phone__frame{transform:translateY(-8px)}}
+.phone__notch{position:absolute;left:50%;top:0;width:64px;height:14px;margin-left:-32px;background:var(--ink);border-radius:0 0 10px 10px;z-index:2}
+.phone__screen{position:relative;height:376px;border-radius:23px;overflow:hidden;background:var(--bg);color:var(--fg);font-family:var(--ff,var(--font-jp));font-size:10px;line-height:1.6}
+.ps__in{padding-top:16px;animation:ps-scroll 14s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes ps-scroll{0%,22%{transform:translateY(0)}46%,74%{transform:translateY(-150px)}96%,100%{transform:translateY(0)}}
+.ps__bar,.ps__band{display:flex;justify-content:space-between;align-items:center;padding:8px 12px}
+.ps__bar b,.ps__band b{font-size:12px;letter-spacing:.06em}
+.ps__bar i,.ps__band i{width:14px;height:9px;border-top:1.5px solid currentColor;border-bottom:1.5px solid currentColor;position:relative}
+.ps__bar i::after,.ps__band i::after{content:"";position:absolute;left:0;right:0;top:2.2px;height:1.5px;background:currentColor}
+.ps__bar--c{justify-content:flex-end}
+.ps__band{background:var(--band);color:var(--bandfg,#fff)}
+.ps__hero{position:relative;height:150px;background:center/cover;display:flex;flex-direction:column;justify-content:space-between;padding:10px}
+.ly-a .ps__hero{margin:0 0 10px}
+.ly-a .ps__hero::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 35%,rgba(0,0,0,.6))}
+.ly-a .ps__hero > *{position:relative;z-index:1}
+.ly-a .ps__catch{color:#fff;font-size:14px;font-weight:900;line-height:1.45}
+.ps__open{align-self:flex-start;display:inline-block;background:var(--bg);color:var(--fg);font-size:8.5px;font-weight:700;padding:3px 8px;border-radius:99px}
+.ly-a .ps__open{background:rgba(255,255,255,.92);color:#1d1d1d}
+.ps__btns{display:grid;gap:6px;padding:0 12px 10px}
+.ps__btns span{display:block;text-align:center;padding:7px;border-radius:var(--r,99px);font-weight:900;font-size:9.5px;border:1.5px solid var(--ac);color:var(--ac)}
+.ps__btns span:first-child{background:var(--ac);color:var(--bg)}
+.ps__h{padding:6px 12px 4px;font-size:9px;font-weight:900;letter-spacing:.16em;color:var(--ac)}
+.ps__menu{padding:0 12px 8px}
+.ps__menu li{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid color-mix(in srgb,var(--fg) 14%,transparent)}
+.ps__menu b{font-weight:700;color:var(--ac)}
+.ps__thumbs{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:5px;padding:0 12px 10px}
+.ps__thumbs i{display:block;aspect-ratio:1;background:center/cover;border-radius:calc(var(--r,6px) / 2)}
+.ps__map{height:60px;margin:6px 12px 14px;border-radius:6px;background:repeating-linear-gradient(0deg,color-mix(in srgb,var(--fg) 8%,transparent) 0 14px,transparent 14px 16px),repeating-linear-gradient(90deg,transparent 0 24px,color-mix(in srgb,var(--fg) 10%,transparent) 24px 26px)}
+.ly-b .ps__title{padding:12px 12px 10px}
+.ly-b .ps__catch{font-size:15px;font-weight:900;line-height:1.4;margin-bottom:6px}
+.ly-b .ps__open{border:1px solid color-mix(in srgb,var(--fg) 25%,transparent)}
+.ly-b .ps__hero{height:130px;margin:0 12px 10px;border-radius:6px}
+.ly-c{text-align:center}
+.ly-c .ps__crest{padding:4px 12px 10px}
+.ly-c .ps__crest small{display:block;font-size:8px;letter-spacing:.2em;color:var(--ac)}
+.ly-c .ps__crest b{display:block;font-size:17px;letter-spacing:.06em;margin-top:2px}
+.ly-c .ps__hero{width:150px;height:170px;margin:0 auto 10px;border-radius:75px 75px 6px 6px}
+.ly-c .ps__catch{font-size:13px;font-weight:700;line-height:1.5;padding:0 12px 6px}
+.ly-c .ps__open{margin-bottom:10px;border:1px solid color-mix(in srgb,var(--fg) 25%,transparent)}
+.ly-c .ps__menu li{text-align:left}
+.phone__cap{display:flex;align-items:baseline;gap:8px;margin-top:10px;font-size:12px;font-weight:700}
+.phone__cap .en{font-size:10px;color:var(--line)}
+@media (max-width:750px){.phone{width:170px}.phone__screen{height:330px}.phones__row{gap:18px}}
+@media (prefers-reduced-motion:reduce){.phones__track{overflow-x:auto}.phones__row,.ps__in{animation:none}}

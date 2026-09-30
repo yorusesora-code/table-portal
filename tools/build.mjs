@@ -67,6 +67,41 @@ const C = {
     ? `<span class="mini mini--web" aria-hidden="true"><i class="mini__bar"><b></b><b></b><b></b></i><i class="mini__empty"><span>＋</span></i></span>`
     : `<span class="mini mini--shift" aria-hidden="true"><i class="mini__bar"><b></b><b></b><b></b></i><i class="mini__old"></i><i class="mini__new"></i></span>`,
 
+
+  // トップ FOOD FIRST：スマホで見たときのHPの見本（架空の店舗）。横に流れる帯
+  phones: () => {
+    const P = (n) => `/assets/img/photos/s/${n}.webp`;
+    const S = [
+      { ly: "a", en: "YAKINIKU", genre: "焼肉", name: "炭火焼肉 はなび", catch: "厚切りの牛たんと、<br>炭の香り。", open: "本日 17:00–23:00", hero: "gyutan", menu: [["厚切り上たん塩", "1,680"], ["特選ハラミ", "1,480"], ["石焼ビビンバ", "980"]], v: "--bg:#17110d;--fg:#f5ede2;--ac:#c9a063;--sub:rgba(245,237,226,.6);--ff:'Hiragino Mincho ProN','Yu Mincho',serif" },
+      { ly: "b", en: "CHINESE", genre: "中華", name: "四川飯店 紅", catch: "しびれる辛さの<br>本格麻婆豆腐", open: "営業中 11:00–22:00", hero: "mapo-tofu", thumbs: ["chinjao", "subuta", "gyoza"], menu: [["麻婆豆腐", "1,100"], ["青椒肉絲", "1,200"]], v: "--bg:#fff;--fg:#1d1d1d;--ac:#b8241c;--sub:#8a8a8a;--band:#b8241c" },
+      { ly: "c", en: "ITALIAN", genre: "イタリアン", name: "Trattoria Sole", catch: "薪窯で焼く、<br>ナポリのピッツァ", open: "LUNCH 11:30 / DINNER 17:30", hero: "margherita", thumbs: ["carbonara", "tomato-pasta"], menu: [["マルゲリータ", "1,400"], ["カルボナーラ", "1,500"]], v: "--bg:#fbf8f2;--fg:#23301f;--ac:#2f6b3a;--sub:#7d7a70;--ff:Georgia,'Times New Roman',serif" },
+      { ly: "a", en: "CAFE", genre: "カフェ", name: "ひだまり珈琲", catch: "ゆっくりできる、<br>朝のブランチ。", open: "本日 8:00–18:00", hero: "cafe-brunch", thumbs: ["souffle-pancake", "cafe-counter"], menu: [["ブランチプレート", "1,350"], ["スフレパンケーキ", "1,200"]], v: "--bg:#f6efe4;--fg:#4a3526;--ac:#b07843;--sub:#9b8573;--r:18px" },
+      { ly: "b", en: "WASHOKU", genre: "和食", name: "天ぷら 凪", catch: "揚げたてを、<br>カウンターで。", open: "昼 11:30／夜 17:30", hero: "tempura", thumbs: ["teishoku"], menu: [["天ぷら定食", "1,480"], ["季節の天丼", "1,380"]], v: "--bg:#f7f5ef;--fg:#1f2a44;--ac:#2b3a67;--sub:#7a7f8c;--band:#2b3a67;--ff:'Hiragino Mincho ProN','Yu Mincho',serif" },
+      { ly: "c", en: "UNAGI", genre: "うなぎ", name: "うなぎ 川瀬", catch: "創業七十年の<br>秘伝のたれ", open: "本日 11:00–20:00", hero: "unaju", menu: [["うな重（上）", "4,200"], ["ひつまぶし", "3,900"]], v: "--bg:#121212;--fg:#efe6d8;--ac:#b5552f;--sub:rgba(239,230,216,.55);--ff:'Hiragino Mincho ProN','Yu Mincho',serif" },
+      { ly: "a", en: "SWEETS", genre: "洋菓子", name: "Pâtisserie Miel", catch: "季節の果実と、<br>とっておきのケーキ。", open: "本日 10:00–19:00", hero: "mont-blanc", thumbs: ["fondant", "creme-brulee", "basque-cheesecake"], menu: [["和栗のモンブラン", "680"], ["バスクチーズケーキ", "560"]], v: "--bg:#fcecf0;--fg:#5a2f3a;--ac:#d0587a;--sub:#a7818b;--r:22px" },
+      { ly: "b", en: "GYOZA", genre: "餃子", name: "餃子の金星", catch: "パリッと羽根つき、<br>毎日手包み。", open: "営業中 11:00–23:00", hero: "gyoza", menu: [["焼き餃子 6個", "380"], ["水餃子", "450"], ["餃子定食", "850"]], v: "--bg:#fff8d6;--fg:#161616;--ac:#161616;--sub:#6b6552;--band:#f5c400;--bandfg:#161616" },
+      { ly: "c", en: "TERRACE", genre: "カフェテラス", name: "GREEN TABLE", catch: "テラス席で、<br>午後のひととき。", open: "本日 11:00–20:00", hero: "cafe-terrace", thumbs: ["berry-cheesecake", "basque-cheesecake"], menu: [["ベリーのチーズケーキ", "650"], ["本日のコーヒー", "480"]], v: "--bg:#eef2ea;--fg:#23392c;--ac:#2f4a3a;--sub:#6f7f73" },
+      { ly: "a", en: "TEISHOKU", genre: "定食", name: "定食 まつや", catch: "炭火で焼いた、<br>今日の焼き魚。", open: "本日 11:00–21:00", hero: "teishoku", menu: [["焼き魚定食", "980"], ["唐揚げ定食", "950"], ["日替わり", "900"]], v: "--bg:#fff;--fg:#2d2a24;--ac:#6b8f3c;--sub:#8b877c" },
+    ];
+    const card = (s, i, dup) => {
+      const thumbs = s.thumbs ? `<div class="ps__thumbs">${s.thumbs.map((t) => `<i style="background-image:url(${P(t)})"></i>`).join("")}</div>` : "";
+      const menu = `<ul class="ps__menu">${s.menu.map(([n, p]) => `<li><span>${n}</span><b>¥${p}</b></li>`).join("")}</ul>`;
+      const btns = `<div class="ps__btns"><span>Uber Eats で注文</span><span>予約する</span></div>`;
+      const hero = `<div class="ps__hero" style="background-image:url(${P(s.hero)})">${s.ly === "a" ? `<span class="ps__open">${s.open}</span><p class="ps__catch">${s.catch}</p>` : ""}</div>`;
+      const body = s.ly === "a"
+        ? `<div class="ps__bar"><b>${s.name}</b><i></i></div>${hero}${btns}<p class="ps__h">MENU</p>${menu}${thumbs}<p class="ps__h">ACCESS</p><div class="ps__map"></div>`
+        : s.ly === "b"
+        ? `<div class="ps__band"><b>${s.name}</b><i></i></div><div class="ps__title"><p class="ps__catch">${s.catch}</p><span class="ps__open">${s.open}</span></div>${hero}${btns}${thumbs}<p class="ps__h">おすすめ</p>${menu}<div class="ps__map"></div>`
+        : `<div class="ps__bar ps__bar--c"><i></i></div><div class="ps__crest"><small>— ${s.en} —</small><b>${s.name}</b></div>${hero}<p class="ps__catch">${s.catch}</p><span class="ps__open">${s.open}</span>${btns}${thumbs}${menu}<div class="ps__map"></div>`;
+      return `<li class="phone"${dup ? ' aria-hidden="true"' : ""}><div class="phone__frame"><div class="phone__notch"></div><div class="phone__screen ly-${s.ly}" style="${s.v}"><div class="ps__in" style="--d:-${(i * 2.3) % 14}s">${body}</div></div></div><p class="phone__cap"><b class="en">${s.en}</b>${s.genre}</p></li>`;
+    };
+    return `<div class="phones" aria-label="スマホで見たときのHPの見本（架空の店舗）">
+  <p class="phones__k"><span class="en">ON YOUR PHONE</span>スマホで見ると、こうなります</p>
+  <div class="phones__track"><ul class="phones__row">${S.map((s, i) => card(s, i)).join("")}${S.map((s, i) => card(s, i, true)).join("")}</ul></div>
+  <p class="phones__note">※ 架空の店舗でつくった制作イメージです。業態やお店の雰囲気に合わせて、色・書体・並びを設計します。</p>
+</div>`;
+  },
+
   // 料金早見表（コンパクト）
   priceQuick: () => `
 <div class="pq">
@@ -86,7 +121,8 @@ const C = {
 <div class="tbl-wrap"><table class="ptable">
   <thead><tr><th scope="col"><span class="sr">項目</span></th>${D.PLANS.map((p) => `<th scope="col" class="${p.recommended ? "is-rec" : ""}"><span class="ptable__en">${p.en}</span>${p.name}${p.recommended ? `<span class="pq__badge">人気</span>` : ""}</th>`).join("")}</tr></thead>
   <tbody>
-        <tr class="ptable__zero"><th scope="row">月額費用</th>${D.PLANS.map(() => `<td>0円</td>`).join("")}</tr>
+        <tr class="ptable__price"><th scope="row">初期費用<small>（税別）</small></th>${D.PLANS.map((p) => `<td><b class="en">${p.price.toLocaleString("ja-JP")}</b>円〜</td>`).join("")}</tr>
+    <tr class="ptable__zero"><th scope="row">月額費用</th>${D.PLANS.map(() => `<td>0円</td>`).join("")}</tr>
     <tr><th scope="row">ページ数</th>${D.PLANS.map((p) => `<td>${p.pages}ページ${p.pages > 1 ? "まで" : ""}</td>`).join("")}</tr>
     <tr><th scope="row">メニュー掲載</th>${D.PLANS.map((p) => `<td>${p.menu}品まで</td>`).join("")}</tr>
     ${D.INCLUDES.map((r) => `<tr><th scope="row">${r.label}</th>${r.v.map((v) => `<td>${typeof v === "string" ? `<span class="txt">${v}</span>` : v ? `<span class="dot" aria-label="含む">●</span>` : `<span class="dash" aria-label="含まない">−</span>`}</td>`).join("")}</tr>`).join("")}
@@ -118,7 +154,7 @@ const C = {
 </ul>`,
 
 
-  // キャンペーン（写真背景の帯。割引額だけを出し、販売金額は出さない）
+  // キャンペーン（写真背景の帯）
   campaign: (a = {}) => `
 <section class="camp" id="campaign">
   <div class="camp__bg" aria-hidden="true"><img src="/assets/img/photos/m/berry-cheesecake.webp" srcset="/assets/img/photos/m/berry-cheesecake.webp 800w, /assets/img/photos/berry-cheesecake.webp 1448w" sizes="100vw" alt="" loading="lazy" decoding="async" width="1448" height="1086"></div>
@@ -191,7 +227,7 @@ const C = {
 </div>`;
   },
 
-  // 月額シミュレーター（Table Shift）。いまの月額の累計だけを出し、当社の販売金額は出さない
+  // 月額シミュレーター（Table Shift）。いまの月額の累計と、おすすめプランの初期費用で元が取れるまでの目安
   simulator: () => `
 <div class="simx" id="simulator" data-simulator>
   <div class="simx-inputs">
@@ -214,6 +250,7 @@ const C = {
     <div class="simx-plan">
       <div class="simx-plan-k en">RECOMMENDED</div>
       <div class="simx-plan-v" data-s="planName">アップグレード</div>
+      <div class="simx-plan-p"><b class="en" data-s="planPrice">¥198,000</b>〜（税別）・月額0円</div>
       <div class="simx-plan-sub" data-s="planReason"></div>
     </div>
   </div>
@@ -229,10 +266,11 @@ const C = {
     </div>
     <div class="simx-tiles">
       <div class="simx-tile"><div class="t-lab">これまでに支払った累計</div><div class="t-val en" data-s="sunk">¥0</div><div class="t-sub">契約から<span data-s="sunkYears">7年</span>で</div></div>
+      <div class="simx-tile"><div class="t-lab">初期費用の元が取れるまで</div><div class="t-val en" data-s="payback">—</div><div class="t-sub">おすすめプランの初期費用÷いまの月額</div></div>
       <div class="simx-tile"><div class="t-lab">乗り換え後、毎月手元に残る</div><div class="t-val en" data-s="perMonth">¥0</div><div class="t-sub">固定費がそのまま利益に</div></div>
     </div>
     ${C.btn({ href: "/contact/?service=shift&amp;topic=diagnosis", t: "この試算で無料診断する", wide: 1 })}
-    <p class="note">※ 1年＝12ヶ月で単純計算しています。乗り換えには買い切りの制作費（初回のみ）がかかります。いまの契約に合わせた金額と、何ヶ月で元が取れるかは無料診断でご案内します。</p>
+    <p class="note">※ 1年＝12ヶ月で単純計算しています。初期費用はプランの最低価格（税別・オプションやデリバリー割引は含まず）です。いまの契約に合わせた正確な金額は、無料診断でご案内します。</p>
   </div>
 </div>`,
 
@@ -389,7 +427,7 @@ ${C.navi()}`;
 function layout(meta, body, relPath) {
   const url = SITE.url + "/" + relPath.replace(/index\.html$/, "");
   const title = meta.title ? `${meta.title}｜Table 飲食店のHP制作` : `Table｜飲食店のHP制作（Table Web・Table Shift）`;
-  const desc = meta.desc || "HPがない飲食店には新規制作の Table Web、古いHPがある店には買い切りでリプレイスする Table Shift。買い切り・月額0円。デリバリー新規申込で最大10万円引き。";
+  const desc = meta.desc || "HPがない飲食店には新規制作の Table Web、古いHPがある店には買い切りでリプレイスする Table Shift。98,000円〜の買い切り・月額0円。デリバリー新規申込で最大10万円引き。";
   const crumbs = meta.crumbs ? `<nav class="crumbs" aria-label="パンくず"><ol><li><a href="/">TOP</a></li>${meta.crumbs.map((c, i) => i === meta.crumbs.length - 1 ? `<li aria-current="page">${c[0]}</li>` : `<li><a href="${c[1]}">${c[0]}</a></li>`).join("")}</ol></nav>` : "";
   return `<!DOCTYPE html>
 <html lang="ja">

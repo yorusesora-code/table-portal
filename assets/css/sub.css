@@ -174,7 +174,9 @@
 .simx-bar-fill{position:absolute;inset:0 auto 0 0;width:0;transition:width 1.1s var(--e-expo)}
 .simx-bar-fill.keep{background:var(--ink)}
 .simx-bar-fill.shift{background:var(--accent)}
-.simx-tiles{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--rule)}
+.simx-tiles{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule)}
+.simx-plan-p{font-size:13px;font-weight:700;margin-top:2px}
+.simx-plan-p b{font-size:20px;color:var(--accent);letter-spacing:.02em}
 .simx-tile{padding:18px 18px 4px 0}
 .simx-tile + .simx-tile{padding-left:18px;border-left:1px solid var(--rule)}
 .simx-tile .t-lab{font-size:12px;font-weight:700;color:var(--sub)}
