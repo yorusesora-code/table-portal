@@ -532,3 +532,18 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9em;background
 
 /* 迷惑送信よけの見えない欄 */
 .hp-field{position:absolute !important;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+/* オプション：問い合わせフォームとトップアニメーションの見本 */
+.formmo{display:grid;grid-template-columns:1.1fr 1fr;gap:14px;width:100%;align-items:stretch}
+.formmo__form{background:#fff;border:2px solid var(--ink);padding:14px;display:grid;gap:8px;font-size:11px;font-weight:700;color:var(--sub)}
+.formmo__form i{font-style:normal;display:block;border-bottom:2px solid var(--ink);padding:10px 2px 4px}
+.formmo__form .formmo__ta{border:2px solid var(--ink);height:52px;padding:6px}
+.formmo__form b{display:block;text-align:center;background:var(--ink);color:#fff;padding:9px;font-size:12px;letter-spacing:.1em}
+.formmo__motion{position:relative;background:var(--accent-3);overflow:hidden;min-height:160px;display:grid;place-items:end start;padding:12px}
+.formmo__motion span{position:absolute;border-radius:50%;background:var(--accent);animation:formmo 3.6s var(--e-expo) infinite}
+.formmo__motion span:nth-child(1){width:46px;height:46px;left:18%;top:22%}
+.formmo__motion span:nth-child(2){width:28px;height:28px;left:58%;top:18%;background:var(--accent-2);animation-delay:-1.2s}
+.formmo__motion span:nth-child(3){width:18px;height:18px;left:44%;top:52%;background:var(--ink);animation-delay:-2.4s}
+.formmo__motion em{position:relative;font-style:normal;font-family:var(--font-en);font-weight:900;letter-spacing:.14em;font-size:13px}
+@keyframes formmo{0%,100%{transform:translateY(0) scale(1)}40%{transform:translateY(-18px) scale(1.12)}70%{transform:translateY(4px) scale(.94)}}
+@media (max-width:750px){.formmo{grid-template-columns:1fr}}
