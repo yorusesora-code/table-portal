@@ -521,3 +521,11 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9em;background
 .clist-meter__bar i{position:absolute;inset:0 auto 0 0;width:0;background:var(--accent);transition:width .6s var(--e-expo)}
 .clist-meter.is-done{background:var(--accent-3)}
 @media (max-width:750px){.clist-meter{top:calc(var(--header-h) + 6px)}}
+
+/* 会社概要：所在地・主要事業 */
+.legal__sub{font-size:13px;color:var(--sub)}
+.legal .office + .office,.legal .biz + .biz{margin-top:16px}
+.legal .office b,.legal .biz b{display:block;font-weight:700;color:var(--ink)}
+.legal .office b::before,.legal .biz b::before{content:"";display:inline-block;width:14px;height:3px;background:var(--accent);border-radius:2px;margin-right:8px;vertical-align:middle}
+.legal .biz ul{list-style:none;padding:0 0 0 22px;margin:2px 0 0;font-size:14px;line-height:1.9}
+.legal .biz li::before{content:"・"}
