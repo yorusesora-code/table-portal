@@ -232,49 +232,6 @@ const enableLite = () => {
   addEventListener('resize', fitTabs);
 }
 
-/* ---- スマホ見本：タッチ端末ではタップで大きく表示（PC はマウスを乗せると CSS で拡大） ---- */
-{
-  const row = $('.phones__row');
-  if (row && !matchMedia('(hover:hover) and (pointer:fine)').matches){
-    let box = null, back = null;
-    const close = () => {
-      if (!box) return;
-      const b = box; box = null;
-      b.classList.remove('is-open');
-      document.documentElement.style.overflow = '';
-      setTimeout(() => b.remove(), 300);
-      back?.focus?.({preventScroll:true});
-    };
-    const open = li => {
-      back = li;
-      const frame = $('.phone__frame', li);
-      box = document.createElement('div');
-      box.className = 'phz';
-      box.setAttribute('role', 'dialog');
-      box.setAttribute('aria-modal', 'true');
-      box.setAttribute('aria-label', 'スマホ見本の拡大表示');
-      const ph = document.createElement('div');
-      ph.className = 'phone phz__phone';
-      ph.appendChild(frame.cloneNode(true));
-      // 画面の幅の86%・高さの（閉じるボタンと店名のぶんを引いた）範囲に収まる倍率
-      const vw = document.documentElement.clientWidth, vh = document.documentElement.clientHeight;
-      const s = Math.min(vw * .86 / frame.offsetWidth, (vh - 170) / frame.offsetHeight);
-      ph.style.setProperty('--s', Math.max(1, s).toFixed(3));
-      const btn = document.createElement('button');
-      btn.type = 'button'; btn.className = 'phz__close'; btn.setAttribute('aria-label', '閉じる');
-      box.append(btn, ph, $('.phone__cap', li).cloneNode(true));
-      box.addEventListener('click', close);
-      document.body.appendChild(box);
-      document.documentElement.style.overflow = 'hidden';
-      void box.offsetWidth;   // 初期状態を確定させてから開く（フェード・拡大のトランジションを効かせる）
-      box.classList.add('is-open');
-      btn.focus({preventScroll:true});
-    };
-    row.addEventListener('click', e => { const li = e.target.closest('.phone'); if (li) open(li); });
-    addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
-  }
-}
-
 /* ---- 画面の外にある部分は、CSS のループと SVG の動き（SMIL）を止める ---- */
 // 見えている間だけ動かす。少し手前（上下200px）で動き出すので、戻ってきたときに止まって見えない
 {
