@@ -812,12 +812,35 @@ html.is-lite:not([data-tod=night]) .kv-night,html.is-lite:not([data-tod=night]) 
 .ios__addr{flex:none;display:flex;align-items:center;gap:6px;padding:3px 10px 6px;border-bottom:1px solid #e3e3e6}
 .ios__addr > svg{flex:none;width:12px;height:12px;stroke-width:2.4}
 .ios__url{flex:1;min-width:0;text-align:center;line-height:1.25}
-.ios__url b,.ios__url small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ios__url b{font-size:8.5px;font-weight:700}
-.ios__url small{font-size:7px;color:#8a8a8e}
+.ios__url b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:8.5px;font-weight:700;line-height:1.6}
 /* サイト本体（中身がゆっくりスクロール） */
 .ios__view{position:relative;flex:1;min-height:0;overflow:hidden;background:var(--bg);color:var(--fg);font-family:var(--ff,var(--font-jp));font-size:10px;line-height:1.6}
 .ps__in{padding-bottom:40px;animation:ps-scroll 14s ease-in-out infinite;animation-delay:var(--d,0s)}
+/* ハンバーガーを開く見本（3台）。16秒で「押す→開く→項目が右から入る→閉じる→スクロール」 */
+.has-nav{--hx:calc(100% - 19px);--hy:17.5px}
+.has-nav.ly-c{--hy:12.5px}
+.has-nav .ps__in{animation:ps-scroll-nav 16s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes ps-scroll-nav{0%,54%{transform:translateY(0)}66%,82%{transform:translateY(-190px)}95%,100%{transform:translateY(0)}}
+.pn{position:absolute;inset:0;z-index:3;pointer-events:none;color:var(--bg);font-family:var(--ff,var(--font-jp))}
+.pn__bg{position:absolute;inset:0;background:var(--ac);clip-path:circle(0 at 0 0);animation:pn-bg-l 16s infinite;animation-delay:var(--d,0s)}
+.pn__bg--r{animation-name:pn-bg-r;animation-delay:calc(var(--d,0s) + .08s)}
+@keyframes pn-bg-l{0%,11%{clip-path:circle(0 at 0 0);animation-timing-function:cubic-bezier(.45,0,.55,1)}16%,44%{clip-path:circle(150% at 0 0);animation-timing-function:cubic-bezier(.55,0,1,.45)}48%,100%{clip-path:circle(0 at 0 0)}}
+@keyframes pn-bg-r{0%,11%{clip-path:circle(0 at 100% 0);animation-timing-function:cubic-bezier(.45,0,.55,1)}16%,44%{clip-path:circle(150% at 100% 0);animation-timing-function:cubic-bezier(.55,0,1,.45)}48%,100%{clip-path:circle(0 at 100% 0)}}
+.pn__list{position:absolute;left:18px;right:18px;top:46px;display:flex;flex-direction:column;gap:10px}
+.pn__list li{display:flex;align-items:baseline;gap:8px;opacity:0;animation:pn-item 16s infinite;animation-delay:calc(var(--d,0s) + var(--n) * .09s)}
+.pn__list b{font-size:15px;letter-spacing:.08em;font-weight:700}
+.pn__list small{font-size:7.5px;font-weight:700;opacity:.8}
+.pn__list .pn__rsv{justify-content:center;margin-top:6px;padding:7px;border:1.5px solid currentColor;border-radius:var(--r,99px);font-size:9px;font-weight:700}
+@keyframes pn-item{0%,14%{opacity:0;transform:translateX(70px);animation-timing-function:cubic-bezier(.22,1,.36,1)}19%,42%{opacity:1;transform:none;animation-timing-function:cubic-bezier(.55,0,1,.45)}45%,100%{opacity:0;transform:translateX(-24px)}}
+/* 閉じるボタン（ハンバーガーの位置に×） */
+.pn__x{position:absolute;left:var(--hx);top:var(--hy);width:14px;height:14px;margin:-7px 0 0 -7px;opacity:0;animation:pn-x 16s infinite;animation-delay:var(--d,0s)}
+.pn__x::before,.pn__x::after{content:"";position:absolute;left:0;right:0;top:50%;height:1.5px;margin-top:-.75px;background:currentColor;transform:rotate(45deg)}
+.pn__x::after{transform:rotate(-45deg)}
+@keyframes pn-x{0%,13%{opacity:0;transform:rotate(-90deg)}17%,44%{opacity:1;transform:none}47%,100%{opacity:0;transform:none}}
+/* 指でタップした印（開くときと閉じるときの2回） */
+.pn__tap{position:absolute;left:var(--hx);top:var(--hy);z-index:4;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;background:rgba(128,128,128,.45);box-shadow:0 0 0 1.5px rgba(255,255,255,.7);opacity:0;pointer-events:none;animation:pn-tap 16s infinite;animation-delay:var(--d,0s)}
+@keyframes pn-tap{0%,7%{opacity:0;transform:scale(.4)}9%{opacity:1;transform:scale(.8)}11%{opacity:1;transform:scale(.7)}13%{opacity:0;transform:scale(1.3)}
+  38%{opacity:0;transform:scale(.4)}40%{opacity:1;transform:scale(.8)}42%{opacity:1;transform:scale(.7)}44%,100%{opacity:0;transform:scale(1.3)}}
 @keyframes ps-scroll{0%,22%{transform:translateY(0)}46%,74%{transform:translateY(-190px)}96%,100%{transform:translateY(0)}}
 /* サイトの固定フッター（電話・予約・アクセス） */
 .ps__fix{position:absolute;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(3,1fr);background:color-mix(in srgb,var(--ac) 92%,transparent);color:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif}
@@ -869,4 +892,4 @@ html.is-lite:not([data-tod=night]) .kv-night,html.is-lite:not([data-tod=night]) 
 @media (max-width:750px){.phone{width:180px}.phone__screen{height:370px}.phones__row{gap:18px}.ios__status{padding:4px 11px 0 18px}.ios__island{width:44px;margin-left:-22px}}
 .phones__cta{margin-top:clamp(28px,4vw,44px)}
 .phones__cta .c-btn{margin:0 auto}
-@media (prefers-reduced-motion:reduce){.phones__track{overflow-x:auto}.phones__row,.ps__in{animation:none}}
+@media (prefers-reduced-motion:reduce){.phones__track{overflow-x:auto}.phones__row,.ps__in,.has-nav .ps__in{animation:none}.pn,.pn__tap{display:none}}
