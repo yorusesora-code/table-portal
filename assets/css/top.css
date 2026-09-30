@@ -780,21 +780,55 @@ html.is-lite:not([data-tod=night]) .kv-night,html.is-lite:not([data-tod=night]) 
 @media (max-width:750px){.ptable__price td b{font-size:18px}}
 
 /* ---------- FOOD FIRST：スマホ画面の見本（横に流れる帯） ---------- */
-.phones{margin-top:clamp(40px,6vw,72px)}
+.phones{margin-top:clamp(28px,4vw,48px)}
 .phones__k{max-width:1160px;margin:0 auto 22px;padding:0 clamp(24px,6vw,60px);display:flex;align-items:baseline;gap:14px;font-size:13px;font-weight:700}
 .phones__k .en{font-size:12px;color:var(--line)}
 .phones__track{overflow:hidden;padding:6px 0 18px}
-.phones__row{display:flex;gap:28px;width:max-content;padding:0 14px;animation:phones-flow 90s linear infinite}
+.phones__row{display:flex;gap:28px;width:max-content;padding:0 14px;animation:phones-flow 45s linear infinite}
 @keyframes phones-flow{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 .phones__track:hover .phones__row{animation-play-state:paused}
 .phones__note{max-width:1160px;margin:6px auto 0;padding:0 clamp(24px,6vw,60px);font-size:11px;color:var(--sub)}
-.phone{flex:none;width:196px}
-.phone__frame{position:relative;border:7px solid var(--ink);border-radius:30px;background:var(--ink);box-shadow:0 20px 34px -22px rgba(23,27,29,.6);transition:transform .6s var(--e-expo)}
+.phone{flex:none;width:212px}
+/* 本体：黒いベゼル＋チタン色の縁＋側面ボタン */
+.phone__frame{position:relative;padding:6px;border-radius:40px;background:#0d0d0f;box-shadow:inset 0 0 0 1px #3b3b40,0 0 0 2px #c9ccd1,0 0 0 3px #9fa3a9,0 24px 38px -22px rgba(23,27,29,.55);transition:transform .6s var(--e-expo)}
+.phone__frame::before,.phone__frame::after{content:"";position:absolute;width:3px;border-radius:2px;background:#aeb2b8}
+.phone__frame::before{left:-5px;top:96px;height:30px;box-shadow:0 40px 0 #aeb2b8}
+.phone__frame::after{right:-5px;top:118px;height:48px}
 @media (hover:hover){.phone:hover .phone__frame{transform:translateY(-8px)}}
-.phone__notch{position:absolute;left:50%;top:0;width:64px;height:14px;margin-left:-32px;background:var(--ink);border-radius:0 0 10px 10px;z-index:2}
-.phone__screen{position:relative;height:376px;border-radius:23px;overflow:hidden;background:var(--bg);color:var(--fg);font-family:var(--ff,var(--font-jp));font-size:10px;line-height:1.6}
-.ps__in{padding-top:16px;animation:ps-scroll 14s ease-in-out infinite;animation-delay:var(--d,0s)}
-@keyframes ps-scroll{0%,22%{transform:translateY(0)}46%,74%{transform:translateY(-150px)}96%,100%{transform:translateY(0)}}
+.phone__screen{position:relative;height:432px;border-radius:34px;overflow:hidden;background:#fff;display:flex;flex-direction:column;color:#111;
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif}
+.phone__screen svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.phone__screen svg .f{fill:currentColor;stroke:none}
+.phone__screen svg .o{stroke-width:1.2;opacity:.45}
+/* ステータスバー（時刻・Dynamic Island・電波・5G・電池） */
+.ios__status{position:relative;flex:none;height:30px;display:flex;justify-content:space-between;align-items:center;padding:4px 18px 0 24px}
+.ios__status > b{font-size:10.5px;font-weight:700;letter-spacing:.01em}
+.ios__island{position:absolute;left:50%;top:7px;width:62px;height:18px;margin-left:-31px;border-radius:10px;background:#000}
+.ios__ic{display:flex;align-items:center;gap:3px}
+.ios__ic svg:first-child{width:11px;height:8px}
+.ios__ic svg:last-child{width:17px;height:8px}
+.ios__ic i{font-style:normal;font-size:8.5px;font-weight:700}
+/* アドレスバー（閉じる・ページ名・URL） */
+.ios__addr{flex:none;display:flex;align-items:center;gap:6px;padding:3px 10px 6px;border-bottom:1px solid #e3e3e6}
+.ios__addr > svg{flex:none;width:12px;height:12px;stroke-width:2.4}
+.ios__url{flex:1;min-width:0;text-align:center;line-height:1.25}
+.ios__url b,.ios__url small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ios__url b{font-size:8.5px;font-weight:700}
+.ios__url small{font-size:7px;color:#8a8a8e}
+/* サイト本体（中身がゆっくりスクロール） */
+.ios__view{position:relative;flex:1;min-height:0;overflow:hidden;background:var(--bg);color:var(--fg);font-family:var(--ff,var(--font-jp));font-size:10px;line-height:1.6}
+.ps__in{padding-bottom:40px;animation:ps-scroll 14s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes ps-scroll{0%,22%{transform:translateY(0)}46%,74%{transform:translateY(-190px)}96%,100%{transform:translateY(0)}}
+/* サイトの固定フッター（電話・予約・アクセス） */
+.ps__fix{position:absolute;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(3,1fr);background:color-mix(in srgb,var(--ac) 92%,transparent);color:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif}
+.ps__fix span{display:flex;flex-direction:column;align-items:center;gap:1px;padding:5px 0 4px;font-size:7.5px;font-weight:700}
+.ps__fix span + span{border-left:1px solid color-mix(in srgb,var(--bg) 30%,transparent)}
+.ps__fix svg{width:12px;height:12px}
+/* ブラウザのツールバー＋ホームインジケーター */
+.ios__tool{flex:none;display:flex;justify-content:space-around;align-items:center;height:30px;padding:0 6px;border-top:1px solid #e3e3e6;color:#4a4a4f}
+.ios__tool svg{width:13px;height:13px}
+.ios__tool svg:nth-child(2){opacity:.35}
+.ios__home{flex:none;display:block;width:78px;height:4px;margin:2px auto 7px;border-radius:3px;background:#111}
 .ps__bar,.ps__band{display:flex;justify-content:space-between;align-items:center;padding:8px 12px}
 .ps__bar b,.ps__band b{font-size:12px;letter-spacing:.06em}
 .ps__bar i,.ps__band i{width:14px;height:9px;border-top:1.5px solid currentColor;border-bottom:1.5px solid currentColor;position:relative}
@@ -832,5 +866,7 @@ html.is-lite:not([data-tod=night]) .kv-night,html.is-lite:not([data-tod=night]) 
 .ly-c .ps__menu li{text-align:left}
 .phone__cap{display:flex;align-items:baseline;gap:8px;margin-top:10px;font-size:12px;font-weight:700}
 .phone__cap .en{font-size:10px;color:var(--line)}
-@media (max-width:750px){.phone{width:170px}.phone__screen{height:330px}.phones__row{gap:18px}}
+@media (max-width:750px){.phone{width:180px}.phone__screen{height:370px}.phones__row{gap:18px}.ios__status{padding:4px 11px 0 18px}.ios__island{width:44px;margin-left:-22px}}
+.phones__cta{margin-top:clamp(28px,4vw,44px)}
+.phones__cta .c-btn{margin:0 auto}
 @media (prefers-reduced-motion:reduce){.phones__track{overflow-x:auto}.phones__row,.ps__in{animation:none}}

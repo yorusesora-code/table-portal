@@ -72,17 +72,30 @@ const C = {
   phones: () => {
     const P = (n) => `/assets/img/photos/s/${n}.webp`;
     const S = [
-      { ly: "a", en: "YAKINIKU", genre: "焼肉", name: "炭火焼肉 はなび", catch: "厚切りの牛たんと、<br>炭の香り。", open: "本日 17:00–23:00", hero: "gyutan", menu: [["厚切り上たん塩", "1,680"], ["特選ハラミ", "1,480"], ["石焼ビビンバ", "980"]], v: "--bg:#17110d;--fg:#f5ede2;--ac:#c9a063;--sub:rgba(245,237,226,.6);--ff:'Hiragino Mincho ProN','Yu Mincho',serif" },
-      { ly: "b", en: "CHINESE", genre: "中華", name: "四川飯店 紅", catch: "しびれる辛さの<br>本格麻婆豆腐", open: "営業中 11:00–22:00", hero: "mapo-tofu", thumbs: ["chinjao", "subuta", "gyoza"], menu: [["麻婆豆腐", "1,100"], ["青椒肉絲", "1,200"]], v: "--bg:#fff;--fg:#1d1d1d;--ac:#b8241c;--sub:#8a8a8a;--band:#b8241c" },
-      { ly: "c", en: "ITALIAN", genre: "イタリアン", name: "Trattoria Sole", catch: "薪窯で焼く、<br>ナポリのピッツァ", open: "LUNCH 11:30 / DINNER 17:30", hero: "margherita", thumbs: ["carbonara", "tomato-pasta"], menu: [["マルゲリータ", "1,400"], ["カルボナーラ", "1,500"]], v: "--bg:#fbf8f2;--fg:#23301f;--ac:#2f6b3a;--sub:#7d7a70;--ff:Georgia,'Times New Roman',serif" },
-      { ly: "a", en: "CAFE", genre: "カフェ", name: "ひだまり珈琲", catch: "ゆっくりできる、<br>朝のブランチ。", open: "本日 8:00–18:00", hero: "cafe-brunch", thumbs: ["souffle-pancake", "cafe-counter"], menu: [["ブランチプレート", "1,350"], ["スフレパンケーキ", "1,200"]], v: "--bg:#f6efe4;--fg:#4a3526;--ac:#b07843;--sub:#9b8573;--r:18px" },
-      { ly: "b", en: "WASHOKU", genre: "和食", name: "天ぷら 凪", catch: "揚げたてを、<br>カウンターで。", open: "昼 11:30／夜 17:30", hero: "tempura", thumbs: ["teishoku"], menu: [["天ぷら定食", "1,480"], ["季節の天丼", "1,380"]], v: "--bg:#f7f5ef;--fg:#1f2a44;--ac:#2b3a67;--sub:#7a7f8c;--band:#2b3a67;--ff:'Hiragino Mincho ProN','Yu Mincho',serif" },
-      { ly: "c", en: "UNAGI", genre: "うなぎ", name: "うなぎ 川瀬", catch: "創業七十年の<br>秘伝のたれ", open: "本日 11:00–20:00", hero: "unaju", menu: [["うな重（上）", "4,200"], ["ひつまぶし", "3,900"]], v: "--bg:#121212;--fg:#efe6d8;--ac:#b5552f;--sub:rgba(239,230,216,.55);--ff:'Hiragino Mincho ProN','Yu Mincho',serif" },
-      { ly: "a", en: "SWEETS", genre: "洋菓子", name: "Pâtisserie Miel", catch: "季節の果実と、<br>とっておきのケーキ。", open: "本日 10:00–19:00", hero: "mont-blanc", thumbs: ["fondant", "creme-brulee", "basque-cheesecake"], menu: [["和栗のモンブラン", "680"], ["バスクチーズケーキ", "560"]], v: "--bg:#fcecf0;--fg:#5a2f3a;--ac:#d0587a;--sub:#a7818b;--r:22px" },
-      { ly: "b", en: "GYOZA", genre: "餃子", name: "餃子の金星", catch: "パリッと羽根つき、<br>毎日手包み。", open: "営業中 11:00–23:00", hero: "gyoza", menu: [["焼き餃子 6個", "380"], ["水餃子", "450"], ["餃子定食", "850"]], v: "--bg:#fff8d6;--fg:#161616;--ac:#161616;--sub:#6b6552;--band:#f5c400;--bandfg:#161616" },
-      { ly: "c", en: "TERRACE", genre: "カフェテラス", name: "GREEN TABLE", catch: "テラス席で、<br>午後のひととき。", open: "本日 11:00–20:00", hero: "cafe-terrace", thumbs: ["berry-cheesecake", "basque-cheesecake"], menu: [["ベリーのチーズケーキ", "650"], ["本日のコーヒー", "480"]], v: "--bg:#eef2ea;--fg:#23392c;--ac:#2f4a3a;--sub:#6f7f73" },
-      { ly: "a", en: "TEISHOKU", genre: "定食", name: "定食 まつや", catch: "炭火で焼いた、<br>今日の焼き魚。", open: "本日 11:00–21:00", hero: "teishoku", menu: [["焼き魚定食", "980"], ["唐揚げ定食", "950"], ["日替わり", "900"]], v: "--bg:#fff;--fg:#2d2a24;--ac:#6b8f3c;--sub:#8b877c" },
+      { ly: "a", en: "YAKINIKU", genre: "焼肉", name: "炭火焼肉 はなび", dom: "sumibi-hanabi.jp", catch: "厚切りの牛たんと、<br>炭の香り。", open: "本日 17:00–23:00", hero: "gyutan", menu: [["厚切り上たん塩", "1,680"], ["特選ハラミ", "1,480"], ["石焼ビビンバ", "980"]], v: "--bg:#17110d;--fg:#f5ede2;--ac:#c9a063;--sub:rgba(245,237,226,.6);--ff:'Hiragino Mincho ProN','Yu Mincho',serif" },
+      { ly: "b", en: "CHINESE", genre: "中華", name: "四川飯店 紅", dom: "shisen-kurenai.jp", catch: "しびれる辛さの<br>本格麻婆豆腐", open: "営業中 11:00–22:00", hero: "mapo-tofu", thumbs: ["chinjao", "subuta", "gyoza"], menu: [["麻婆豆腐", "1,100"], ["青椒肉絲", "1,200"]], v: "--bg:#fff;--fg:#1d1d1d;--ac:#b8241c;--sub:#8a8a8a;--band:#b8241c" },
+      { ly: "c", en: "ITALIAN", genre: "イタリアン", name: "Trattoria Sole", dom: "trattoria-sole-sample.jp", catch: "薪窯で焼く、<br>ナポリのピッツァ", open: "LUNCH 11:30 / DINNER 17:30", hero: "margherita", thumbs: ["carbonara", "tomato-pasta"], menu: [["マルゲリータ", "1,400"], ["カルボナーラ", "1,500"]], v: "--bg:#fbf8f2;--fg:#23301f;--ac:#2f6b3a;--sub:#7d7a70;--ff:Georgia,'Times New Roman',serif" },
+      { ly: "a", en: "CAFE", genre: "カフェ", name: "ひだまり珈琲", dom: "hidamari-coffee.jp", catch: "ゆっくりできる、<br>朝のブランチ。", open: "本日 8:00–18:00", hero: "cafe-brunch", thumbs: ["souffle-pancake", "cafe-counter"], menu: [["ブランチプレート", "1,350"], ["スフレパンケーキ", "1,200"]], v: "--bg:#f6efe4;--fg:#4a3526;--ac:#b07843;--sub:#9b8573;--r:18px" },
+      { ly: "b", en: "WASHOKU", genre: "和食", name: "天ぷら 凪", dom: "tempura-nagi.jp", catch: "揚げたてを、<br>カウンターで。", open: "昼 11:30／夜 17:30", hero: "tempura", thumbs: ["teishoku"], menu: [["天ぷら定食", "1,480"], ["季節の天丼", "1,380"]], v: "--bg:#f7f5ef;--fg:#1f2a44;--ac:#2b3a67;--sub:#7a7f8c;--band:#2b3a67;--ff:'Hiragino Mincho ProN','Yu Mincho',serif" },
+      { ly: "c", en: "UNAGI", genre: "うなぎ", name: "うなぎ 川瀬", dom: "unagi-kawase.jp", catch: "創業七十年の<br>秘伝のたれ", open: "本日 11:00–20:00", hero: "unaju", menu: [["うな重（上）", "4,200"], ["ひつまぶし", "3,900"]], v: "--bg:#121212;--fg:#efe6d8;--ac:#b5552f;--sub:rgba(239,230,216,.55);--ff:'Hiragino Mincho ProN','Yu Mincho',serif" },
+      { ly: "a", en: "SWEETS", genre: "洋菓子", name: "Pâtisserie Miel", dom: "patisserie-miel.jp", catch: "季節の果実と、<br>とっておきのケーキ。", open: "本日 10:00–19:00", hero: "mont-blanc", thumbs: ["fondant", "creme-brulee", "basque-cheesecake"], menu: [["和栗のモンブラン", "680"], ["バスクチーズケーキ", "560"]], v: "--bg:#fcecf0;--fg:#5a2f3a;--ac:#d0587a;--sub:#a7818b;--r:22px" },
+      { ly: "b", en: "GYOZA", genre: "餃子", name: "餃子の金星", dom: "gyoza-kinboshi.jp", catch: "パリッと羽根つき、<br>毎日手包み。", open: "営業中 11:00–23:00", hero: "gyoza", menu: [["焼き餃子 6個", "380"], ["水餃子", "450"], ["餃子定食", "850"]], v: "--bg:#fff8d6;--fg:#161616;--ac:#161616;--sub:#6b6552;--band:#f5c400;--bandfg:#161616" },
+      { ly: "c", en: "TERRACE", genre: "カフェテラス", name: "GREEN TABLE", dom: "green-table-cafe.jp", catch: "テラス席で、<br>午後のひととき。", open: "本日 11:00–20:00", hero: "cafe-terrace", thumbs: ["berry-cheesecake", "basque-cheesecake"], menu: [["ベリーのチーズケーキ", "650"], ["本日のコーヒー", "480"]], v: "--bg:#eef2ea;--fg:#23392c;--ac:#2f4a3a;--sub:#6f7f73" },
+      { ly: "a", en: "TEISHOKU", genre: "定食", name: "定食 まつや", dom: "teishoku-matsuya.jp", catch: "炭火で焼いた、<br>今日の焼き魚。", open: "本日 11:00–21:00", hero: "teishoku", menu: [["焼き魚定食", "980"], ["唐揚げ定食", "950"], ["日替わり", "900"]], v: "--bg:#fff;--fg:#2d2a24;--ac:#6b8f3c;--sub:#8b877c" },
     ];
+    // iPhone の画面まわり（アイコンはすべて線画のSVG）
+    const ic = (d, vb = "0 0 24 24") => `<svg viewBox="${vb}" aria-hidden="true">${d}</svg>`;
+    const I = {
+      sig: ic(`<g class="f"><rect x="0" y="8" width="3" height="4" rx=".7"/><rect x="5" y="5.5" width="3" height="6.5" rx=".7"/><rect x="10" y="3" width="3" height="9" rx=".7"/><rect x="15" y="0" width="3" height="12" rx=".7"/></g>`, "0 0 18 12"),
+      bat: ic(`<rect x="1" y="1" width="21" height="10" rx="3" class="o"/><rect x="3" y="3" width="15" height="6" rx="1.5" class="f"/><path d="M24.5 4.5v3" class="o"/>`, "0 0 26 12"),
+      chev: ic(`<path d="M6 9l6 6 6-6"/>`), close: ic(`<path d="M6 6l12 12M18 6L6 18"/>`),
+      back: ic(`<path d="M15 5l-7 7 7 7"/>`), fwd: ic(`<path d="M9 5l7 7-7 7"/>`),
+      reload: ic(`<path d="M19 12a7 7 0 1 1-2.1-5M19 4v4h-4"/>`), share: ic(`<path d="M12 3v12M8 7l4-4 4 4M6 11v9h12v-9"/>`),
+      more: ic(`<g class="f"><circle cx="12" cy="5" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="19" r="1.7"/></g>`),
+      tel: ic(`<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/>`),
+      cal: ic(`<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>`),
+      pin: ic(`<path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/>`),
+    };
     const card = (s, i, dup) => {
       const thumbs = s.thumbs ? `<div class="ps__thumbs">${s.thumbs.map((t) => `<i style="background-image:url(${P(t)})"></i>`).join("")}</div>` : "";
       const menu = `<ul class="ps__menu">${s.menu.map(([n, p]) => `<li><span>${n}</span><b>¥${p}</b></li>`).join("")}</ul>`;
@@ -93,7 +106,10 @@ const C = {
         : s.ly === "b"
         ? `<div class="ps__band"><b>${s.name}</b><i></i></div><div class="ps__title"><p class="ps__catch">${s.catch}</p><span class="ps__open">${s.open}</span></div>${hero}${btns}${thumbs}<p class="ps__h">おすすめ</p>${menu}<div class="ps__map"></div>`
         : `<div class="ps__bar ps__bar--c"><i></i></div><div class="ps__crest"><small>— ${s.en} —</small><b>${s.name}</b></div>${hero}<p class="ps__catch">${s.catch}</p><span class="ps__open">${s.open}</span>${btns}${thumbs}${menu}<div class="ps__map"></div>`;
-      return `<li class="phone"${dup ? ' aria-hidden="true"' : ""}><div class="phone__frame"><div class="phone__notch"></div><div class="phone__screen ly-${s.ly}" style="${s.v}"><div class="ps__in" style="--d:-${(i * 2.3) % 14}s">${body}</div></div></div><p class="phone__cap"><b class="en">${s.en}</b>${s.genre}</p></li>`;
+      const top = `<div class="ios__status"><b>12:31</b><span class="ios__island"></span><span class="ios__ic">${I.sig}<i>5G</i>${I.bat}</span></div><div class="ios__addr">${I.chev}<span class="ios__url"><b>${s.name} | 公式サイト</b><small>https://www.${s.dom}</small></span>${I.close}</div>`;
+      const fix = `<div class="ps__fix"><span>${I.tel}電話</span><span>${I.cal}予約</span><span>${I.pin}アクセス</span></div>`;
+      const tool = `<div class="ios__tool">${I.back}${I.fwd}${I.reload}${I.share}${I.more}</div><span class="ios__home"></span>`;
+      return `<li class="phone"${dup ? ' aria-hidden="true"' : ""}><div class="phone__frame"><div class="phone__screen">${top}<div class="ios__view ly-${s.ly}" style="${s.v}"><div class="ps__in" style="--d:-${(i * 2.3) % 14}s">${body}</div>${fix}</div>${tool}</div></div><p class="phone__cap"><b class="en">${s.en}</b>${s.genre}</p></li>`;
     };
     return `<div class="phones" aria-label="スマホで見たときのHPの見本（架空の店舗）">
   <p class="phones__k"><span class="en">ON YOUR PHONE</span>スマホで見ると、こうなります</p>
