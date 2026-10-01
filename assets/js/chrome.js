@@ -232,6 +232,60 @@ const enableLite = () => {
   addEventListener('resize', fitTabs);
 }
 
+/* ---- 営業用の表示（料金を出さない）。トップを ?talk で開くか、左上のロゴを3秒長押しで切り替え ----
+   ほかのページでロゴを長押しすると、営業用の表示のトップへ移る。営業用の表示の間は、
+   ほかのページへのリンク（メニュー・ボタン・ロゴ）を押しても移動しない（ページ内の #リンクは動く） */
+{
+  const root = document.documentElement, logo = $('.hd-logo');
+  const isTop = location.pathname === '/' || location.pathname === '/index.html';
+  const talking = () => root.classList.contains('is-talk');
+  const setTalk = on => {
+    root.classList.toggle('is-talk', on);
+    const q = new URLSearchParams(location.search);
+    on ? q.set('talk', '') : q.delete('talk');
+    const s = q.toString().replace(/(^|&)talk=(?=&|$)/, '$1talk');
+    history.replaceState(history.state, '', location.pathname + (s ? '?' + s : '') + location.hash);
+  };
+  if (!isTop) root.classList.remove('is-talk');
+
+  if (logo){
+    let timer = 0, fired = false, sx = 0, sy = 0;
+    const start = (x, y) => {
+      clearTimeout(timer); fired = false; sx = x; sy = y;
+      timer = setTimeout(() => {
+        timer = 0; fired = true;
+        navigator.vibrate?.(30);
+        if (isTop) setTalk(!talking()); else location.href = '/?talk';
+      }, 3000);
+    };
+    const move = (x, y) => { if (timer && Math.hypot(x - sx, y - sy) > 12){ clearTimeout(timer); timer = 0; } };
+    const stop = () => { clearTimeout(timer); timer = 0; };
+    // タッチとマウスを分けて扱う（スマホの長押しメニューが出ても、指を離すまで数え続ける）
+    logo.addEventListener('touchstart', e => start(e.touches[0].clientX, e.touches[0].clientY), {passive:true});
+    logo.addEventListener('touchmove', e => move(e.touches[0].clientX, e.touches[0].clientY), {passive:true});
+    logo.addEventListener('touchend', stop);
+    logo.addEventListener('mousedown', e => { if (!e.button && !matchMedia('(pointer:coarse)').matches) start(e.clientX, e.clientY); });
+    logo.addEventListener('mousemove', e => move(e.clientX, e.clientY));
+    logo.addEventListener('mouseup', stop);
+    logo.addEventListener('mouseleave', stop);
+    logo.addEventListener('contextmenu', e => e.preventDefault());
+    logo.addEventListener('dragstart', e => e.preventDefault());
+    // 長押しのあとに指を離したときのクリックでは、ページを移動しない
+    logo.addEventListener('click', e => { if (fired){ e.preventDefault(); fired = false; } });
+  }
+
+  const block = e => {
+    if (!talking()) return;
+    const a = e.target.closest('a[href]');
+    if (!a) return;
+    const u = new URL(a.href, location.href);
+    if (u.origin === location.origin && u.pathname === location.pathname && u.hash) return;
+    e.preventDefault();
+  };
+  document.addEventListener('click', block, true);
+  document.addEventListener('auxclick', block, true);
+}
+
 /* ---- 画面の外にある部分は、CSS のループと SVG の動き（SMIL）を止める ---- */
 // 見えている間だけ動かす。少し手前（上下200px）で動き出すので、戻ってきたときに止まって見えない
 {

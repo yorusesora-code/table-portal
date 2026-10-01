@@ -475,6 +475,7 @@ ${meta.noindex || SITE.noindex ? `<meta name="robots" content="noindex, nofollow
 ${meta.legacy ? `<link rel="stylesheet" href="/assets/css/site.css">` : meta.bare ? "" : `<link rel="stylesheet" href="/assets/css/top.css"><link rel="stylesheet" href="/assets/css/sub.css">`}
 ${(meta.css || []).map((h) => '<link rel="stylesheet" href="' + h + '">').join("")}
 ${meta.jsonld ? `<script type="application/ld+json">${meta.jsonld}</script>` : ""}
+${relPath === "index.html" ? `<script>if(new URLSearchParams(location.search).has("talk"))document.documentElement.classList.add("is-talk")</script>` : ""}
 </head>
 <body class="${meta.bare ? "" : "sub "}${meta.bodyClass || ""}">
 ${meta.bare ? body : `${header()}
