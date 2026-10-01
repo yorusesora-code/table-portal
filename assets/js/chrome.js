@@ -234,7 +234,7 @@ const enableLite = () => {
 
 /* ---- 営業用の表示（料金を出さない）。トップを ?talk で開くか、左上のロゴを3秒長押しで切り替え ----
    ほかのページでロゴを長押しすると、営業用の表示のトップへ移る。営業用の表示の間は、
-   ほかのページへのリンク（メニュー・ボタン・ロゴ）を押しても移動しない（ページ内の #リンクは動く） */
+   ほかのページへのリンク（イラストの島・メニュー・ボタン・ロゴ）を押しても移動しない（ページ内の #リンクは動く） */
 {
   const root = document.documentElement, logo = $('.hd-logo');
   const isTop = location.pathname === '/' || location.pathname === '/index.html';
@@ -280,7 +280,9 @@ const enableLite = () => {
     if (!a) return;
     const u = new URL(a.href, location.href);
     if (u.origin === location.origin && u.pathname === location.pathname && u.hash) return;
+    // トップのイラストの島やメニューは、要素側でページを移動させるので、ここで止めて届かせない
     e.preventDefault();
+    e.stopPropagation();
   };
   document.addEventListener('click', block, true);
   document.addEventListener('auxclick', block, true);

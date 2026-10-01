@@ -931,7 +931,7 @@ html.is-lite:not([data-tod=night]) .kv-night,html.is-lite:not([data-tod=night]) 
 /* ---------- 営業用の表示（トップのみ。?talk で開くか、ロゴを3秒長押しで切り替え） ----------
    料金（初期費用）を出さず、ほかのページへのリンクは押しても移動しない（chrome.js）。
    ロゴの右上の小さな点が、営業用の表示になっている目印 */
-html:not(.is-talk) .talk-on,html.is-talk .talk-off,html.is-talk .ptable__price,html.is-talk .trigger{display:none !important}
+html:not(.is-talk) .talk-on,html.is-talk .talk-off,html.is-talk .ptable__price{display:none !important}
 html.is-talk a[href]:not([href^="#"]){cursor:default}
 .hd-logo{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-user-drag:none}
 html.is-talk .hd-logo{position:relative}
